@@ -23,7 +23,7 @@ class DBHelper {
 
   Future<void> _onCreate(Database db, int version) async {
     // Database is created, create the table
-    // await db.execute("CREATE TABLE Test (id INTEGER PRIMARY KEY, value TEXT)");
+    await db.execute("CREATE TABLE \"user\" ( \"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, \"uid\" INTEGER, \"token\" TEXT, \"username\" TEXT, \"password\" TEXT );");
     // populate data
   }
 

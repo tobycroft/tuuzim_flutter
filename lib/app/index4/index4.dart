@@ -13,6 +13,7 @@ import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/res.dart';
 import 'package:tuuzim_flutter/config/url.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
+import 'package:tuuzim_flutter/model/UserModel.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/storage/storage.dart';
@@ -159,7 +160,8 @@ class _Index4 extends State<Index4> {
                   ),
                 ),
                 FlatButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    UserModel.Api_find();
                     Auth.Check_and_goto_login(context);
                   },
                   onLongPress: () async {

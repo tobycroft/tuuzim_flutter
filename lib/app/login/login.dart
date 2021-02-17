@@ -6,6 +6,7 @@ import 'package:tuuzim_flutter/app/login/help/help.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/res.dart';
 import 'package:tuuzim_flutter/config/url.dart';
+import 'package:tuuzim_flutter/model/UserModel.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
 import 'package:tuuzim_flutter/tuuz/button/button.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
@@ -18,7 +19,7 @@ class Login extends StatefulWidget {
 }
 
 class _login extends State<Login> {
-  String qq;
+  String username;
   String password;
 
   @override
@@ -26,7 +27,7 @@ class _login extends State<Login> {
     var uid_controller = new TextEditingController(text: "");
     var password_controller = new TextEditingController(text: "");
     uid_controller.addListener(() {
-      this.qq = uid_controller.text;
+      this.username = uid_controller.text;
     });
 
     //这里双向绑定简直是太蛋疼了
@@ -82,21 +83,13 @@ class _login extends State<Login> {
           // width: MediaQuery.of(context).size.width,
           // height: MediaQuery.of(context).size.height,
           child: ListView(
+            padding: EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
             children: [
               SizedBox(
                 height: 100,
-              ),
-              Center(
-                child: Text(
-                  "登录GoBotQ",
-                  style: TextStyle(
-                    fontSize: 36,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 50,
               ),
               TextFormField(
                 controller: uid_controller,
@@ -115,17 +108,17 @@ class _login extends State<Login> {
                     Icons.person,
                     color: Colors.white,
                   ),
-                  hintText: "在这里输入你的QQ号码",
+                  hintText: "账号",
+                  labelText: "请输入你的账号",
                   hintStyle: TextStyle(
                     color: Colors.white,
                   ),
-                  labelText: 'QQ:',
                   labelStyle: TextStyle(
                     color: Colors.white,
                   ),
                 ),
                 onChanged: (String value) {
-                  this.qq = value;
+                  this.username = value;
                 },
               ),
               SizedBox(
@@ -148,11 +141,11 @@ class _login extends State<Login> {
                     Icons.person,
                     color: Colors.white,
                   ),
-                  hintText: "输入登录码",
+                  hintText: "密码",
+                  labelText: "请输入登录密码",
                   hintStyle: TextStyle(
                     color: Colors.white,
                   ),
-                  labelText: '登录码:',
                   labelStyle: TextStyle(
                     color: Colors.white,
                   ),
@@ -193,7 +186,7 @@ class _login extends State<Login> {
                 child: Text('登录'),
                 onPressed: () async {
                   Map<String, String> post = {
-                    "qq": this.qq,
+                    "username": this.username,
                     "password": this.password,
                   };
                   String ret = await Net.Post(Config.Url, Url.login, null, post, null);
@@ -202,6 +195,7 @@ class _login extends State<Login> {
                     Storage.Set("__uid__", json["data"]["uid"].toString());
                     Storage.Set("__password__", this.password.toString());
                     Storage.Set("__token__", json["data"]["token"].toString());
+                    UserModel.Api_insert(json["data"]["uid"].toString(), json["data"]["token"].toString(), this.username, this.password);
                     Alert.Confirm(context, "登录成功", json["data"]["uid"].toString() + "欢迎回来！", Windows.Close(context));
                   } else {
                     Alert.Confirm(context, "登录失败", json["echo"], null);
