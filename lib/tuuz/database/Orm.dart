@@ -497,11 +497,15 @@ class TuuzOrm {
         DELETE FROM ${this._table};
         DELETE FROM sqlite_sequence WHERE name = ${this._table};
       """;
-
       // fetch result
-      return await this._db.rawDelete(query);
+      if (await this._db.rawDelete(query) == 0) {
+        return false;
+      } else {
+        return true;
+      }
     } catch (e) {
       print(e);
+      return false;
     }
   }
 

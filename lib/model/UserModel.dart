@@ -19,7 +19,13 @@ class UserModel extends BaseModel {
 
   static Future<Map> Api_find() async {
     Database db = await TuuzDb().getDb();
-    List data = await TuuzOrm(db).table(_table).get();
+    var data = await TuuzOrm(db).table(_table).first();
     print(data);
   }
+
+  static Future<bool> Api_tuncate()async{
+    Database db=await TuuzDb().getDb();
+    var data=await TuuzOrm(db).table(_table).truncate();
+  }
+
 }
