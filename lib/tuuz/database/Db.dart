@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 
-class DBHelper {
+class TuuzDb {
   Future<Database> _db;
 
   Future<Database> getDb() {

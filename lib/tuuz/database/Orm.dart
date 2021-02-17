@@ -18,7 +18,7 @@ const String LESS_EQUALS = LE;
 // ##################
 // QUERY BUILDER UTILITIES
 // ##################
-class TuuzDbUtils {
+class TuuzOrmUtils {
   static String _checkComparisonOperator(String comparisonOperator) {
     if (comparisonOperator != '=' &&
         comparisonOperator != '!=' &&
@@ -36,7 +36,7 @@ class TuuzDbUtils {
 // ##################
 // QUERY BUILDER MAIN CLASS
 // ##################
-class TuuzDb {
+class TuuzOrm {
   /*
     - error handling
     - raw queries methods
@@ -80,17 +80,17 @@ class TuuzDb {
   int _limit;
   int _offset;
 
-  TuuzDb _union;
+  TuuzOrm _union;
 
   /*
     TABLE CONSTRUCTOR (entrypoint for all queries)
    */
-  TuuzDb(Database db) {
+  TuuzOrm(Database db) {
     this._db = db;
   }
 
-  Future<TuuzDb> tableInit(String tableName) async {
-    this._db = await DBHelper().getDb();
+  Future<TuuzOrm> tableInit(String tableName) async {
+    this._db = await TuuzDb().getDb();
     if (this._db == null) {
       throw Exception('Cannot instantiate Loquacious Query Builder before Database initialization');
     }
@@ -98,7 +98,7 @@ class TuuzDb {
     return this;
   }
 
-  TuuzDb table(String tableName) {
+  TuuzOrm table(String tableName) {
     this._table = this._parseTableAndAlias(tableName);
     return this;
   }
@@ -203,7 +203,7 @@ class TuuzDb {
   // ##################
 
   // SELECT
-  TuuzDb select(List<String> columns) {
+  TuuzOrm select(List<String> columns) {
     this._columns = columns
         .map((e) {
           return this._checkTableAndAliasInColumn(e);
@@ -214,7 +214,7 @@ class TuuzDb {
   }
 
   // COMMON WHERE
-  TuuzDb _commonWhere(
+  TuuzOrm _commonWhere(
     String column,
     dynamic value,
     String whereOperator, {
@@ -225,14 +225,14 @@ class TuuzDb {
     this._where.add({
       'column': this._checkTableAndAliasInColumn(column),
       'value': value,
-      'comparisonOperator': TuuzDbUtils._checkComparisonOperator(comparisonOperator),
+      'comparisonOperator': TuuzOrmUtils._checkComparisonOperator(comparisonOperator),
       'whereOperator': this._where.length == 0 ? '' : "$whereOperator ",
     });
     return this;
   }
 
   // WHERE
-  TuuzDb where(
+  TuuzOrm where(
     String column,
     dynamic value, {
     String comparisonOperator,
@@ -241,7 +241,7 @@ class TuuzDb {
   }
 
   // OR WHERE
-  TuuzDb orWhere(
+  TuuzOrm orWhere(
     String column,
     dynamic value, {
     String comparisonOperator,
@@ -250,57 +250,57 @@ class TuuzDb {
   }
 
   // DISTINCT
-  TuuzDb distinct() {
+  TuuzOrm distinct() {
     this._distinct = true;
     return this;
   }
 
   // ADD SELECT
-  TuuzDb addSelect(String column) {
+  TuuzOrm addSelect(String column) {
     if (this._columns == null) this._columns = [];
     this._columns.add(column);
     return this;
   }
 
   // COMMON JOIN
-  TuuzDb _commonJoin(String joinType, String table, String joinColumn, String comparisonOperator, String tableColumn) {
+  TuuzOrm _commonJoin(String joinType, String table, String joinColumn, String comparisonOperator, String tableColumn) {
     if (this._join == null) this._join = [];
     this._join.add({
       'type': joinType,
       'table': this._parseTableAndAlias(table),
       'join_column': joinColumn,
-      'comparisonOperator': TuuzDbUtils._checkComparisonOperator(comparisonOperator),
+      'comparisonOperator': TuuzOrmUtils._checkComparisonOperator(comparisonOperator),
       'table_column': tableColumn,
     });
     return this;
   }
 
   // INNER JOIN
-  TuuzDb join(String table, String joinColumn, String comparisonOperator, String tableColumn) {
+  TuuzOrm join(String table, String joinColumn, String comparisonOperator, String tableColumn) {
     this._commonJoin('INNER JOIN', table, joinColumn, comparisonOperator, tableColumn);
     return this;
   }
 
-  TuuzDb innerJoin(String table, String joinColumn, String comparisonOperator, String tableColumn) {
+  TuuzOrm innerJoin(String table, String joinColumn, String comparisonOperator, String tableColumn) {
     this._commonJoin('INNER JOIN', table, joinColumn, comparisonOperator, tableColumn);
     return this;
   }
 
   // LEFT JOIN
-  TuuzDb leftJoin(String table, String joinColumn, String comparisonOperator, String tableColumn) {
+  TuuzOrm leftJoin(String table, String joinColumn, String comparisonOperator, String tableColumn) {
     this._commonJoin('LEFT JOIN', table, joinColumn, comparisonOperator, tableColumn);
     return this;
   }
 
   // UNION
-  TuuzDb union(TuuzDb queryBuilder) {
+  TuuzOrm union(TuuzOrm queryBuilder) {
     if (queryBuilder == this) throw 'Cannot pass calling instance as union argument';
     this._union = queryBuilder;
     return this;
   }
 
   // ORDER BY
-  TuuzDb _commonOrderBy(String column, String direction) {
+  TuuzOrm _commonOrderBy(String column, String direction) {
     if (this._orderBy == null) this._orderBy = [];
     this._orderBy.add({
       'column': column,
@@ -309,24 +309,24 @@ class TuuzDb {
     return this;
   }
 
-  TuuzDb orderBy(String column) {
+  TuuzOrm orderBy(String column) {
     return this._commonOrderBy(column, 'ASC');
   }
 
   // ORDER BY DESC
-  TuuzDb orderByDesc(String column) {
+  TuuzOrm orderByDesc(String column) {
     return this._commonOrderBy(column, 'DESC');
   }
 
   // GROUP BY
-  TuuzDb groupBy(List<String> columns) {
+  TuuzOrm groupBy(List<String> columns) {
     if (this._groupBy == null) this._groupBy = [];
     this._groupBy.addAll(columns);
     return this;
   }
 
   // HAVING
-  TuuzDb having(
+  TuuzOrm having(
     String column,
     String comparisonOperator,
     dynamic value,
@@ -335,28 +335,28 @@ class TuuzDb {
     this._having = {
       'column': this._checkTableAndAliasInColumn(column),
       'value': value,
-      'comparisonOperator': TuuzDbUtils._checkComparisonOperator(comparisonOperator),
+      'comparisonOperator': TuuzOrmUtils._checkComparisonOperator(comparisonOperator),
     };
     return this;
   }
 
   // LIMIT / TAKE
-  TuuzDb limit(int count) {
+  TuuzOrm limit(int count) {
     this._limit = count;
     return this;
   }
 
-  TuuzDb take(int count) {
+  TuuzOrm take(int count) {
     return this.limit(count);
   }
 
   // OFFSET / SKIP
-  TuuzDb offset(int count) {
+  TuuzOrm offset(int count) {
     this._offset = count;
     return this;
   }
 
-  TuuzDb skip(int count) {
+  TuuzOrm skip(int count) {
     return this.offset(count);
   }
 
@@ -426,6 +426,7 @@ class TuuzDb {
   // ##################
 
   // INSERT
+
   Future<int> insertGetId(Map<String, dynamic> values) async {
     try {
       return await this._db.insert(this._table, values);
