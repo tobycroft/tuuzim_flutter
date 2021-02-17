@@ -19,13 +19,30 @@ class UserModel extends BaseModel {
 
   static Future<Map> Api_find() async {
     Database db = await TuuzDb().getDb();
-    var data = await TuuzOrm(db).table(_table).first();
-    print(data);
+    Map data = await TuuzOrm(db).table(_table).orderByDesc("id").first();
+    return data;
   }
 
-  static Future<bool> Api_tuncate()async{
-    Database db=await TuuzDb().getDb();
-    var data=await TuuzOrm(db).table(_table).truncate();
+  static Future<Map> Api_find_by_username(String username) async {
+    Database db = await TuuzDb().getDb();
+    Map data = await TuuzOrm(db).table(_table).where("username", username).first();
+    return data;
   }
 
+  static Future<bool> Api_update_by_username(String username, password, uid, token) async {
+    Database db = await TuuzDb().getDb();
+    Map datas = {
+      "password": password,
+      "uid": uid,
+      "token": token,
+    };
+    bool data = await TuuzOrm(db).table(_table).where("username", username).update(datas);
+    return data;
+  }
+
+  static Future<bool> Api_tuncate() async {
+    Database db = await TuuzDb().getDb();
+    bool data = await TuuzOrm(db).table(_table).truncate();
+    return data;
+  }
 }

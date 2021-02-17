@@ -491,7 +491,7 @@ class TuuzOrm {
     }
   }
 
-  Future<void> truncate() async {
+  Future<bool> truncate() async {
     try {
       final query = """
         DELETE FROM ${this._table};

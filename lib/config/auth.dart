@@ -27,6 +27,7 @@ class Auth {
 
   static bool Return_login_check_and_Goto(BuildContext context, Map json) {
     if (json["code"] == -1) {
+      Clear_Login();
       Windows.Open(context, Login());
       return false;
     } else {
@@ -36,6 +37,7 @@ class Auth {
 
   static bool Return_login_check(BuildContext context, Map json) {
     if (json["code"] == -1) {
+      Clear_Login();
       return false;
     } else {
       return true;
@@ -44,5 +46,10 @@ class Auth {
 
   static void Goto_Login(BuildContext context) {
     Windows.Open(context, Login());
+  }
+
+  static void Clear_Login() async {
+    await Storage.Delete("__uid__");
+    await Storage.Delete("__token__");
   }
 }

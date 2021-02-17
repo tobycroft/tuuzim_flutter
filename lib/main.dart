@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         backgroundColor: Colors.black,
         appBarTheme: AppBarTheme(
-          color: Colors.black,
+          color: Colors.black87,
           centerTitle: true,
         ),
         primarySwatch: Colors.green,
@@ -84,8 +84,6 @@ final JPush jpush = new JPush();
 class BotomeMenumPageState extends State<BotomeMenumPage> {
   BotomeMenumPageState();
 
-  String debugLable = 'Unknown';
-
   @override
   void initState() {
     ///初始化，这个函数在生命周期中只调用一次
@@ -105,17 +103,17 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
   final List<BottomNavigationBarItem> bottomNavItems = [
     BottomNavigationBarItem(
       backgroundColor: Colors.blue,
-      icon: Icon(Icons.android_rounded),
-      label: "机器人控制",
+      icon: Icon(Icons.chat_rounded),
+      label: "聊天",
     ),
     BottomNavigationBarItem(
       backgroundColor: Colors.blue[600],
-      icon: Icon(Icons.desktop_windows),
-      label: "群管理",
+      icon: Icon(Icons.perm_contact_calendar),
+      label: "联系人",
     ),
     BottomNavigationBarItem(
       backgroundColor: Colors.blue[800],
-      icon: Icon(Icons.camera),
+      icon: Icon(Icons.disc_full),
       label: "发现",
     ),
     BottomNavigationBarItem(
@@ -126,11 +124,13 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
   ];
 
   //点击导航项是要显示的页面
-  final pages = [Index1("机器人列表"), Index2("群列表"), Index3("发现"), Index4("我的")];
+  final pages = [Index1("聊天"), Index2("联系人"), Index3("发现"), Index4("我的")];
 
   Widget buildBottomTabScaffold() {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.white70,
+        backgroundColor: Colors.black87,
         items: bottomNavItems,
         currentIndex: currentIndex,
         //所以一般都是使用fixed模式，此时，导航栏的图标和标题颜色会使用fixedColor指定的颜色，

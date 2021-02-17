@@ -35,9 +35,11 @@ class _login extends State<Login> {
       this.password = password_controller.text;
     });
     void initold() async {
-      uid_controller.text = await Storage.Get("__uid__");
-
-      password_controller.text = await Storage.Get("__password__");
+      Map user = await UserModel.Api_find();
+      if (user != null) {
+        uid_controller.text = user["username"].toString();
+        password_controller.text = user["password"].toString();
+      }
     }
 
     initold();
@@ -193,9 +195,12 @@ class _login extends State<Login> {
                   var json = jsonDecode(ret);
                   if (json["code"] == 0) {
                     Storage.Set("__uid__", json["data"]["uid"].toString());
-                    Storage.Set("__password__", this.password.toString());
                     Storage.Set("__token__", json["data"]["token"].toString());
-                    UserModel.Api_insert(json["data"]["uid"].toString(), json["data"]["token"].toString(), this.username, this.password);
+                    if (await UserModel.Api_find_by_username(this.username) != null) {
+                      UserModel.Api_update_by_username(this.username, this.password, json["data"]["uid"].toString(), json["data"]["token"].toString());
+                    } else {
+                      UserModel.Api_insert(json["data"]["uid"].toString(), json["data"]["token"].toString(), this.username, this.password);
+                    }
                     Alert.Confirm(context, "登录成功", json["data"]["uid"].toString() + "欢迎回来！", Windows.Close(context));
                   } else {
                     Alert.Confirm(context, "登录失败", json["echo"], null);
