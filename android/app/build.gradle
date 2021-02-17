@@ -54,7 +54,7 @@ android {
 
         applicationId "im.tuuz.cc"
         minSdkVersion 17
-        targetSdkVersion 28
+        targetSdkVersion 26
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
 

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:tuuzim_flutter/app/index1/index1.dart';
 import 'package:tuuzim_flutter/app/index2/index2.dart';
 import 'package:tuuzim_flutter/app/index3/index3.dart';
 import 'package:tuuzim_flutter/app/index4/index4.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
+import 'package:tuuzim_flutter/tuuz/database/Db.dart';
 
-void main() {
+void main() async {
   Init().init();
   runApp(MyApp());
 }
@@ -53,6 +55,7 @@ class BotomeMenumPage extends StatefulWidget {
 }
 
 final JPush jpush = new JPush();
+final Database Data = Db().DB();
 
 /**
  * 在 State 中,可以动态改变数据
