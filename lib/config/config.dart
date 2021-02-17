@@ -7,7 +7,7 @@ class Config {
 
   static TextStyle Text_Style_default = TextStyle(
     fontSize: 16,
-    color: Colors.black,
+    color: Colors.white,
   );
 
   static TextStyle Text_style_notimportant_auto = TextStyle(

@@ -28,35 +28,19 @@ class _Index2 extends State<Index2> {
 
   @override
   void initState() {
-    group_control(context);
-    group_joined(context);
+    _friend_list(context);
     super.initState();
   }
 
-  Future<void> group_control(BuildContext context) async {
+  Future<void> _friend_list(BuildContext context) async {
     Map post = await AuthAction().LoginObject();
-    String ret = await Net.Post(Config.Url, Url_Index2.Group_list_control, null, post, null);
+    String ret = await Net.Post(Config.Url, Url_Index2.Friend_list, null, post, null);
     Map json = jsonDecode(ret);
     if (Auth.Return_login_check(context, json)) {
       if (Ret.Check_isok(context, json)) {
         setState(() {
           if (json["data"] != null) {
-            _group_control = json["data"];
-          }
-        });
-      }
-    }
-  }
-
-  Future<void> group_joined(BuildContext context) async {
-    Map post = await AuthAction().LoginObject();
-    String ret = await Net.Post(Config.Url, Url_Index2.Group_list_joined, null, post, null);
-    Map json = jsonDecode(ret);
-    if (Auth.Return_login_check(context, json)) {
-      if (Ret.Check_isok(context, json)) {
-        setState(() {
-          if (json["data"] != null) {
-            _group_joined = json["data"];
+            _data = json["data"];
           }
         });
       }
@@ -65,90 +49,54 @@ class _Index2 extends State<Index2> {
 
   @override
   Widget build(BuildContext context) {
-    final _kTabPages = <Widget>[
-      EasyRefresh(
-        child: ListView.builder(
-          itemBuilder: (BuildContext con, int index) => _group_list_widget(context, _group_control[index], _widget_type.set),
-          itemCount: _group_control.length,
-        ),
-        onRefresh: () async {
-          group_control(this.context);
-        },
-        firstRefresh: false,
+    return Scaffold(
+      backgroundColor: Colors.black87,
+      appBar: AppBar(
+        title: Text(this._title),
+        backgroundColor: Colors.black,
+        // If `TabController controller` is not provided, then a
+        // DefaultTabController ancestor must be provided instead.
+        // Another way is to use a self-defined controller, c.f. "Bottom tab
+        // bar" example.
       ),
-      EasyRefresh(
+      body: EasyRefresh(
         child: ListView.builder(
-          itemBuilder: (BuildContext con, int index) => _group_list_widget(context, _group_joined[index], _widget_type.get),
-          itemCount: _group_joined.length,
+          itemBuilder: (BuildContext con, int index) => _group_list_widget(context, _data[index]),
+          itemCount: _data.length,
         ),
-        onRefresh: () async {
-          group_joined(this.context);
-        },
+        onRefresh: () async {},
         firstRefresh: false,
-      ),
-    ];
-    final _kTabs = <Tab>[
-      const Tab(icon: Icon(Icons.check_box), text: '可控制'),
-      const Tab(icon: Icon(Icons.check_box_outline_blank), text: '仅查看'),
-    ];
-
-    return DefaultTabController(
-      length: _kTabs.length,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(this._title),
-          backgroundColor: Colors.black,
-          // If `TabController controller` is not provided, then a
-          // DefaultTabController ancestor must be provided instead.
-          // Another way is to use a self-defined controller, c.f. "Bottom tab
-          // bar" example.
-          bottom: TabBar(
-            tabs: _kTabs,
-          ),
-        ),
-        body: TabBarView(
-          children: _kTabPages,
-        ),
       ),
     );
   }
 }
 
-List _group_control = [];
-List _group_joined = [];
-
-enum _widget_type { set, get }
+List _data = [];
 
 class _group_list_widget extends StatelessWidget {
   var _pageparam;
   BuildContext _context;
-  _widget_type _wgtype;
 
-  _group_list_widget(this._context, this._pageparam, this._wgtype);
+  _group_list_widget(this._context, this._pageparam);
 
   Widget _buildTiles(Map ret) {
     if (ret == null) return ListTile();
     return ListTile(
-      leading: Icon(
-        Icons.group,
-        size: 32,
+      leading: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.network(
+          (ret["face"]),
+          width: 45,
+          height: 45,
+          fit: BoxFit.cover,
+        ),
       ),
-      contentPadding: EdgeInsets.only(left: 20),
+      contentPadding: EdgeInsets.only(left: 20, top: 2, bottom: 2, right: 20),
       title: Text(
-        ret["group_name"].toString(),
-        style: Config.Text_Style_default,
+        ret["uname"].toString(),
+        style: Config.Text_Style_default.copyWith(color: Colors.white),
       ),
-      subtitle: Text(
-        ret["gid"].toString(),
-        style: Config.Text_Style_default,
-      ),
-      onTap: () {
-        if (this._wgtype == _widget_type.get) {
-          Windows.Open(this._context, GroupSettingGet("查看本群设定", this._pageparam));
-        } else if (this._wgtype == _widget_type.set) {
-          Windows.Open(this._context, GroupFunctionSelect("群机器人设定", this._pageparam));
-        }
-      },
+      onTap: () {},
       trailing: Icon(Icons.keyboard_arrow_right),
     );
   }

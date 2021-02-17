@@ -103,12 +103,12 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
   final List<BottomNavigationBarItem> bottomNavItems = [
     BottomNavigationBarItem(
       backgroundColor: Colors.blue,
-      icon: Icon(Icons.chat_rounded),
+      icon: Icon(Icons.maps_ugc),
       label: "聊天",
     ),
     BottomNavigationBarItem(
       backgroundColor: Colors.blue[600],
-      icon: Icon(Icons.perm_contact_calendar),
+      icon: Icon(Icons.person_pin),
       label: "联系人",
     ),
     BottomNavigationBarItem(
@@ -124,7 +124,7 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
   ];
 
   //点击导航项是要显示的页面
-  final pages = [Index1("聊天"), Index2("联系人"), Index3("发现"), Index4("我的")];
+  final pages = [Index1("TuuzIM"), Index2("联系人"), Index3("发现"), Index4("我的")];
 
   Widget buildBottomTabScaffold() {
     return Scaffold(

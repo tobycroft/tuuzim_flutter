@@ -20,36 +20,79 @@ class _Index3 extends State<Index3> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black87,
       appBar: AppBar(
         title: Text(
           this._title,
           style: Config.Text_style_title,
         ),
       ),
-      body: GridView.count(
-        crossAxisCount: 2,
+      body:          Column(
         children: [
-          FlatButton(
-            color: Colors.black87,
-            splashColor: Colors.white,
-            textColor: Colors.white,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.person_add_alt,
-                  size: 80,
-                ),
-                Text(
-                  "提交一个机器人",
-                  style: Config.Text_style_main_page,
-                ),
-              ],
+          SizedBox(
+            height: 10,
+          ),
+          ListTile(
+            tileColor: Colors.white10,
+            leading: Icon(
+              Icons.camera,
+              color: Colors.greenAccent,
+              size: 32,
             ),
-            onPressed: () async {
-              Windows.Open(context, Upload_robot("提交机器人"));
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Colors.white38,
+            ),
+            title: Text(
+              "朋友圈",
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
             },
           ),
+          SizedBox(
+            height: 10,
+          ),
+          ListTile(
+            tileColor: Colors.white10,
+            leading: Icon(
+              Icons.qr_code_scanner,
+              color: Colors.red,
+              size: 32,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Colors.white38,
+            ),
+            title: Text(
+              "扫码",
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+            },
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          ListTile(
+            tileColor: Colors.white10,
+            leading: Icon(
+              Icons.error_outline,
+              color: Colors.purple,
+              size: 32,
+            ),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+              color: Colors.white38,
+            ),
+            title: Text(
+              "周围的人",
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+            },
+          ),
+
         ],
       ),
     );

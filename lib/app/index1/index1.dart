@@ -7,11 +7,13 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:tuuzim_flutter/app/index1/bind_bot/bind_bot.dart';
 import 'package:tuuzim_flutter/app/index1/help/help.dart';
 import 'package:tuuzim_flutter/app/index1/robot_info/robot_info.dart';
+import 'package:tuuzim_flutter/app/index1/url_index1.dart';
 import 'package:tuuzim_flutter/app/login/login.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
+import 'package:tuuzim_flutter/tuuz/net/ret.dart';
 import 'package:tuuzim_flutter/tuuz/popup/popupmenu.dart';
 import 'package:tuuzim_flutter/tuuz/storage/storage.dart';
 import 'package:tuuzim_flutter/tuuz/win/close.dart';
@@ -24,6 +26,8 @@ class Index1 extends StatefulWidget {
   @override
   _Index1 createState() => _Index1(this._title);
 }
+
+List _data = [];
 
 class _Index1 extends State<Index1> {
   String _title;
@@ -41,27 +45,13 @@ class _Index1 extends State<Index1> {
     Map<String, String> post = {};
     post["uid"] = await Storage.Get("__uid__");
     post["token"] = await Storage.Get("__token__");
-    var ret = await Net.Post(Config.Url, "/v1/bot/list/owned", null, post, null);
+    var ret = await Net.Post(Config.Url, Url_Index1.Message_list, null, post, null);
 
     var json = jsonDecode(ret);
     if (Auth.Return_login_check_and_Goto(context, json)) {
-      if (json["code"] == 0) {
-        setState(() {
-          bot_datas = [];
-          List data = json["data"];
-          data.forEach((value) {
-            bot_datas.add(value);
-          });
-        });
-      } else {
-        setState(() {
-          bot_datas = [];
-        });
+      if (Ret.Check_isok(context, json)) {
+        _data = json["data"];
       }
-    } else {
-      setState(() {
-        bot_datas = [];
-      });
     }
   }
 
@@ -73,8 +63,15 @@ class _Index1 extends State<Index1> {
         backgroundColor: Colors.black87,
         centerTitle: true,
         actions: <Widget>[
+          FlatButton(
+              onPressed: () async {},
+              minWidth: 1,
+              child: Icon(
+                Icons.search_sharp,
+                color: Colors.white,
+              )),
           PopupMenuButton(
-            icon: const Icon(Icons.menu),
+            icon: const Icon(Icons.add_circle_outline),
             offset: Offset(100, 100),
             itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
               // Tuuz_Popup.MenuItem(Icons.login, "登录", "login"),
@@ -123,8 +120,8 @@ class _Index1 extends State<Index1> {
       body: EasyRefresh(
         scrollController: null,
         child: ListView.builder(
-          itemBuilder: (BuildContext con, int index) => BotItem(this.context, bot_datas[index]),
-          itemCount: bot_datas.length,
+          itemBuilder: (BuildContext con, int index) => BotItem(this.context, _data[index]),
+          itemCount: _data.length,
         ),
         firstRefresh: false,
         onRefresh: get_data,
@@ -139,10 +136,6 @@ class _Index1 extends State<Index1> {
   }
 }
 
-List bot_datas = [];
-
-// Displays one Entry. If the entry has children then it's displayed
-// with an ExpansionTile.
 class BotItem extends StatelessWidget {
   var item;
   var _context;
@@ -152,16 +145,16 @@ class BotItem extends StatelessWidget {
   Widget _buildTiles(Map ret) {
     if (ret == null) return ListTile();
     return ListTile(
-      leading: CircleAvatar(
-        child: Image(image: NetworkImage(ret["img"])),
-      ),
+      // leading: CircleAvatar(
+      //   child: Image(image: NetworkImage(ret["face"])),
+      // ),
       contentPadding: EdgeInsets.only(left: 20, right: 20),
       title: Text(
-        ret["cname"].toString(),
+        ret["fid"].toString(),
         style: Config.Text_Style_default,
       ),
       subtitle: Text(
-        ret["bot"].toString(),
+        ret["message"].toString(),
         style: Config.Text_Style_default,
       ),
       trailing: Text(
@@ -176,6 +169,6 @@ class BotItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildTiles(item);
+    return _buildTiles(this.item);
   }
 }
