@@ -1,4 +1,3 @@
-// LOQUACIOUS QUERY BUILDER
 import 'package:sqflite/sqflite.dart';
 import 'package:tuuzim_flutter/tuuz/database/Db.dart';
 
@@ -87,15 +86,6 @@ class TuuzOrm {
    */
   TuuzOrm(Database db) {
     this._db = db;
-  }
-
-  Future<TuuzOrm> tableInit(String tableName) async {
-    this._db = await TuuzDb().getDb();
-    if (this._db == null) {
-      throw Exception('Cannot instantiate Loquacious Query Builder before Database initialization');
-    }
-    this._table = this._parseTableAndAlias(tableName);
-    return this;
   }
 
   TuuzOrm table(String tableName) {
@@ -436,11 +426,16 @@ class TuuzOrm {
     return null;
   }
 
-  Future<void> insert(Map<String, dynamic> values) async {
+  Future<bool> insert(Map<String, dynamic> values) async {
     try {
-      await this.insertGetId(values);
+      if (await this.insertGetId(values) != null) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       print(e);
+      return false;
     }
   }
 
@@ -458,15 +453,20 @@ class TuuzOrm {
   // ##################
   // UPDATES
   // ##################
-  Future<void> update(Map<String, dynamic> values) async {
+  Future<bool> update(Map<String, dynamic> values) async {
     try {
       // compile the query
       this._compileUpdate(values);
 
       // fetch result
-      return await this._db.rawUpdate(this._query, this._getQueryArgs());
+      if (await this._db.rawUpdate(this._query, this._getQueryArgs()) == 0) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       print(e);
+      return false;
     }
   }
 
@@ -474,15 +474,20 @@ class TuuzOrm {
   // DELETES
   // ##################
 
-  Future<void> delete() async {
+  Future<bool> delete() async {
     try {
       // compile the query
       this._compileDelete();
 
       // fetch result
-      return await this._db.rawDelete(this._query, this._getQueryArgs());
+      if (await this._db.rawDelete(this._query, this._getQueryArgs()) == 0) {
+        return false;
+      } else {
+        return true;
+      }
     } catch (e) {
       print(e);
+      return false;
     }
   }
 

@@ -8,15 +8,14 @@ class UserModel extends BaseModel {
 
   static Future<int> Api_insert(dynamic uid, token, username, password) async {
     Database db = await TuuzDb().getDb();
-    var dd=TuuzOrm(db).update(values)
     Map<String, dynamic> data = {
       "uid": uid,
       "token": token,
       "username": username,
       "password": password,
     };
-    
-    return await db.insert(_table, data);
+
+    return await TuuzOrm(db).table(_table).insert(data);
   }
 
   static Future<Map> Api_find() async {
