@@ -19,7 +19,6 @@ class UserModel extends BaseModel {
 
   static Future<Map> Api_find() async {
     Database db = await TuuzDb().getDb();
-
     List data = await TuuzOrm(db).table(_table).get();
     print(data);
   }

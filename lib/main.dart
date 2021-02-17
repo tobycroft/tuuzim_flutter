@@ -8,17 +8,40 @@ import 'package:jpush_flutter/jpush_flutter.dart';
 
 void main() async {
   Init().init();
+  Init().initPlatformState();
+
   runApp(MyApp());
 }
 
 class Init {
-  void init() async {
-    // PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    // print(packageInfo.appName);
-    // print(packageInfo.version);
-  }
+  Future<void> init() async {}
 
-  void is_login() async {}
+  Future<void> initPlatformState() async {
+    String platformVersion;
+    try {
+      jpush.addEventHandler(onReceiveNotification: (Map<String, dynamic> message) async {
+        print("flutter onReceiveNotification: $message");
+      }, onOpenNotification: (Map<String, dynamic> message) async {
+        print("flutter onOpenNotification: $message");
+      }, onReceiveMessage: (Map<String, dynamic> message) async {
+        print("flutter onReceiveMessage: $message");
+      }, onReceiveNotificationAuthorization: (Map<String, dynamic> message) async {
+        print("flutter onReceiveNotificationAuthorization: $message");
+      });
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+    jpush.setup(
+      appKey: "f7ec188c8df31cdca3d50b22", //你自己应用的 AppKey
+      channel: "developer-default",
+      production: true,
+      debug: true,
+    );
+    jpush.applyPushAuthority(new NotificationSettingsIOS(sound: true, alert: true, badge: true));
+    jpush.getRegistrationID().then((rid) {
+      print("flutter get registration id : $rid");
+    });
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -67,62 +90,6 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
   void initState() {
     ///初始化，这个函数在生命周期中只调用一次
     super.initState();
-    initPlatformState();
-  }
-
-  Future<void> initPlatformState() async {
-    String platformVersion;
-
-    try {
-      jpush.addEventHandler(onReceiveNotification: (Map<String, dynamic> message) async {
-        print("flutter onReceiveNotification: $message");
-        setState(() {
-          debugLable = "flutter onReceiveNotification: $message";
-        });
-      }, onOpenNotification: (Map<String, dynamic> message) async {
-        print("flutter onOpenNotification: $message");
-        setState(() {
-          debugLable = "flutter onOpenNotification: $message";
-        });
-      }, onReceiveMessage: (Map<String, dynamic> message) async {
-        print("flutter onReceiveMessage: $message");
-        setState(() {
-          debugLable = "flutter onReceiveMessage: $message";
-        });
-      }, onReceiveNotificationAuthorization: (Map<String, dynamic> message) async {
-        print("flutter onReceiveNotificationAuthorization: $message");
-        setState(() {
-          debugLable = "flutter onReceiveNotificationAuthorization: $message";
-        });
-      });
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    jpush.setup(
-      appKey: "f7ec188c8df31cdca3d50b22", //你自己应用的 AppKey
-      channel: "developer-default",
-      production: true,
-      debug: true,
-    );
-    jpush.applyPushAuthority(new NotificationSettingsIOS(sound: true, alert: true, badge: true));
-
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    jpush.getRegistrationID().then((rid) {
-      print("flutter get registration id : $rid");
-      setState(() {
-        debugLable = "flutter getRegistrationID: $rid";
-      });
-    });
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      debugLable = platformVersion;
-    });
   }
 
   @override
