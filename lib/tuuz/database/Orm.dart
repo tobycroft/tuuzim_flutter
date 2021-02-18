@@ -419,6 +419,13 @@ class TuuzOrm {
 
   Future<int> insertGetId(Map<String, dynamic> values) async {
     try {
+      // values.forEach((key, value) {
+      //   if (value == null) {
+      //     values[key] = null;
+      //   }else if(value.runtimeType==Null){
+      //     values[key] = null;
+      //   }
+      // });
       return await this._db.insert(this._table, values);
     } catch (e) {
       print(e);

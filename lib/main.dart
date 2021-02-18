@@ -8,7 +8,6 @@ import 'package:jpush_flutter/jpush_flutter.dart';
 
 void main() async {
   Init().init();
-  Init().initPlatformState();
 
   runApp(MyApp());
 }
@@ -91,6 +90,10 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
   void initState() {
     ///初始化，这个函数在生命周期中只调用一次
     super.initState();
+
+    Init().initPlatformState();
+
+
     pages..add(Index1("TuuzIM"))..add(Index2("联系人"))..add(Index3("发现"))..add(Index4("我的"));
   }
 

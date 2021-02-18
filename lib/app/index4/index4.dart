@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:tuuzim_flutter/app/index4/balance_record/balance_record.dart';
 import 'package:tuuzim_flutter/app/index4/url_index4.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
@@ -11,6 +12,7 @@ import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/res.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
+import 'package:tuuzim_flutter/tuuz/database/Db.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/storage/storage.dart';
 import 'package:tuuzim_flutter/tuuz/win/close.dart';
@@ -28,7 +30,6 @@ class _Index4 extends State<Index4> {
   String _title;
 
   _Index4(this._title);
-
 
   @override
   void initState() {
@@ -296,6 +297,31 @@ class _Index4 extends State<Index4> {
                   Windows.Open(context, Balance_record("积分记录"));
                 },
               ),
+              SizedBox(
+                height: 10,
+              ),
+              ListTile(
+                tileColor: Colors.white10,
+                leading: Icon(
+                  Icons.settings,
+                  color: Colors.blue,
+                  size: 32,
+                ),
+                trailing: Icon(
+                  Icons.keyboard_arrow_right,
+                  color: Colors.white38,
+                ),
+                title: Text(
+                  "数据库",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () async {
+                  Database db = await TuuzDb().getDb();
+                  var data = await db.rawQuery("PRAGMA table_info([friend]);");
+                  print(data);
+                },
+              ),
+
             ],
           ),
           Container(

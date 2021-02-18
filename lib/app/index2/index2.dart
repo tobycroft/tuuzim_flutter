@@ -8,6 +8,7 @@ import 'package:tuuzim_flutter/app/index2/url_index2.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
+import 'package:tuuzim_flutter/model/FriendModel.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
 import 'package:tuuzim_flutter/tuuz/win/close.dart';
@@ -28,8 +29,15 @@ class _Index2 extends State<Index2> {
 
   @override
   void initState() {
-    _friend_list(context);
+    _load_database(context);
+    // _friend_list(context);
     super.initState();
+  }
+
+  Future<void> _load_database(BuildContext context) async {
+    List data = await FriendModel.Api_select();
+    print(data);
+    _data = data;
   }
 
   Future<void> _friend_list(BuildContext context) async {
@@ -41,6 +49,25 @@ class _Index2 extends State<Index2> {
         setState(() {
           if (json["data"] != null) {
             _data = json["data"];
+            _data.forEach((element) async {
+              if (await FriendModel.Api_find(element["fid"]) == null) {
+                await FriendModel.Api_insert(
+                  element["fid"],
+                  element["uname"],
+                  element["nickname"],
+                  element["face"],
+                  element["sex"],
+                  element["telephone"],
+                  element["remark"],
+                  element["mail"],
+                  element["introduction"],
+                  element["destory"],
+                  element["destory_time"],
+                  element["can_pull"],
+                  element["can_notice"],
+                );
+              }
+            });
           }
         });
       }
@@ -65,6 +92,8 @@ class _Index2 extends State<Index2> {
           itemCount: _data.length,
         ),
         onRefresh: () async {
+          _load_database(context);
+
           _friend_list(context);
         },
         firstRefresh: false,
