@@ -13,6 +13,7 @@ import 'package:tuuzim_flutter/config/res.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
 import 'package:tuuzim_flutter/model/FriendModel.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
+import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
 import 'package:tuuzim_flutter/tuuz/database/Db.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/storage/storage.dart';
@@ -35,7 +36,6 @@ class _Index4 extends State<Index4> {
   @override
   void initState() {
     get_user_info();
-    get_user_balance();
 
     super.initState();
   }
@@ -59,26 +59,6 @@ class _Index4 extends State<Index4> {
         };
       });
     }
-  }
-
-  Future<void> get_user_balance() async {
-    // Map<String, String> post = await AuthAction().LoginObject();
-    // var ret = await Net.Post(Config.Url, Url_Index4.User_balance, null, post, null);
-    // Map json = jsonDecode(ret);
-    // if (Auth.Return_login_check(context, json)) {
-    //   if (json["code"] == 0) {
-    //     _user_balance = json["data"];
-    //     setState(() {});
-    //   } else {
-    //     Alert.Error(context, json["data"], () {});
-    //   }
-    // } else {
-    //   setState(() {
-    //     _user_balance = {
-    //       "balance": 0,
-    //     };
-    //   });
-    // }
   }
 
   Map _user_info = {
@@ -114,16 +94,7 @@ class _Index4 extends State<Index4> {
                   alignment: Alignment.centerLeft,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: ExtendedImage.network(
-                      _user_info["face"].toString(),
-                      width: 70,
-                      height: 70,
-                      fit: BoxFit.cover,
-                      cache: true,
-                      border: Border.all(color: Colors.transparent, width: 0.0),
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    ),
+                    child: CacheImage.network(_user_info["face"], 70, 70),
                   ),
                 ),
                 Container(
@@ -318,11 +289,10 @@ class _Index4 extends State<Index4> {
                 ),
                 onTap: () async {
                   Database db = await TuuzDb().getDb();
-                  var data= await FriendModel.Api_select();
+                  var data = await FriendModel.Api_select();
                   print(data);
                 },
               ),
-
             ],
           ),
           Container(

@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:tuuzim_flutter/app/index2/group_setting/group_function_select.dart';
-import 'package:tuuzim_flutter/app/index2/group_setting/group_setting_get.dart';
+import 'package:tuuzim_flutter/app/index2/group/group_list.dart';
 import 'package:tuuzim_flutter/app/index2/url_index2.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
@@ -118,7 +117,9 @@ class _Index2 extends State<Index2> {
                     "新朋友",
                     style: Config.Text_Style_default.copyWith(color: Colors.white),
                   ),
-                  onTap: () {},
+                  onTap: () async {
+                    Windows.Open(context, GroupList("群聊", null));
+                  },
                   trailing: Icon(Icons.keyboard_arrow_right),
                 ),
                 ListTile(
@@ -140,7 +141,9 @@ class _Index2 extends State<Index2> {
                     "群聊",
                     style: Config.Text_Style_default.copyWith(color: Colors.white),
                   ),
-                  onTap: () {},
+                  onTap: () async {
+                    Windows.Open(context, GroupList("群聊", null));
+                  },
                   trailing: Icon(Icons.keyboard_arrow_right),
                 ),
                 Divider(),

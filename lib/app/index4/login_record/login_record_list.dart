@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:tuuzim_flutter/app/index2/group_setting/auto_reply_upload.dart';
 import 'package:tuuzim_flutter/app/index4/login_record/url_login_record.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
@@ -63,7 +62,6 @@ class _LoginRecordList extends State<LoginRecordList> {
         actions: [
           FlatButton(
             onPressed: () async {
-              Windows.Open(context, AutoReplyUpload("新增自动回复", this._pageparam));
             },
             child: const Icon(
               Icons.add_circle_outline,
