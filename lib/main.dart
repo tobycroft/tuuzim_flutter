@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tuuzim_flutter/app/index1/index1.dart';
@@ -7,7 +9,9 @@ import 'package:tuuzim_flutter/app/index4/index4.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
 
 void main() async {
-  Init().init();
+  if (Platform.isAndroid) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  }
 
   runApp(MyApp());
 }
@@ -92,7 +96,6 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
     super.initState();
 
     Init().initPlatformState();
-
 
     pages..add(Index1("TuuzIM"))..add(Index2("联系人"))..add(Index3("发现"))..add(Index4("我的"));
   }

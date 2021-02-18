@@ -276,16 +276,16 @@ class _Index4 extends State<Index4> {
                 tileColor: Colors.white10,
                 leading: Icon(
                   Icons.settings,
-                  color: Colors.blue,
+                  color: Colors.red,
                   size: 32,
                 ),
                 trailing: Icon(
                   Icons.keyboard_arrow_right,
-                  color: Colors.white38,
+                  color: Colors.red,
                 ),
                 title: Text(
-                  "数据库",
-                  style: TextStyle(color: Colors.white),
+                  "Debug销毁数据库",
+                  style: TextStyle(color: Colors.red),
                 ),
                 onTap: () async {
                   Database db = await TuuzDb().getDb();
@@ -298,16 +298,16 @@ class _Index4 extends State<Index4> {
                 tileColor: Colors.white10,
                 leading: Icon(
                   Icons.settings,
-                  color: Colors.blue,
+                  color: Colors.red,
                   size: 32,
                 ),
                 trailing: Icon(
                   Icons.keyboard_arrow_right,
-                  color: Colors.white38,
+                  color: Colors.red,
                 ),
                 title: Text(
-                  "数据库",
-                  style: TextStyle(color: Colors.white),
+                  "数据库语句测试",
+                  style: TextStyle(color: Colors.red),
                 ),
                 onTap: () async {
                   Database db = await TuuzDb().getDb();
