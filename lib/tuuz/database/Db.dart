@@ -13,7 +13,7 @@ class TuuzDb {
   Future<Database> _initDb() async {
     final db = await openDatabase(
       "tuuzim.db",
-      version: 4,
+      version: 10,
       onCreate: _onCreate,
       onUpgrade: _onUpdate,
       singleInstance: true,

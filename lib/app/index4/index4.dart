@@ -289,7 +289,7 @@ class _Index4 extends State<Index4> {
                 ),
                 onTap: () async {
                   Database db = await TuuzDb().getDb();
-                  var data = await db.rawQuery("select name from sqlite_master where type='table' order by name");
+                  var data = await db.rawQuery("SELECT * FROM group");
                   // var data = await FriendModel.Api_select();
                   print(data);
                 },

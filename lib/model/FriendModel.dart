@@ -4,7 +4,7 @@ import 'package:tuuzim_flutter/tuuz/database/Db.dart';
 import 'package:tuuzim_flutter/tuuz/database/Orm.dart';
 
 class FriendModel extends BaseModel {
-  static String _table = "friend";
+  static String _table = "friends";
 
   static Future<bool> Api_insert(int fid, String uname, nickname, face, sex, telephone, remark, mail, introduction, destroy, destory_time, can_pull, can_notice) async {
     Database db = await TuuzDb().getDb();

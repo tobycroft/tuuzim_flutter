@@ -4,7 +4,7 @@ import 'package:tuuzim_flutter/tuuz/database/Db.dart';
 import 'package:tuuzim_flutter/tuuz/database/Orm.dart';
 
 class GroupModel extends BaseModel {
-  static String _table = "group";
+  static String _table = "groups";
 
   static Future<bool> Api_insert(int gid, String announcement, ban_all, can_add, can_recommend, category, direct_join_group, group_name, img, introduction, max_admin_count, max_member_count) async {
     Database db = await TuuzDb().getDb();
