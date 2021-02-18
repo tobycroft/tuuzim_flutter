@@ -64,7 +64,9 @@ class _Index2 extends State<Index2> {
           itemBuilder: (BuildContext con, int index) => _group_list_widget(context, _data[index]),
           itemCount: _data.length,
         ),
-        onRefresh: () async {},
+        onRefresh: () async {
+          _friend_list(context);
+        },
         firstRefresh: false,
       ),
     );

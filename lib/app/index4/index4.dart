@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tuuzim_flutter/app/index4/balance_record/balance_record.dart';
 import 'package:tuuzim_flutter/app/index4/url_index4.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
+import 'package:tuuzim_flutter/config/res.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
@@ -26,6 +28,7 @@ class _Index4 extends State<Index4> {
   String _title;
 
   _Index4(this._title);
+
 
   @override
   void initState() {
@@ -109,11 +112,15 @@ class _Index4 extends State<Index4> {
                   alignment: Alignment.centerLeft,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                      (_user_info["face"] != null ? _user_info["face"] : "./images/logo.png"),
+                    child: ExtendedImage.network(
+                      _user_info["face"].toString(),
                       width: 70,
                       height: 70,
                       fit: BoxFit.cover,
+                      cache: true,
+                      border: Border.all(color: Colors.transparent, width: 0.0),
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
                   ),
                 ),

@@ -85,9 +85,13 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
   BotomeMenumPageState();
 
   @override
+  List<Widget> pages = List();
+
+  @override
   void initState() {
     ///初始化，这个函数在生命周期中只调用一次
     super.initState();
+    pages..add(Index1("TuuzIM"))..add(Index2("联系人"))..add(Index3("发现"))..add(Index4("我的"));
   }
 
   @override
@@ -124,7 +128,6 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
   ];
 
   //点击导航项是要显示的页面
-  final pages = [Index1("TuuzIM"), Index2("联系人"), Index3("发现"), Index4("我的")];
 
   Widget buildBottomTabScaffold() {
     return Scaffold(
@@ -142,7 +145,10 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
         },
       ),
       //对应的页面
-      body: pages[currentIndex],
+      body: IndexedStack(
+        index: currentIndex,
+        children: pages,
+      ),
     );
   }
 
