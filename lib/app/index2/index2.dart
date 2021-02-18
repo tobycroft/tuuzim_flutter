@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:tuuzim_flutter/app/index2/group/group_list.dart';
+import 'package:tuuzim_flutter/app/index2/info/user_info.dart';
 import 'package:tuuzim_flutter/app/index2/url_index2.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
@@ -174,7 +175,9 @@ class _group_list_widget extends StatelessWidget {
         ret["uname"].toString(),
         style: Config.Text_Style_default.copyWith(color: Colors.white),
       ),
-      onTap: () {},
+      onTap: () async {
+        Windows.Open(this._context, UserInfo("", this._pageparam));
+      },
       trailing: Icon(Icons.keyboard_arrow_right),
     );
   }

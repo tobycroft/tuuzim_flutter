@@ -29,9 +29,15 @@ class _GroupList extends State<GroupList> {
 
   @override
   void initState() {
-    _group_list(context);
-    // _friend_list(context);
+    _group_list_database(context);
     super.initState();
+  }
+
+  Future<void> _group_list_database(BuildContext context) async {
+    List data = await GroupModel.Api_select();
+    setState(() {
+      _data = data;
+    });
   }
 
   Future<void> _group_list(BuildContext context) async {
@@ -51,7 +57,7 @@ class _GroupList extends State<GroupList> {
           if (await GroupModel.Api_find(element["id"]) != null) {
             await GroupModel.Api_delete(element["id"]);
           }
-          await GroupModel.Api_insert(element["id"], element["announcement"], element["ban_all"], element["can_add"], element["can_recommend"], element["category"], element["direct_join_group"],
+          GroupModel.Api_insert(element["id"], element["announcement"], element["ban_all"], element["can_add"], element["can_recommend"], element["category"], element["direct_join_group"],
               element["group_name"], element["img"], element["introduction"], element["max_admin_count"], element["max_member_count"]);
         });
       }

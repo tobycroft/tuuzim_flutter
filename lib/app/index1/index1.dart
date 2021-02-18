@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:tuuzim_flutter/app/index1/bind_bot/bind_bot.dart';
 import 'package:tuuzim_flutter/app/index1/help/help.dart';
-import 'package:tuuzim_flutter/app/index1/robot_info/robot_info.dart';
 import 'package:tuuzim_flutter/app/index1/url_index1.dart';
 import 'package:tuuzim_flutter/app/login/login.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
@@ -162,7 +161,6 @@ class BotItem extends StatelessWidget {
         style: Config.Text_Style_default,
       ),
       onTap: () async {
-        Windows.Open(this._context, Robot_info_index(this.item));
       },
     );
   }

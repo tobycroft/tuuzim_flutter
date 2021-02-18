@@ -289,7 +289,29 @@ class _Index4 extends State<Index4> {
                 ),
                 onTap: () async {
                   Database db = await TuuzDb().getDb();
-                  var data = await db.rawQuery("SELECT * FROM group");
+                  deleteDatabase("tuuzim.db");
+                  // var data = await FriendModel.Api_select();
+                  // print(data);
+                },
+              ),
+              ListTile(
+                tileColor: Colors.white10,
+                leading: Icon(
+                  Icons.settings,
+                  color: Colors.blue,
+                  size: 32,
+                ),
+                trailing: Icon(
+                  Icons.keyboard_arrow_right,
+                  color: Colors.white38,
+                ),
+                title: Text(
+                  "数据库",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () async {
+                  Database db = await TuuzDb().getDb();
+                  var data = await db.rawQuery("SELECT * FROM groups");
                   // var data = await FriendModel.Api_select();
                   print(data);
                 },
