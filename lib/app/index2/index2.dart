@@ -52,23 +52,11 @@ class _Index2 extends State<Index2> {
             _data = json["data"];
             _build_list();
             _data.forEach((element) async {
-              if (await FriendModel.Api_find(element["fid"]) == null) {
-                FriendModel.Api_insert(
-                  element["fid"],
-                  element["uname"],
-                  element["nickname"],
-                  element["face"],
-                  element["sex"],
-                  element["telephone"],
-                  element["remark"],
-                  element["mail"],
-                  element["introduction"],
-                  element["destory"],
-                  element["destory_time"],
-                  element["can_pull"],
-                  element["can_notice"],
-                );
+              if (await FriendModel.Api_find(element["fid"]) != null) {
+                await FriendModel.Api_delete(element["fid"]);
               }
+              await FriendModel.Api_insert(element["fid"], element["uname"], element["nickname"], element["face"], element["sex"], element["telephone"], element["remark"], element["mail"],
+                  element["introduction"], element["destory"], element["destory_time"], element["can_pull"], element["can_notice"]);
             });
           }
         });

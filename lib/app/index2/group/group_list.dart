@@ -7,6 +7,7 @@ import 'package:tuuzim_flutter/app/index2/url_index2.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
+import 'package:tuuzim_flutter/model/GroupModel.dart';
 import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
@@ -46,6 +47,13 @@ class _GroupList extends State<GroupList> {
           _data += json["data"]["other"];
           _data += json["data"]["owner"];
         });
+        _data.forEach((element) async {
+          if (await GroupModel.Api_find(element["id"]) != null) {
+            await GroupModel.Api_delete(element["id"]);
+          }
+          await GroupModel.Api_insert(element["id"], element["announcement"], element["ban_all"], element["can_add"], element["can_recommend"], element["category"], element["direct_join_group"],
+              element["group_name"], element["img"], element["introduction"], element["max_admin_count"], element["max_member_count"]);
+        });
       }
     }
   }
@@ -79,7 +87,6 @@ class _GroupList extends State<GroupList> {
           _group_list(context);
         },
       ),
-
     );
   }
 }
