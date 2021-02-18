@@ -54,6 +54,7 @@ class _GroupList extends State<GroupList> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      backgroundColor: Colors.white10,
       appBar: AppBar(
         title: Text(
           this._title,
@@ -78,7 +79,7 @@ class _GroupList extends State<GroupList> {
           _group_list(context);
         },
       ),
-      backgroundColor: Colors.black87,
+
     );
   }
 }
