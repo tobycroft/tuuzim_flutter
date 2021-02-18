@@ -417,25 +417,18 @@ class TuuzOrm {
 
   // INSERT
 
-  Future<int> insertGetId(Map<String, dynamic> values) async {
+  Future<int> insertGetId(Map<String, dynamic> data) async {
     try {
-      // values.forEach((key, value) {
-      //   if (value == null) {
-      //     values[key] = null;
-      //   }else if(value.runtimeType==Null){
-      //     values[key] = null;
-      //   }
-      // });
-      return await this._db.insert(this._table, values);
+      return await this._db.insert(this._table, data);
     } catch (e) {
       print(e);
     }
     return null;
   }
 
-  Future<bool> insert(Map<String, dynamic> values) async {
+  Future<bool> insert(Map<String, dynamic> data) async {
     try {
-      if (await this.insertGetId(values) != null) {
+      if (await this.insertGetId(data) != null) {
         return true;
       } else {
         return false;
