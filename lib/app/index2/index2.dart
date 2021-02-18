@@ -37,6 +37,8 @@ class _Index2 extends State<Index2> {
   Future<void> _load_database(BuildContext context) async {
     List data = await FriendModel.Api_select();
     _data = data;
+    _build_list();
+    setState(() {});
   }
 
   Future<void> _friend_list(BuildContext context) async {
@@ -45,10 +47,11 @@ class _Index2 extends State<Index2> {
     Map json = jsonDecode(ret);
     if (Auth.Return_login_check(context, json)) {
       if (Ret.Check_isok(context, json)) {
-        _data=[];
+        _data = [];
         setState(() {
           if (json["data"] != null) {
             _data = json["data"];
+            _build_list();
             _data.forEach((element) async {
               if (await FriendModel.Api_find(element["fid"]) == null) {
                 FriendModel.Api_insert(
@@ -74,6 +77,13 @@ class _Index2 extends State<Index2> {
     }
   }
 
+  Future<void> _build_list() async {
+    _widgets.clear();
+    _data.forEach((element) {
+      _widgets.add(_group_list_widget(this.context, element));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,26 +96,69 @@ class _Index2 extends State<Index2> {
         // Another way is to use a self-defined controller, c.f. "Bottom tab
         // bar" example.
       ),
-      body:Column(
-        children: [
-          EasyRefresh(
-            child: ListView.builder(
-              itemBuilder: (BuildContext con, int index) => _group_list_widget(context, _data[index]),
-              itemCount: _data.length,
-            ),
-            onRefresh: () async {
-              // _load_database(context);
-              _friend_list(context);
-            },
-            firstRefresh: false,
-          )
-        ],
+      body: EasyRefresh(
+        child: ListView(
+          children: <Widget>[
+                ListTile(
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      color: Colors.orange,
+                      child: Icon(
+                        Icons.person_add,
+                        size: 40,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.only(left: 20, top: 2, bottom: 2, right: 20),
+                  title: Text(
+                    "新朋友",
+                    style: Config.Text_Style_default.copyWith(color: Colors.white),
+                  ),
+                  onTap: () {},
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                ),
+                ListTile(
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      width: 45,
+                      height: 45,
+                      color: Colors.green,
+                      child: Icon(
+                        Icons.group,
+                        size: 40,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.only(left: 20, top: 2, bottom: 2, right: 20),
+                  title: Text(
+                    "群聊",
+                    style: Config.Text_Style_default.copyWith(color: Colors.white),
+                  ),
+                  onTap: () {},
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                ),
+                Divider(),
+              ] +
+              _widgets,
+        ),
+        onRefresh: () async {
+          // _load_database(context);
+          _friend_list(context);
+        },
+        firstRefresh: false,
       ),
     );
   }
 }
 
 List _data = [];
+List<Widget> _widgets = [];
 
 class _group_list_widget extends StatelessWidget {
   var _pageparam;

@@ -11,6 +11,7 @@ class BaseModel {
   }
 
   Future<void> update(Database db) async {
-
+    await db.execute("CREATE TABLE \"group\" ( \"id\" INTEGER PRIMARY KEY AUTOINCREMENT, \"gid\" INTEGER, \"announcement\" TEXT, \"ban_all\" text, \"can_add\" text, \"can_recommend\" text, \"category\" TEXT,"
+        " \"direct_join_group\" TEXT, \"group_name\" TEXT, \"img\" TEXT, \"introduction\" TEXT, \"max_admin_count\" TEXT, \"max_member_count\" TEXT );");
   }
 }
