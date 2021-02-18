@@ -36,7 +36,6 @@ class _Index2 extends State<Index2> {
 
   Future<void> _load_database(BuildContext context) async {
     List data = await FriendModel.Api_select();
-    print(data);
     _data = data;
   }
 
@@ -46,12 +45,13 @@ class _Index2 extends State<Index2> {
     Map json = jsonDecode(ret);
     if (Auth.Return_login_check(context, json)) {
       if (Ret.Check_isok(context, json)) {
+        _data=[];
         setState(() {
           if (json["data"] != null) {
             _data = json["data"];
             _data.forEach((element) async {
               if (await FriendModel.Api_find(element["fid"]) == null) {
-                await FriendModel.Api_insert(
+                FriendModel.Api_insert(
                   element["fid"],
                   element["uname"],
                   element["nickname"],
@@ -86,17 +86,20 @@ class _Index2 extends State<Index2> {
         // Another way is to use a self-defined controller, c.f. "Bottom tab
         // bar" example.
       ),
-      body: EasyRefresh(
-        child: ListView.builder(
-          itemBuilder: (BuildContext con, int index) => _group_list_widget(context, _data[index]),
-          itemCount: _data.length,
-        ),
-        onRefresh: () async {
-          _load_database(context);
-
-          _friend_list(context);
-        },
-        firstRefresh: false,
+      body:Column(
+        children: [
+          EasyRefresh(
+            child: ListView.builder(
+              itemBuilder: (BuildContext con, int index) => _group_list_widget(context, _data[index]),
+              itemCount: _data.length,
+            ),
+            onRefresh: () async {
+              // _load_database(context);
+              _friend_list(context);
+            },
+            firstRefresh: false,
+          )
+        ],
       ),
     );
   }

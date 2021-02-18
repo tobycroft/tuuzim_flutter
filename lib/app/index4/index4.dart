@@ -11,6 +11,7 @@ import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/res.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
+import 'package:tuuzim_flutter/model/FriendModel.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
 import 'package:tuuzim_flutter/tuuz/database/Db.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
@@ -317,7 +318,7 @@ class _Index4 extends State<Index4> {
                 ),
                 onTap: () async {
                   Database db = await TuuzDb().getDb();
-                  var data = await db.rawQuery("PRAGMA table_info([friend]);");
+                  var data= await FriendModel.Api_select();
                   print(data);
                 },
               ),

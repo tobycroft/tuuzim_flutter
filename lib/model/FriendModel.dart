@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tuuzim_flutter/model/BaseModel.dart';
 import 'package:tuuzim_flutter/tuuz/database/Db.dart';
@@ -32,9 +31,14 @@ class FriendModel extends BaseModel {
     return await TuuzOrm(db).table(_table).where("fid", fid).first();
   }
 
+  static Future<dynamic> Api_delete(int fid) async {
+    Database db = await TuuzDb().getDb();
+    return await TuuzOrm(db).table(_table).where("fid", fid).delete();
+  }
+
   static Future<List> Api_select() async {
     Database db = await TuuzDb().getDb();
-    return await TuuzOrm(db).table(_table).get();
+    return await TuuzOrm(db).table(_table).orderBy("id").get();
   }
 
 
