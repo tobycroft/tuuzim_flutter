@@ -98,6 +98,7 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
     Init().initPlatformState();
 
     pages..add(Index1("TuuzIM"))..add(Index2("联系人"))..add(Index3("发现"))..add(Index4("我的"));
+
   }
 
   @override
