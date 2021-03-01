@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tuuzim_flutter/app/index4/balance_record/balance_record.dart';
+import 'package:tuuzim_flutter/app/index4/setting/app_setting.dart';
 import 'package:tuuzim_flutter/app/index4/url_index4.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
@@ -266,7 +267,7 @@ class _Index4 extends State<Index4> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onTap: () {
-                  Windows.Open(context, Balance_record("积分记录"));
+                  Windows.Open(context, AppSetting("设置"));
                 },
               ),
               SizedBox(
