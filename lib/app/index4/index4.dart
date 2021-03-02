@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tuuzim_flutter/app/index4/balance_record/balance_record.dart';
+import 'package:tuuzim_flutter/app/index4/my_info/my_info.dart';
 import 'package:tuuzim_flutter/app/index4/setting/app_setting.dart';
 import 'package:tuuzim_flutter/app/index4/url_index4.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
@@ -81,7 +82,7 @@ class _Index4 extends State<Index4> {
             height: 40,
             color: Colors.white10,
           ),
-          Container(
+          FlatButton(
             height: 140,
             child: Stack(
               alignment: Alignment.centerLeft,
@@ -163,6 +164,9 @@ class _Index4 extends State<Index4> {
                 ),
               ],
             ),
+            onPressed: ()async{
+              Windows.Open(context, MyInfo("个人信息",null));
+            },
           ),
           Column(
             children: [
