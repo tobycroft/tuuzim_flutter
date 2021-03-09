@@ -31,7 +31,7 @@ class UserModel extends BaseModel {
 
   static Future<bool> Api_update_by_username(String username, password, uid, token) async {
     Database db = await TuuzDb().getDb();
-    Map datas = {
+    Map<String, dynamic> datas = {
       "password": password,
       "uid": uid,
       "token": token,
