@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tuuzim_flutter/app/index4/setting/account_safe/account_safe.dart';
+import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/tuuz/win/close.dart';
 
@@ -189,7 +190,9 @@ class _AppSetting extends State<AppSetting> {
           FlatButton(
             color: Colors.white10,
             height: 60,
-            onPressed: () {},
+            onPressed: () {
+              Auth.Clear_Login();
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

@@ -45,8 +45,8 @@ class Auth {
     }
   }
 
-  static void Goto_Login(BuildContext context) {
-    Windows.Open(context, Login());
+  static void Goto_Login(BuildContext context) async {
+    await Windows.Open(context, Login());
   }
 
   static void Clear_Login() async {
