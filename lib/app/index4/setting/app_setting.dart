@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -31,7 +30,7 @@ class _AppSetting extends State<AppSetting> {
           style: Config.Text_style_title,
         ),
       ),
-      body:          Column(
+      body: Column(
         children: [
           SizedBox(
             height: 10,
@@ -63,8 +62,7 @@ class _AppSetting extends State<AppSetting> {
               "新消息提醒",
               style: TextStyle(color: Colors.white),
             ),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           Divider(
             height: 1,
@@ -79,8 +77,7 @@ class _AppSetting extends State<AppSetting> {
               "勿扰模式",
               style: TextStyle(color: Colors.white),
             ),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           Divider(
             height: 1,
@@ -95,8 +92,7 @@ class _AppSetting extends State<AppSetting> {
               "聊天",
               style: TextStyle(color: Colors.white),
             ),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           Divider(
             height: 1,
@@ -111,8 +107,7 @@ class _AppSetting extends State<AppSetting> {
               "隐私",
               style: TextStyle(color: Colors.white),
             ),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           Divider(
             height: 1,
@@ -127,8 +122,7 @@ class _AppSetting extends State<AppSetting> {
               "通用",
               style: TextStyle(color: Colors.white),
             ),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           SizedBox(
             height: 10,
@@ -143,8 +137,7 @@ class _AppSetting extends State<AppSetting> {
               "关于微信",
               style: TextStyle(color: Colors.white),
             ),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           Divider(
             height: 1,
@@ -159,8 +152,7 @@ class _AppSetting extends State<AppSetting> {
               "帮助与反馈",
               style: TextStyle(color: Colors.white),
             ),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           SizedBox(
             height: 10,
@@ -190,8 +182,9 @@ class _AppSetting extends State<AppSetting> {
           FlatButton(
             color: Colors.white10,
             height: 60,
-            onPressed: () {
-              Auth.Clear_Login();
+            onPressed: () async {
+              await Auth.Clear_Login();
+              await Auth.Goto_Login(context);
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
