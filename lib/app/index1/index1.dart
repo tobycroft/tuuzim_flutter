@@ -49,7 +49,9 @@ class _Index1 extends State<Index1> {
     var json = jsonDecode(ret);
     if (Auth.Return_login_check_and_Goto(context, json)) {
       if (Ret.Check_isok(context, json)) {
-        _data = json["data"];
+        setState(() {
+          _data = json["data"];
+        });
       }
     }
   }
