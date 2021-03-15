@@ -165,7 +165,7 @@ class _Index4 extends State<Index4> {
               ],
             ),
             onPressed: ()async{
-              Windows.Open(context, MyInfo("个人信息",null));
+              Windows.Open(context, MyInfo("个人信息",this._user_info));
             },
           ),
           Column(

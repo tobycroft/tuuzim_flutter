@@ -6,7 +6,7 @@ import 'package:tuuzim_flutter/tuuz/toasts/toast.dart';
 
 class MyInfo extends StatefulWidget {
   String _title;
-  String _pageparams;
+  var _pageparams;
   MyInfo(this._title,this._pageparams);
 
   _MyInfo createState() => _MyInfo(this._title,this._pageparams);
@@ -14,7 +14,7 @@ class MyInfo extends StatefulWidget {
 
 class _MyInfo extends State<MyInfo> {
   String _title;
-  String _pageparams;
+  var _pageparams;
   _MyInfo(this._title,this._pageparams);
 
   @override
@@ -48,7 +48,7 @@ class _MyInfo extends State<MyInfo> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: CacheImage.network(null, 70, 70),
+                      child: CacheImage.network(this._pageparams["face"], 70, 70),
                     ),
                     SizedBox(width: 5),
                     Icon(
