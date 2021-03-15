@@ -6,6 +6,7 @@ import 'package:tuuzim_flutter/app/login/help/help.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/res.dart';
 import 'package:tuuzim_flutter/config/url.dart';
+import 'package:tuuzim_flutter/main.dart';
 import 'package:tuuzim_flutter/model/UserModel.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
 import 'package:tuuzim_flutter/tuuz/button/button.dart';
@@ -201,6 +202,7 @@ class _login extends State<Login> {
                     } else {
                       UserModel.Api_insert(json["data"]["uid"].toString(), json["data"]["token"].toString(), this.username, this.password);
                     }
+                    eventhub.fire("logined");
                     Alert.Confirm(context, "登录成功", json["data"]["uid"].toString() + "欢迎回来！", Windows.Close(context));
                   } else {
                     Alert.Confirm(context, "登录失败", json["echo"], null);
