@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:event_hub/event_hub.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tuuzim_flutter/app/index1/index1.dart';
@@ -23,13 +24,17 @@ class Init {
     String platformVersion;
     try {
       jpush.addEventHandler(onReceiveNotification: (Map<String, dynamic> message) async {
-        print("flutter onReceiveNotification: $message");
+        // print("flutter onReceiveNotification: $message");
+        eventhub.fire("JPush_notification", message);
       }, onOpenNotification: (Map<String, dynamic> message) async {
-        print("flutter onOpenNotification: $message");
+        // print("flutter onOpenNotification: $message");
+        eventhub.fire("JPush_landing", message);
       }, onReceiveMessage: (Map<String, dynamic> message) async {
-        print("flutter onReceiveMessage: $message");
+        // print("flutter onReceiveMessage: $message");
+        eventhub.fire("JPush_message", message);
       }, onReceiveNotificationAuthorization: (Map<String, dynamic> message) async {
-        print("flutter onReceiveNotificationAuthorization: $message");
+        // print("flutter onReceiveNotificationAuthorization: $message");
+        eventhub.fire("JPush_auth", message);
       });
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
@@ -80,6 +85,8 @@ class BotomeMenumPage extends StatefulWidget {
 
 final JPush jpush = new JPush();
 
+final EventHub eventhub = EventHub();
+
 /**
  * 在 State 中,可以动态改变数据
  * 在 setState 之后，改变的数据会触发 Widget 重新构建刷新
@@ -98,7 +105,6 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
     Init().initPlatformState();
 
     pages..add(Index1("TuuzIM"))..add(Index2("联系人"))..add(Index3("发现"))..add(Index4("我的"));
-
   }
 
   @override

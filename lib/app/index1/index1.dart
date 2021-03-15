@@ -10,6 +10,7 @@ import 'package:tuuzim_flutter/app/index1/url_index1.dart';
 import 'package:tuuzim_flutter/app/login/login.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
+import 'package:tuuzim_flutter/main.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
@@ -36,6 +37,12 @@ class _Index1 extends State<Index1> {
   @override
   void initState() {
     get_data();
+    eventhub.on("logined", (data) async {
+      get_data();
+    });
+    eventhub.on("logout", (data) async {
+      _data = [];
+    });
     super.initState();
   }
 
@@ -162,8 +169,7 @@ class BotItem extends StatelessWidget {
         ret["date"].toString(),
         style: Config.Text_Style_default,
       ),
-      onTap: () async {
-      },
+      onTap: () async {},
     );
   }
 

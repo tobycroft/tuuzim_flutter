@@ -8,6 +8,7 @@ import 'package:tuuzim_flutter/app/index2/url_index2.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
+import 'package:tuuzim_flutter/main.dart';
 import 'package:tuuzim_flutter/model/FriendModel.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
@@ -30,6 +31,12 @@ class _Index2 extends State<Index2> {
   @override
   void initState() {
     _load_database(context);
+    eventhub.on("logined", (data) async {
+      _load_database(context);
+    });
+    eventhub.on("logout", (data) async {
+      _data = [];
+    });
     // _friend_list(context);
     super.initState();
   }

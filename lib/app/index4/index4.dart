@@ -13,6 +13,7 @@ import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/res.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
+import 'package:tuuzim_flutter/main.dart';
 import 'package:tuuzim_flutter/model/FriendModel.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
 import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
@@ -38,7 +39,15 @@ class _Index4 extends State<Index4> {
   @override
   void initState() {
     get_user_info();
-
+    eventhub.on("logined", (data) async {
+      get_user_info();
+    });
+    eventhub.on("logout", (data) async {
+      _user_info = {
+        "uname": "请先登录",
+        "qq": "",
+      };
+    });
     super.initState();
   }
 
