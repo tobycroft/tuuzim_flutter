@@ -1,14 +1,13 @@
 import 'dart:convert';
 
 import 'package:tuuzim_flutter/app/index2/url_index2.dart';
-import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
 import 'package:tuuzim_flutter/model/GroupModel.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 
 class GroupList {
-  void refresh_list() async {
+  Future<void> refresh_list() async {
     Map post = await AuthAction().LoginObject();
     String ret = await Net.Post(Config.Url, Url_Index2.GroupList, null, post, null);
     Map json = jsonDecode(ret);
