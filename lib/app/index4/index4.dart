@@ -49,8 +49,9 @@ class _Index4 extends State<Index4> {
     Map json = jsonDecode(ret);
     if (Auth.Return_login_check(context, json)) {
       if (json["code"] == 0) {
-        _user_info = json["data"];
-        setState(() {});
+        setState(() {
+          _user_info = json["data"];
+        });
       } else {
         Alert.Error(context, json["data"], () {});
       }
@@ -164,8 +165,8 @@ class _Index4 extends State<Index4> {
                 ),
               ],
             ),
-            onPressed: ()async{
-              Windows.Open(context, MyInfo("个人信息",this._user_info));
+            onPressed: () async {
+              Windows.Open(context, MyInfo("个人信息", this._user_info));
             },
           ),
           Column(
