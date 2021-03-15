@@ -5,13 +5,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:tuuzim_flutter/app/index1/bind_bot/bind_bot.dart';
+import 'package:tuuzim_flutter/app/index1/chat/chat_private.dart';
 import 'package:tuuzim_flutter/app/index1/help/help.dart';
 import 'package:tuuzim_flutter/app/index1/url_index1.dart';
 import 'package:tuuzim_flutter/app/login/login.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
+import 'package:tuuzim_flutter/data/friend/friend_info.dart';
 import 'package:tuuzim_flutter/main.dart';
+import 'package:tuuzim_flutter/model/UserModel.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
+import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
 import 'package:tuuzim_flutter/tuuz/popup/popupmenu.dart';
@@ -52,10 +56,24 @@ class _Index1 extends State<Index1> {
     post["uid"] = await Storage.Get("__uid__");
     post["token"] = await Storage.Get("__token__");
     var ret = await Net.Post(Config.Url, Url_Index1.Message_list, null, post, null);
-
     var json = jsonDecode(ret);
     if (Auth.Return_login_check_and_Goto(context, json)) {
       if (Ret.Check_isok(context, json)) {
+        print(_data);
+        for (var i in _data) {
+          switch (_data[i]["chat_type"].toString()) {
+            case "private":
+              _data[i]["info"]=await FriendInfo.friend_info(_data[i]["fid"]);
+              break;
+
+            case "group":
+              break;
+
+            default:
+              break;
+          }
+        }
+        print(_data);
         setState(() {
           _data = json["data"];
         });
@@ -154,7 +172,7 @@ class BotItem extends StatelessWidget {
     if (ret == null) return ListTile();
     return ListTile(
       // leading: CircleAvatar(
-      //   child: Image(image: NetworkImage(ret["face"])),
+      //   child: CacheImage.network(ret["info"]["face"], 60, 60),
       // ),
       contentPadding: EdgeInsets.only(left: 20, right: 20),
       title: Text(
@@ -169,12 +187,30 @@ class BotItem extends StatelessWidget {
         ret["date"].toString(),
         style: Config.Text_Style_default,
       ),
-      onTap: () async {},
+      onTap: () async {
+        // print(ret);
+        switch (ret["chat_type"]) {
+          case "group":
+            // Windows.Open(this._context, ChatPrivate(ret["uname"], ret));
+            break;
+
+          case "private":
+            var friend_info = await FriendInfo.friend_info(ret["fid"].toString());
+
+            var user_info = await FriendInfo.friend_info(await Storage.Get("__uid__"));
+            Windows.Open(this._context, ChatPrivate(friend_info["uname"].toString(), ret, friend_info, user_info));
+            break;
+
+          default:
+            {}
+        }
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    print(this.item);
     return _buildTiles(this.item);
   }
 }
