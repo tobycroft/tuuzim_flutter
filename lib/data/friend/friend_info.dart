@@ -20,9 +20,7 @@ class FriendInfo {
     var json = jsonDecode(ret);
     if (json["data"] != null) {
       var element = json["data"];
-      if (await FriendModel.Api_find(element["uid"]) != null) {
-        await FriendModel.Api_delete(element["uid"]);
-      }
+      await FriendModel.Api_delete(element["uid"]);
       await FriendModel.Api_insert(
         element["uid"],
         element["uname"],

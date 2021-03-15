@@ -12,6 +12,7 @@ import 'package:tuuzim_flutter/app/login/login.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/data/friend/friend_info.dart';
+import 'package:tuuzim_flutter/data/group/group_info.dart';
 import 'package:tuuzim_flutter/main.dart';
 import 'package:tuuzim_flutter/model/UserModel.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
@@ -59,24 +60,24 @@ class _Index1 extends State<Index1> {
     var json = jsonDecode(ret);
     if (Auth.Return_login_check_and_Goto(context, json)) {
       if (Ret.Check_isok(context, json)) {
-        print(_data);
-        for (var i in _data) {
+        _data = json["data"];
+
+        // print(_data);
+        for (var i = 0; i < _data.length; i++) {
           switch (_data[i]["chat_type"].toString()) {
             case "private":
-              _data[i]["info"]=await FriendInfo.friend_info(_data[i]["fid"]);
+              _data[i]["info"] = await FriendInfo.friend_info(_data[i]["fid"]);
               break;
 
             case "group":
+              _data[i]["info"] = await GroupInfo.get_info(_data[i]["gid"]);
               break;
 
             default:
               break;
           }
         }
-        print(_data);
-        setState(() {
-          _data = json["data"];
-        });
+        setState(() {});
       }
     }
   }
@@ -171,12 +172,12 @@ class BotItem extends StatelessWidget {
   Widget _buildTiles(Map ret) {
     if (ret == null) return ListTile();
     return ListTile(
-      // leading: CircleAvatar(
-      //   child: CacheImage.network(ret["info"]["face"], 60, 60),
-      // ),
+      leading: CircleAvatar(
+        child: CacheImage.network((ret["info"]["face"] == null) ? ret["info"]["img"] : ret["info"]["face"], 60, 60),
+      ),
       contentPadding: EdgeInsets.only(left: 20, right: 20),
       title: Text(
-        ret["fid"].toString(),
+        (ret["info"]["uname"] == null) ? ret["info"]["group_name"] : ret["info"]["uname"],
         style: Config.Text_Style_default,
       ),
       subtitle: Text(
@@ -210,7 +211,7 @@ class BotItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(this.item);
+    // print(this.item);
     return _buildTiles(this.item);
   }
 }
