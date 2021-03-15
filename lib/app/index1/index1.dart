@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -42,6 +43,9 @@ class _Index1 extends State<Index1> {
   @override
   void initState() {
     get_data();
+    eventhub.on("refresh_list", (data) async {
+      get_data();
+    });
     eventhub.on("logined", (data) async {
       get_data();
     });
@@ -60,24 +64,42 @@ class _Index1 extends State<Index1> {
     var json = jsonDecode(ret);
     if (Auth.Return_login_check_and_Goto(context, json)) {
       if (Ret.Check_isok(context, json)) {
-        _data = json["data"];
-
+        var _dat = json["data"];
         // print(_data);
-        for (var i = 0; i < _data.length; i++) {
-          switch (_data[i]["chat_type"].toString()) {
+        List _d1 = [];
+        List _d2 = [];
+        for (var i = 0; i < _dat.length; i++) {
+          switch (_dat[i]["chat_type"].toString()) {
             case "private":
-              _data[i]["info"] = await FriendInfo.friend_info(_data[i]["fid"]);
+              _dat[i]["info"] = await FriendInfo.friend_info(_dat[i]["fid"]);
+              if (_dat[i]["is_top"] == 1) {
+                _d1.add(_dat[i]);
+              } else {
+                _d2.add(_dat[i]);
+              }
               break;
 
             case "group":
-              _data[i]["info"] = await GroupInfo.get_info(_data[i]["gid"]);
+              _dat[i]["info"] = await GroupInfo.get_info(_dat[i]["gid"]);
+              if (_dat[i]["is_top"] == 1) {
+                _d1.add(_dat[i]);
+              } else {
+                _d2.add(_dat[i]);
+              }
               break;
 
             default:
               break;
           }
         }
-        setState(() {});
+        _d1.sort((left, right) => right["date"].compareTo(left["date"]));
+        _d2.sort((left, right) => right["date"].compareTo(left["date"]));
+        _data.clear();
+
+        setState(() {
+          _data = _d1;
+          _data += _d2;
+        });
       }
     }
   }
@@ -171,13 +193,31 @@ class BotItem extends StatelessWidget {
 
   Widget _buildTiles(Map ret) {
     if (ret == null) return ListTile();
+    ExtendedImage head_img;
+    if (ret["info"] != null) {
+      if (ret["info"]["face"] == null) {
+        head_img = CacheImage.network(ret["info"]["img"], 60, 60);
+      } else {
+        head_img = CacheImage.network(ret["info"]["face"], 60, 60);
+      }
+    } else {
+      head_img = CacheImage.network(null, 60, 60);
+    }
+    String uname = "";
+    if (ret["info"] != null) {
+      if (ret["info"]["uname"] != null) {
+        uname = ret["info"]["uname"].toString();
+      } else {
+        uname = ret["info"]["group_name"].toString();
+      }
+    }
     return ListTile(
       leading: CircleAvatar(
-        child: CacheImage.network((ret["info"]["face"] == null) ? ret["info"]["img"] : ret["info"]["face"], 60, 60),
+        child: head_img,
       ),
       contentPadding: EdgeInsets.only(left: 20, right: 20),
       title: Text(
-        (ret["info"]["uname"] == null) ? ret["info"]["group_name"] : ret["info"]["uname"],
+        uname,
         style: Config.Text_Style_default,
       ),
       subtitle: Text(
@@ -197,7 +237,6 @@ class BotItem extends StatelessWidget {
 
           case "private":
             var friend_info = await FriendInfo.friend_info(ret["fid"].toString());
-
             var user_info = await FriendInfo.friend_info(await Storage.Get("__uid__"));
             Windows.Open(this._context, ChatPrivate(friend_info["uname"].toString(), ret, friend_info, user_info));
             break;

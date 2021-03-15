@@ -8,7 +8,7 @@ import 'package:tuuzim_flutter/tuuz/storage/storage.dart';
 
 class FriendInfo {
   static Future<dynamic> friend_info(dynamic fid) async {
-    var data = await FriendModel.Api_find(fid);
+    var data = await FriendModel.Api_find(int.tryParse(fid.toString()));
     if (data != null) {
       return data;
     }

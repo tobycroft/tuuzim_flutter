@@ -37,7 +37,7 @@ class GroupInfo {
   }
 
   static Future<Map> get_info(dynamic gid) async {
-    var data = await GroupModel.Api_find(gid);
+    var data = await GroupModel.Api_find(int.tryParse(gid.toString()));
     if (data != null) {
       return data;
     }
