@@ -9,6 +9,7 @@ import 'package:tuuzim_flutter/app/index2/index2.dart';
 import 'package:tuuzim_flutter/app/index3/index3.dart';
 import 'package:tuuzim_flutter/app/index4/index4.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
+import 'package:tuuzim_flutter/config/style.dart';
 
 void main() async {
   if (Platform.isAndroid) {
@@ -60,28 +61,30 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       darkTheme: ThemeData.dark(),
       theme: ThemeData(
-          // primaryColor: Colors.grey,
+        // primaryColor: Colors.grey,
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: Style.LightGrey,
+        appBarTheme: AppBarTheme(
           brightness: Brightness.light,
-          scaffoldBackgroundColor: Color.fromRGBO(238, 238, 238, 1),
-          appBarTheme: AppBarTheme(
-            brightness: Brightness.light,
-            color: Colors.white54,
-            shadowColor: Colors.transparent,
-            actionsIconTheme: IconThemeData(color: Colors.black),
-            textTheme: TextTheme(
-              title: TextStyle(
-                color: Colors.black,
-                fontSize: 22,
-              ),
+          color: Colors.white54,
+          shadowColor: Colors.transparent,
+          actionsIconTheme: IconThemeData(color: Colors.black),
+          textTheme: TextTheme(
+            title: TextStyle(
+              color: Colors.black,
+              fontSize: 22,
             ),
-            iconTheme: IconThemeData(color: Colors.black),
-            centerTitle: true,
           ),
           iconTheme: IconThemeData(color: Colors.black),
-          primarySwatch: Colors.green,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.white70),
-          dividerTheme: DividerThemeData(color: Colors.black, thickness: 1)),
+          centerTitle: true,
+        ),
+        iconTheme: IconThemeData(color: Colors.black),
+        primarySwatch: Colors.green,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.white70),
+        dividerTheme: DividerThemeData(color: Style.LightGrey, thickness: 1),
+        dividerColor: Colors.grey,
+      ),
       home: BotomeMenumPage(),
     );
   }

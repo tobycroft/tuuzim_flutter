@@ -170,7 +170,9 @@ class _Index1 extends State<Index1> {
           itemBuilder: (BuildContext con, int index) => BotItem(this.context, _data[index]),
           itemCount: _data.length,
           separatorBuilder: (context, index) {
-            return Divider();
+            return Divider(
+              height: 0,
+            );
           },
         ),
         firstRefresh: false,
