@@ -7,63 +7,31 @@ import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/style.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
+import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
 import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
 import 'package:tuuzim_flutter/tuuz/ui/ui_input.dart';
+import 'package:tuuzim_flutter/tuuz/win/close.dart';
 
 class AddFriend extends StatefulWidget {
-  String _title;
+  var _fid;
   var _pageparam;
 
-  AddFriend(this._title, this._pageparam);
+  AddFriend(this._fid, this._pageparam);
 
-  _AddFriend createState() => _AddFriend(this._title, this._pageparam);
+  _AddFriend createState() => _AddFriend(this._fid, this._pageparam);
 }
 
-var _data = {};
-bool _is_friend;
-
 class _AddFriend extends State<AddFriend> {
-  String _title;
   var _pageparam;
   var _fid;
+  var _comment;
 
-  _AddFriend(this._title, this._pageparam);
-
-  Future<void> get_data() async {
-    Map post = await AuthAction.LoginObject();
-    post["fid"] = this._fid;
-    String ret = await Net.Post(Config.Url, Url_Index2.Friend_info, null, post, null);
-    Map json = jsonDecode(ret);
-    if (Auth.Return_login_check(context, json)) {
-      if (Ret.Check_isok(context, json)) {
-        setState(() {
-          _data = json["data"];
-        });
-      }
-    }
-  }
-
-  Future<void> get_data2() async {
-    Map post = await AuthAction.LoginObject();
-    post["fid"] = this._fid;
-    String ret = await Net.Post(Config.Url, Url_Index2.is_friend, null, post, null);
-    Map json = jsonDecode(ret);
-    if (Auth.Return_login_check(context, json)) {
-      if (Ret.Check_isok(context, json)) {
-        setState(() {
-          _is_friend = json["data"];
-        });
-      }
-    }
-  }
+  _AddFriend(this._fid, this._pageparam);
 
   @override
   void initState() {
-    this._fid = (this._pageparam["fid"] != null ? this._pageparam["fid"].toString() : this._pageparam["uid"].toString());
-    get_data();
-    get_data2();
     super.initState();
   }
 
@@ -81,7 +49,20 @@ class _AddFriend extends State<AddFriend> {
               "Send",
               style: TextStyle(color: Colors.white),
             ),
-            onPressed: () {},
+            onPressed: () async {
+              var post = await AuthAction.LoginObject();
+              post["fid"] = this._fid.toString();
+              post["comment"] = this._comment.toString();
+              String ret = await Net.Post(Config.Url, Url_Index2.Add_friend, null, post, null);
+              var json = jsonDecode(ret);
+              if (Auth.Return_login_check_and_Goto(context, json)) {
+                if (Ret.Check_isok(context, json)) {
+                  Alert.Confirm(context, json["echo"].toString(), json["echo"].toString(), () {
+                    Windows.Close(context);
+                  });
+                }
+              }
+            },
           ),
         ],
       ),
@@ -92,87 +73,24 @@ class _AddFriend extends State<AddFriend> {
           ),
           Divider(),
           Container(
-            height: 50,
+            margin: EdgeInsets.all(20),
             alignment: Alignment.center,
             child: Text(
               "发送好友申请",
               style: TextStyle(fontSize: 30),
             ),
           ),
-          SizedBox(
-            height: 50,
-          ),
-Ui_input
-          SizedBox(
-            height: 10,
-          ),
-          Offstage(
-            offstage: !_is_friend,
-            child: FlatButton(
-              color: Style.Listtile_color(context),
-              height: 60,
-              onPressed: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.question_answer,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "发送消息",
-                    style: Config.Text_style_Name.copyWith(),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Offstage(
-            offstage: !_is_friend,
-            child: FlatButton(
-              color: Style.Listtile_color(context),
-              height: 60,
-              onPressed: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.video_call,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "实时语音",
-                    style: Config.Text_style_Name.copyWith(),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Offstage(
-            offstage: _is_friend,
-            child: FlatButton(
-              color: Style.Listtile_color(context),
-              height: 60,
-              onPressed: () async {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.plus_one,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "加好友",
-                    style: Config.Text_style_Name.copyWith(),
-                  )
-                ],
-              ),
+          Container(
+            margin: EdgeInsets.all(20),
+            child: TextField(
+              keyboardType: TextInputType.number,
+              style: Theme.of(context).textTheme.headline4,
+              maxLines: 3,
+              minLines: 3,
+              decoration: Config.Inputdecoration_default_input_box(Icons.mail_outline, "输入好友申请内容", false, "请输入数字"),
+              onChanged: (String val) {
+                this._comment = val.toString();
+              },
             ),
           ),
         ],

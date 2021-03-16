@@ -1,15 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:tuuzim_flutter/app/index1/chat/chat_private.dart';
 import 'package:tuuzim_flutter/app/index2/add_friend/add_friend.dart';
 import 'package:tuuzim_flutter/app/index2/url_index2.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/style.dart';
+import 'package:tuuzim_flutter/data/friend/friend_info.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
 import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
+import 'package:tuuzim_flutter/tuuz/storage/storage.dart';
 import 'package:tuuzim_flutter/tuuz/win/close.dart';
 
 class UserInfo extends StatefulWidget {
@@ -144,7 +147,11 @@ class _UserInfo extends State<UserInfo> {
             child: FlatButton(
               color: Style.Listtile_color(context),
               height: 60,
-              onPressed: () {},
+              onPressed: () async {
+                var friend_info = await FriendInfo.friend_info(this._fid.toString());
+                var user_info = await FriendInfo.friend_info(await Storage.Get("__uid__"));
+                Windows.Open(context, ChatPrivate((friend_info["nickname"] != null ? friend_info["nickname"] : friend_info["uname"]).toString(), this._fid, friend_info, user_info));
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -191,7 +198,7 @@ class _UserInfo extends State<UserInfo> {
               color: Style.Listtile_color(context),
               height: 60,
               onPressed: () async {
-                Windows.Open(context, AddFriend(null, _data));
+                Windows.Open(context, AddFriend(this._fid, _data));
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

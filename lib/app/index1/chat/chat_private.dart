@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:event_hub/event_hub.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tuuzim_flutter/app/index1/chat/url_chat.dart';
@@ -7,7 +9,9 @@ import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/event.dart';
 import 'package:tuuzim_flutter/config/style.dart';
+import 'package:tuuzim_flutter/data/chat/private_chat_data.dart';
 import 'package:tuuzim_flutter/data/friend/friend_info.dart';
+import 'package:tuuzim_flutter/extend/chat_gen/chat_gen.dart';
 import 'package:tuuzim_flutter/main.dart';
 import 'package:tuuzim_flutter/model/PrivateChatModel.dart';
 import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
@@ -19,27 +23,27 @@ import 'package:tuuzim_flutter/tuuz/win/close.dart';
 
 class ChatPrivate extends StatefulWidget {
   String _title;
-  var _pageparam;
+  var _fid;
   var _friend_info;
   var _user_info;
 
-  ChatPrivate(this._title, this._pageparam, this._friend_info, this._user_info);
+  ChatPrivate(this._title, this._fid, this._friend_info, this._user_info);
 
   @override
-  _ChatPrivate createState() => _ChatPrivate(this._title, this._pageparam, this._friend_info, this._user_info);
+  _ChatPrivate createState() => _ChatPrivate(this._title, this._fid, this._friend_info, this._user_info);
 }
 
 var _data = [];
 String _uid;
-String _fid;
 
 class _ChatPrivate extends State<ChatPrivate> {
   String _title;
-  var _pageparam;
+  var _fid;
   var _friend_info;
   var _user_info;
+  StreamSubscription _eventhub;
 
-  _ChatPrivate(this._title, this._pageparam, this._friend_info, this._user_info);
+  _ChatPrivate(this._title, this._fid, this._friend_info, this._user_info);
 
   TextEditingController _text = new TextEditingController();
 
@@ -79,8 +83,7 @@ class _ChatPrivate extends State<ChatPrivate> {
   Future<void> get_data() async {
     Map<String, String> post = {};
     _uid = await Storage.Get("__uid__");
-    _fid = this._pageparam["fid"].toString();
-    var history = await PrivateChatModel.Api_select_byChatId(this._pageparam["chat_id"]);
+    var history = await PrivateChatModel.Api_select_byChatId(ChatGen.ChatId(int.parse(_uid), int.parse(this._fid)));
     setState(() {
       if (history != null) {
         Sort.sort(history, "msg_id");
@@ -97,20 +100,7 @@ class _ChatPrivate extends State<ChatPrivate> {
         setState(() {
           _data = json["data"];
           _data.forEach((element) async {
-            if (await PrivateChatModel.Api_find(element["id"]) != null) {
-              await PrivateChatModel.Api_delete(element["id"]);
-            }
-            PrivateChatModel.Api_insert(
-              element["id"],
-              element["chat_id"],
-              element["sender"],
-              element["type"],
-              element["message"],
-              element["extra"],
-              element["ident"],
-              element["is_read"],
-              element["date"],
-            );
+            PrivateChatData.sync(element);
           });
         });
       }
@@ -119,17 +109,14 @@ class _ChatPrivate extends State<ChatPrivate> {
 
   Future<void> send_chat(String UrlChat, dynamic msg, Map extra, dynamic ident) async {
     Map<String, String> post = {};
-    _uid = await Storage.Get("__uid__");
-    _fid = this._pageparam["fid"].toString();
     post["uid"] = _uid;
     post["token"] = await Storage.Get("__token__");
-    post["fid"] = _fid;
+    post["fid"] = this._fid;
     post["msg"] = msg.toString();
     post["extra"] = extra.toString();
     post["ident"] = ident.toString();
     _friend_info = await FriendInfo.friend_info(_fid);
     var ret = await Net.Post(Config.Url, UrlChat, null, post, null);
-
     var json = jsonDecode(ret);
     if (Auth.Return_login_check_and_Goto(context, json)) {
       if (Ret.Check_isok(context, json)) {
@@ -141,6 +128,13 @@ class _ChatPrivate extends State<ChatPrivate> {
   @override
   void initState() {
     get_data();
+    this._eventhub = eventhub.on(EventType.Private_chat, (dynamic message) {
+      _data.add(message["data"]);
+      var dat = _data;
+      _data = Sort.sort(dat, "id");
+      setState(() {});
+      PrivateChatData.sync(message["data"]);
+    });
     super.initState();
   }
 
@@ -162,6 +156,7 @@ class _ChatPrivate extends State<ChatPrivate> {
         leading: BackButton(
           onPressed: () async {
             eventhub.fire(EventType.Websocket_refresh_list);
+            this._eventhub.cancel();
             Windows.Close(context);
           },
         ),
@@ -191,6 +186,7 @@ class _ChatPrivate extends State<ChatPrivate> {
         ),
         onWillPop: () async {
           eventhub.fire(EventType.Websocket_refresh_list);
+          this._eventhub.cancel();
           Windows.Close(context);
         },
       ),
@@ -258,7 +254,7 @@ class EntryItem extends StatelessWidget {
                     color: Style.Chat_on_left(context),
                   ),
                   child: new Text(
-                    message["message"],
+                    message["message"].toString(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

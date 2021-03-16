@@ -10,4 +10,7 @@ class EventType {
   static String Websocket_connect = "websocket_connect";
 
   static String FriendList_updated = "friendlist_updated";
+
+
+  static String Private_chat = "private_chat";
 }

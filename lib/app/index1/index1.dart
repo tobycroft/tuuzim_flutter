@@ -129,8 +129,7 @@ class _Index1 extends State<Index1> {
           PopupMenuButton(
             icon: const Icon(Icons.add_circle_outline),
             offset: Offset(100, 100),
-            itemBuilder: (BuildContext context) =>
-            <PopupMenuItem<String>>[
+            itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
               // Tuuz_Popup.MenuItem(Icons.login, "登录", "login"),
               Tuuz_Popup.MenuItem(Icons.add_box, "绑定机器人", "bind_bot"),
               Tuuz_Popup.MenuItem(Icons.help_center, "首页帮助", "index_help"),
@@ -244,13 +243,13 @@ class BotItem extends StatelessWidget {
         // print(ret);
         switch (ret["chat_type"]) {
           case "group":
-          // Windows.Open(this._context, ChatPrivate(ret["uname"], ret));
+            // Windows.Open(this._context, ChatPrivate(ret["uname"], ret));
             break;
 
           case "private":
             var friend_info = await FriendInfo.friend_info(ret["fid"].toString());
             var user_info = await FriendInfo.friend_info(await Storage.Get("__uid__"));
-            Windows.Open(this._context, ChatPrivate(friend_info["uname"].toString(), ret, friend_info, user_info));
+            Windows.Open(this._context, ChatPrivate((friend_info["nickname"] != null ? friend_info["nickname"] : friend_info["uname"]).toString(), ret["fid"].toString(), friend_info, user_info));
             break;
 
           default:

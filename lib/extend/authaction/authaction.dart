@@ -7,4 +7,8 @@ class AuthAction {
     post["token"] = await Storage.Get("__token__");
     return post;
   }
+
+  static Uid() async {
+    return await Storage.Get("__uid__");
+  }
 }

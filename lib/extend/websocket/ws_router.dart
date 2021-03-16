@@ -8,7 +8,7 @@ import 'package:tuuzim_flutter/main.dart';
 class WsRouter {
   static Route(dynamic message) async {
     var json = jsonDecode(message);
-    print("ws_route:" + message);
+    // print("ws_route:" + message);
     switch (json["type"].toString()) {
       case "connected":
         var login = await AuthAction.LoginObject();
@@ -20,6 +20,15 @@ class WsRouter {
         break;
 
       case "private_chat":
+        eventhub.fire(EventType.Private_chat, json);
+        break;
+
+      case "request_count":
+        eventhub.fire(EventType.FriendList_updated);
+        break;
+
+      case "refresh_list":
+        eventhub.fire(EventType.Websocket_refresh_list);
         break;
 
       default:
