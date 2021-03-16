@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/event.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
 import 'package:tuuzim_flutter/extend/websocket/ws_message.dart';
