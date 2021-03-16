@@ -19,6 +19,9 @@ class WsRouter {
       case "init":
         break;
 
+      case "private_chat":
+        break;
+
       default:
         print("ws_undefined:" + message);
         break;
