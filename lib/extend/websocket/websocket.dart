@@ -13,6 +13,8 @@ void init_websocket() async {
   socket.onClose((dynamic message) {
     print(EventType.Websocket_onclose);
     eventhub.fire(EventType.Websocket_onclose, message);
+    sleep(Duration(seconds: 5));
+    socket.connect();
   });
 
   socket.onMessage((dynamic message) {
