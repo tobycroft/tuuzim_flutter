@@ -59,7 +59,7 @@ class Init {
       platformVersion = 'Failed to get platform version.';
     }
     jpush.setup(
-      appKey: "f7ec188c8df31cdca3d50b22", //你自己应用的 AppKey
+      appKey: "4e43b1eb7ada7e0b153addc8", //你自己应用的 AppKey
       channel: "developer-default",
       production: true,
       debug: true,
