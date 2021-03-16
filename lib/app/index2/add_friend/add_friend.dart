@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:tuuzim_flutter/app/index2/url_index2.dart';
@@ -9,6 +10,7 @@ import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
 import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
+import 'package:tuuzim_flutter/tuuz/ui/ui_input.dart';
 
 class AddFriend extends StatefulWidget {
   String _title;
@@ -85,19 +87,22 @@ class _AddFriend extends State<AddFriend> {
       ),
       body: ListView(
         children: [
-          Divider(),
-          ListTile(
-            tileColor: Style.Listtile_color(context),
-            leading: Text(
-              "朋友圈",
-              style: Config.Text_style_Name.copyWith(),
-            ),
-            trailing: Icon(
-              Icons.keyboard_arrow_right,
-            ),
-            title: null,
-            onTap: () {},
+          SizedBox(
+            height: 50,
           ),
+          Divider(),
+          Container(
+            height: 50,
+            alignment: Alignment.center,
+            child: Text(
+              "发送好友申请",
+              style: TextStyle(fontSize: 30),
+            ),
+          ),
+          SizedBox(
+            height: 50,
+          ),
+Ui_input
           SizedBox(
             height: 10,
           ),
