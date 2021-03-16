@@ -159,8 +159,8 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
     ///初始化，这个函数在生命周期中只调用一次
     super.initState();
     Init().init();
-    Init().initWebsocket();
     Init().initPlatformState();
+    Init().initWebsocket();
 
     pages..add(Index1("TuuzIM"))..add(Index2("联系人"))..add(Index3("发现"))..add(Index4("我的"));
   }
