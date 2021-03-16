@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:event_hub/event_hub.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,12 +12,14 @@ import 'package:tuuzim_flutter/app/index4/index4.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/style.dart';
+import 'package:tuuzim_flutter/extend/websocket/websocket.dart';
 import 'package:websocket_manager/websocket_manager.dart';
 
 void main() async {
   if (Platform.isAndroid) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   }
+  initWebsocket();
 
   runApp(MyApp());
 }
@@ -25,30 +28,27 @@ final JPush jpush = new JPush();
 
 final EventHub eventhub = EventHub();
 
-final socket = WebsocketManager(Config.WS);
-int messageNum = 0;
+initWebsocket() async {
+  ReceivePort rp = new ReceivePort();
+
+  SendPort port1 = rp.sendPort;
+
+  await Isolate.spawn(websocket, port1);
+
+  SendPort port2;
+  rp.listen((message) {
+    print("main isolate message: $message");
+    // if (message[0] == 0) {
+    //   port2 = message[1];
+    // } else {
+    //   port2?.send([1, "这条信息是 main isolate 发送的"]);
+    // }
+  });
+}
 
 class Init {
-  Future<void> init() async {}
+  Future<void> init() async {
 
-  Future<void> initWebsocket() async {
-    // socket.onClose((dynamic message) {
-    //   print('close');
-    // });
-// Listen to server messages
-    socket.onMessage((dynamic message) {
-      print('recv: $message');
-      if (messageNum == 10) {
-        socket.close();
-      } else {
-        messageNum += 1;
-        final String msg = '$messageNum: ${DateTime.now()}';
-        print('send: $msg');
-        socket.send(msg);
-      }
-    });
-// Connect to server
-    socket.connect();
   }
 
   Future<void> initPlatformState() async {
@@ -160,7 +160,6 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
     super.initState();
     Init().init();
     Init().initPlatformState();
-    Init().initWebsocket();
 
     pages..add(Index1("TuuzIM"))..add(Index2("联系人"))..add(Index3("发现"))..add(Index4("我的"));
   }
