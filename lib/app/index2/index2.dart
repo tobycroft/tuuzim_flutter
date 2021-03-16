@@ -82,10 +82,8 @@ class _Index2 extends State<Index2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87,
       appBar: AppBar(
         title: Text(this._title),
-        backgroundColor: Colors.black,
         // If `TabController controller` is not provided, then a
         // DefaultTabController ancestor must be provided instead.
         // Another way is to use a self-defined controller, c.f. "Bottom tab
@@ -111,7 +109,7 @@ class _Index2 extends State<Index2> {
                   contentPadding: EdgeInsets.only(left: 20, top: 2, bottom: 2, right: 20),
                   title: Text(
                     "新朋友",
-                    style: Config.Text_Style_default.copyWith(color: Colors.white),
+                    style: Config.Text_Style_default,
                   ),
                   onTap: () async {
                     Windows.Open(context, GroupList("群聊", null));
@@ -135,7 +133,7 @@ class _Index2 extends State<Index2> {
                   contentPadding: EdgeInsets.only(left: 20, top: 2, bottom: 2, right: 20),
                   title: Text(
                     "群聊",
-                    style: Config.Text_Style_default.copyWith(color: Colors.white),
+                    style: Config.Text_Style_default,
                   ),
                   onTap: () async {
                     Windows.Open(context, GroupList("群聊", null));
@@ -180,7 +178,7 @@ class _group_list_widget extends StatelessWidget {
       contentPadding: EdgeInsets.only(left: 20, top: 2, bottom: 2, right: 20),
       title: Text(
         ret["uname"].toString(),
-        style: Config.Text_Style_default.copyWith(color: Colors.white),
+        style: Config.Text_Style_default,
       ),
       onTap: () async {
         Windows.Open(this._context, UserInfo("", this._pageparam));

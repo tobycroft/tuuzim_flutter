@@ -7,13 +7,11 @@ class Config {
 
   static TextStyle Text_Style_default = TextStyle(
     fontSize: 16,
-    color: Colors.white,
   );
 
   static TextStyle Text_style_notimportant_auto = TextStyle(
-    // fontSize: 16,
-    color: Colors.black38,
-  );
+      // fontSize: 16,
+      );
 
   static TextStyle Text_style_Name = TextStyle(
     fontSize: 16,
@@ -21,7 +19,6 @@ class Config {
 
   static TextStyle Text_style_title = TextStyle(
     fontSize: 20,
-    color: Colors.white,
   );
 
   static TextStyle Text_style_main_page = TextStyle(

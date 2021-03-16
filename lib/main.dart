@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
+      darkTheme: ThemeData(
         backgroundColor: Colors.black,
         appBarTheme: AppBarTheme(
           color: Colors.black87,
@@ -65,6 +65,25 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      theme: ThemeData(
+        backgroundColor: Colors.black,
+        appBarTheme: AppBarTheme(
+          color: Colors.white70,
+          actionsIconTheme: IconThemeData(color: Colors.black),
+          textTheme: TextTheme(
+            title: TextStyle(
+              color: Colors.black,
+              fontSize: 22,
+            ),
+          ),
+          iconTheme: IconThemeData(color: Colors.black),
+          centerTitle: true,
+        ),
+        iconTheme: IconThemeData(color: Colors.black),
+        primarySwatch: Colors.green,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.white70),
       ),
       home: BotomeMenumPage(),
     );
@@ -145,8 +164,6 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
   Widget buildBottomTabScaffold() {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.white70,
-        backgroundColor: Colors.black87,
         items: bottomNavItems,
         currentIndex: currentIndex,
         //所以一般都是使用fixed模式，此时，导航栏的图标和标题颜色会使用fixedColor指定的颜色，

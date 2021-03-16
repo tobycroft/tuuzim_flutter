@@ -85,12 +85,10 @@ class _Index4 extends State<Index4> {
         shadowColor: Colors.black87,
         toolbarHeight: 0,
       ),
-      backgroundColor: Colors.black87,
       body: ListView(
         children: [
           Container(
             height: 40,
-            color: Colors.white10,
           ),
           FlatButton(
             height: 140,
@@ -98,7 +96,6 @@ class _Index4 extends State<Index4> {
               alignment: Alignment.centerLeft,
               children: [
                 Container(
-                  color: Colors.white10,
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20),
@@ -118,7 +115,6 @@ class _Index4 extends State<Index4> {
                       Text(
                         _user_info["uname"].toString(),
                         style: Config.Text_style_Name.copyWith(
-                          color: Colors.white,
                           fontSize: 30,
                         ),
                       ),
@@ -128,7 +124,6 @@ class _Index4 extends State<Index4> {
                       Text(
                         "您的ID：" + _user_info["uid"].toString(),
                         style: Config.Text_style_Name.copyWith(
-                          color: Colors.white70,
                           fontSize: 16,
                         ),
                       ),
@@ -139,9 +134,7 @@ class _Index4 extends State<Index4> {
                   alignment: Alignment.centerRight,
                   margin: EdgeInsets.only(right: 50),
                   child: FlatButton(
-                    // color: Colors.white,
                     minWidth: 1,
-                    textColor: Colors.white60,
                     onPressed: () async {
                       print("123");
                     },
@@ -159,7 +152,6 @@ class _Index4 extends State<Index4> {
                   child: FlatButton(
                     // color: Colors.red,
                     minWidth: 1,
-                    textColor: Colors.white60,
                     onPressed: () async {
                       print("2222");
                     },
@@ -184,7 +176,6 @@ class _Index4 extends State<Index4> {
                 height: 10,
               ),
               ListTile(
-                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.check_circle_outline,
                   color: Colors.green,
@@ -192,11 +183,9 @@ class _Index4 extends State<Index4> {
                 ),
                 trailing: Icon(
                   Icons.keyboard_arrow_right,
-                  color: Colors.white38,
                 ),
                 title: Text(
                   "支付",
-                  style: TextStyle(color: Colors.white),
                 ),
                 onTap: () {
                   Windows.Open(context, Balance_record("积分记录"));
@@ -206,7 +195,6 @@ class _Index4 extends State<Index4> {
                 height: 10,
               ),
               ListTile(
-                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.move_to_inbox,
                   color: Colors.red,
@@ -214,18 +202,15 @@ class _Index4 extends State<Index4> {
                 ),
                 trailing: Icon(
                   Icons.keyboard_arrow_right,
-                  color: Colors.white38,
                 ),
                 title: Text(
                   "收藏",
-                  style: TextStyle(color: Colors.white),
                 ),
                 onTap: () {
                   Windows.Open(context, Balance_record("积分记录"));
                 },
               ),
               ListTile(
-                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.image,
                   color: Colors.blue,
@@ -233,18 +218,15 @@ class _Index4 extends State<Index4> {
                 ),
                 trailing: Icon(
                   Icons.keyboard_arrow_right,
-                  color: Colors.white38,
                 ),
                 title: Text(
                   "我的设置",
-                  style: TextStyle(color: Colors.white),
                 ),
                 onTap: () {
                   Windows.Open(context, Balance_record("积分记录"));
                 },
               ),
               ListTile(
-                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.face,
                   color: Colors.yellow,
@@ -252,11 +234,9 @@ class _Index4 extends State<Index4> {
                 ),
                 trailing: Icon(
                   Icons.keyboard_arrow_right,
-                  color: Colors.white38,
                 ),
                 title: Text(
                   "贴纸",
-                  style: TextStyle(color: Colors.white),
                 ),
                 onTap: () {
                   Windows.Open(context, Balance_record("积分记录"));
@@ -266,7 +246,6 @@ class _Index4 extends State<Index4> {
                 height: 10,
               ),
               ListTile(
-                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.settings,
                   color: Colors.blue,
@@ -274,11 +253,9 @@ class _Index4 extends State<Index4> {
                 ),
                 trailing: Icon(
                   Icons.keyboard_arrow_right,
-                  color: Colors.white38,
                 ),
                 title: Text(
                   "设置",
-                  style: TextStyle(color: Colors.white),
                 ),
                 onTap: () {
                   Windows.Open(context, AppSetting("设置"));
@@ -288,7 +265,6 @@ class _Index4 extends State<Index4> {
                 height: 10,
               ),
               ListTile(
-                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.settings,
                   color: Colors.red,
@@ -310,7 +286,6 @@ class _Index4 extends State<Index4> {
                 },
               ),
               ListTile(
-                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.settings,
                   color: Colors.red,

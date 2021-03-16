@@ -20,7 +20,6 @@ class _Index3 extends State<Index3> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87,
       appBar: AppBar(
         title: Text(
           this._title,
@@ -41,11 +40,9 @@ class _Index3 extends State<Index3> {
             ),
             trailing: Icon(
               Icons.keyboard_arrow_right,
-              color: Colors.white38,
             ),
             title: Text(
               "朋友圈",
-              style: TextStyle(color: Colors.white),
             ),
             onTap: () {
             },
@@ -62,11 +59,9 @@ class _Index3 extends State<Index3> {
             ),
             trailing: Icon(
               Icons.keyboard_arrow_right,
-              color: Colors.white38,
             ),
             title: Text(
               "扫码",
-              style: TextStyle(color: Colors.white),
             ),
             onTap: () {
             },
@@ -75,7 +70,6 @@ class _Index3 extends State<Index3> {
             height: 10,
           ),
           ListTile(
-            tileColor: Colors.white10,
             leading: Icon(
               Icons.error_outline,
               color: Colors.purple,
@@ -83,11 +77,9 @@ class _Index3 extends State<Index3> {
             ),
             trailing: Icon(
               Icons.keyboard_arrow_right,
-              color: Colors.white38,
             ),
             title: Text(
               "周围的人",
-              style: TextStyle(color: Colors.white),
             ),
             onTap: () {
             },

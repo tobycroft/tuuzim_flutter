@@ -106,10 +106,8 @@ class _Index1 extends State<Index1> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87,
       appBar: AppBar(
         title: Text(this._title),
-        backgroundColor: Colors.black87,
         centerTitle: true,
         actions: <Widget>[
           FlatButton(
@@ -117,7 +115,7 @@ class _Index1 extends State<Index1> {
               minWidth: 1,
               child: Icon(
                 Icons.search_sharp,
-                color: Colors.white,
+                // color: Colors.white,
               )),
           PopupMenuButton(
             icon: const Icon(Icons.add_circle_outline),

@@ -128,7 +128,7 @@ class _ChatPrivate extends State<ChatPrivate> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(
           this._title,
