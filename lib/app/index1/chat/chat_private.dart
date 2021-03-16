@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:tuuzim_flutter/app/index1/chat/url_chat.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
+import 'package:tuuzim_flutter/config/event.dart';
 import 'package:tuuzim_flutter/config/style.dart';
 import 'package:tuuzim_flutter/data/friend/friend_info.dart';
 import 'package:tuuzim_flutter/main.dart';
@@ -136,7 +137,7 @@ class _ChatPrivate extends State<ChatPrivate> {
         ),
         leading: BackButton(
           onPressed: () async {
-            eventhub.fire("refresh_list");
+            eventhub.fire(EventType.Websocket_refresh_list);
             Windows.Close(context);
           },
         ),
@@ -165,7 +166,7 @@ class _ChatPrivate extends State<ChatPrivate> {
           ],
         ),
         onWillPop: () async {
-          eventhub.fire("refresh_list");
+          eventhub.fire(EventType.Websocket_refresh_list);
           Windows.Close(context);
         },
       ),

@@ -11,15 +11,16 @@ import 'package:tuuzim_flutter/app/index3/index3.dart';
 import 'package:tuuzim_flutter/app/index4/index4.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:tuuzim_flutter/config/config.dart';
+import 'package:tuuzim_flutter/config/event.dart';
 import 'package:tuuzim_flutter/config/style.dart';
 import 'package:tuuzim_flutter/extend/websocket/websocket.dart';
+import 'package:tuuzim_flutter/extend/websocket/ws_router.dart';
 import 'package:websocket_manager/websocket_manager.dart';
 
 void main() async {
   if (Platform.isAndroid) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   }
-  initWebsocket();
 
   runApp(MyApp());
 }
@@ -28,27 +29,14 @@ final JPush jpush = new JPush();
 
 final EventHub eventhub = EventHub();
 
-initWebsocket() async {
-  ReceivePort rp = new ReceivePort();
-
-  SendPort port1 = rp.sendPort;
-
-  await Isolate.spawn(websocket, port1);
-
-  SendPort port2;
-  rp.listen((message) {
-    print("main isolate message: $message");
-    // if (message[0] == 0) {
-    //   port2 = message[1];
-    // } else {
-    //   port2?.send([1, "这条信息是 main isolate 发送的"]);
-    // }
-  });
-}
-
 class Init {
-  Future<void> init() async {
+  Future<void> init() async {}
 
+  Future<void> initWebsocket() async {
+    init_websocket();
+    eventhub.on(EventType.Websocket_OnMessage, (message) {
+        WsRouter.Route(message);
+    });
   }
 
   Future<void> initPlatformState() async {
@@ -159,6 +147,7 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
     ///初始化，这个函数在生命周期中只调用一次
     super.initState();
     Init().init();
+    Init().initWebsocket();
     Init().initPlatformState();
 
     pages..add(Index1("TuuzIM"))..add(Index2("联系人"))..add(Index3("发现"))..add(Index4("我的"));

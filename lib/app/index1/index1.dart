@@ -12,6 +12,7 @@ import 'package:tuuzim_flutter/app/index1/url_index1.dart';
 import 'package:tuuzim_flutter/app/login/login.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
+import 'package:tuuzim_flutter/config/event.dart';
 import 'package:tuuzim_flutter/config/style.dart';
 import 'package:tuuzim_flutter/data/friend/friend_info.dart';
 import 'package:tuuzim_flutter/data/group/group_info.dart';
@@ -44,13 +45,13 @@ class _Index1 extends State<Index1> {
   @override
   void initState() {
     get_data();
-    eventhub.on("refresh_list", (data) async {
+    eventhub.on(EventType.Websocket_refresh_list, (data) async {
       get_data();
     });
-    eventhub.on("logined", (data) async {
+    eventhub.on(EventType.Login, (data) async {
       get_data();
     });
-    eventhub.on("logout", (data) async {
+    eventhub.on(EventType.Logout, (data) async {
       _data = [];
     });
     super.initState();

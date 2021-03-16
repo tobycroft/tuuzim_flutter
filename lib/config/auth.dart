@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:tuuzim_flutter/app/login/login.dart';
+import 'package:tuuzim_flutter/config/event.dart';
 import 'package:tuuzim_flutter/main.dart';
 import 'package:tuuzim_flutter/tuuz/storage/storage.dart';
 import 'package:tuuzim_flutter/tuuz/win/close.dart';
@@ -52,6 +53,6 @@ class Auth {
   static void Clear_Login() async {
     await Storage.Delete("__uid__");
     await Storage.Delete("__token__");
-    eventhub.fire("logout");
+    eventhub.fire(EventType.Logout);
   }
 }
