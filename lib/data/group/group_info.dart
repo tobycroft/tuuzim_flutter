@@ -13,7 +13,10 @@ class GroupInfo {
     String ret = await Net.Post(Config.Url, Url_Index2.GroupList, null, post, null);
     Map json = jsonDecode(ret);
     if (json["code"] == 0) {
-      var _data = json["data"];
+      var _data = json["data"]["admin"];
+      _data += json["data"]["member"];
+      _data += json["data"]["other"];
+      _data += json["data"]["owner"];
       _data.forEach((element) async {
         if (await GroupModel.Api_find(element["id"]) != null) {
           await GroupModel.Api_delete(element["id"]);
@@ -42,6 +45,7 @@ class GroupInfo {
       return data;
     }
     Map post = await AuthAction().LoginObject();
+    post["gid"] = gid;
     String ret = await Net.Post(Config.Url, UrlGroup.Get, null, post, null);
     Map json = jsonDecode(ret);
     if (json["code"] == 0) {

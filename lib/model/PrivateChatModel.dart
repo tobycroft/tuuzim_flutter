@@ -26,14 +26,14 @@ class PrivateChatModel {
     return await TuuzOrm(db).table(_table).where("msg_id", msg_id).first();
   }
 
-  static Future<dynamic> Api_delete(int sender) async {
+  static Future<dynamic> Api_delete(int msg_id) async {
     Database db = await TuuzDb().getDb();
-    return await TuuzOrm(db).table(_table).where("sender", sender).delete();
+    return await TuuzOrm(db).table(_table).where("msg_id", msg_id).delete();
   }
 
-  static Future<dynamic> Api_select_sender(int sender) async {
+  static Future<dynamic> Api_select_byChatId(dynamic chat_id) async {
     Database db = await TuuzDb().getDb();
-    return await TuuzOrm(db).table(_table).where("sender", sender).first();
+    return await TuuzOrm(db).table(_table).where("chat_id", chat_id).orderByDesc("msg_id").get();
   }
 
   static Future<List> Api_select() async {

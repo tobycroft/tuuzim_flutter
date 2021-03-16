@@ -9,7 +9,9 @@ import 'package:tuuzim_flutter/config/event.dart';
 import 'package:tuuzim_flutter/config/style.dart';
 import 'package:tuuzim_flutter/data/friend/friend_info.dart';
 import 'package:tuuzim_flutter/main.dart';
+import 'package:tuuzim_flutter/model/PrivateChatModel.dart';
 import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
+import 'package:tuuzim_flutter/tuuz/calc/sort.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
 import 'package:tuuzim_flutter/tuuz/storage/storage.dart';
@@ -78,6 +80,13 @@ class _ChatPrivate extends State<ChatPrivate> {
     Map<String, String> post = {};
     _uid = await Storage.Get("__uid__");
     _fid = this._pageparam["fid"].toString();
+    var history = await PrivateChatModel.Api_select_byChatId(this._pageparam["chat_id"]);
+    setState(() {
+      if (history != null) {
+        Sort.sort(history, "msg_id");
+        _data = history;
+      }
+    });
     post["uid"] = _uid;
     post["token"] = await Storage.Get("__token__");
     post["fid"] = _fid;
@@ -87,7 +96,22 @@ class _ChatPrivate extends State<ChatPrivate> {
       if (Ret.Check_isok(context, json)) {
         setState(() {
           _data = json["data"];
-          // print(_data);
+          _data.forEach((element) async {
+            if (await PrivateChatModel.Api_find(element["id"]) != null) {
+              await PrivateChatModel.Api_delete(element["id"]);
+            }
+            PrivateChatModel.Api_insert(
+              element["id"],
+              element["chat_id"],
+              element["sender"],
+              element["type"],
+              element["message"],
+              element["extra"],
+              element["ident"],
+              element["is_read"],
+              element["date"],
+            );
+          });
         });
       }
     }

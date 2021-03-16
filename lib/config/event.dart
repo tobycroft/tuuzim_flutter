@@ -8,4 +8,6 @@ class EventType {
   static String Websocket_close = "websocket_close";
   static String Websocket_onclose = "websocket_onclose";
   static String Websocket_connect = "websocket_connect";
+
+  static String FriendList_updated = "friendlist_updated";
 }

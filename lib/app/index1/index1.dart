@@ -20,6 +20,7 @@ import 'package:tuuzim_flutter/main.dart';
 import 'package:tuuzim_flutter/model/UserModel.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
 import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
+import 'package:tuuzim_flutter/tuuz/calc/sort.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
 import 'package:tuuzim_flutter/tuuz/popup/popupmenu.dart';
@@ -94,8 +95,10 @@ class _Index1 extends State<Index1> {
               break;
           }
         }
-        _d1.sort((left, right) => right["date"].compareTo(left["date"]));
-        _d2.sort((left, right) => right["date"].compareTo(left["date"]));
+        _d1 = Sort.sort(_d1, "date");
+        _d2 = Sort.sort(_d2, "date");
+        // _d1.sort((left, right) => right["date"].compareTo(left["date"]));
+        // _d2.sort((left, right) => right["date"].compareTo(left["date"]));
         _data.clear();
 
         setState(() {
@@ -172,8 +175,7 @@ class _Index1 extends State<Index1> {
           itemBuilder: (BuildContext con, int index) => BotItem(this.context, _data[index]),
           itemCount: _data.length,
           separatorBuilder: (context, index) {
-            return Divider(
-            );
+            return Divider();
           },
         ),
         firstRefresh: false,

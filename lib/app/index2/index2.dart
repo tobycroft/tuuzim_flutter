@@ -12,6 +12,7 @@ import 'package:tuuzim_flutter/config/style.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
 import 'package:tuuzim_flutter/main.dart';
 import 'package:tuuzim_flutter/model/FriendModel.dart';
+import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
 import 'package:tuuzim_flutter/tuuz/win/close.dart';
@@ -38,6 +39,10 @@ class _Index2 extends State<Index2> {
     });
     eventhub.on(EventType.Logout, (data) async {
       _data = [];
+    });
+    eventhub.on(EventType.FriendList_updated, (_) {
+      _friend_list(context);
+      _load_database(context);
     });
     // _friend_list(context);
     super.initState();
@@ -173,12 +178,7 @@ class _group_list_widget extends StatelessWidget {
       tileColor: Style.Listtile_color(this._context),
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: Image.network(
-          (ret["face"]),
-          width: 45,
-          height: 45,
-          fit: BoxFit.cover,
-        ),
+        child: CacheImage.network(ret["face"], 45, 45),
       ),
       contentPadding: EdgeInsets.only(left: 20, top: 2, bottom: 2, right: 20),
       title: Text(

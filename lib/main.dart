@@ -3,6 +3,7 @@ import 'dart:isolate';
 
 import 'package:event_hub/event_hub.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tuuzim_flutter/app/index1/index1.dart';
@@ -13,6 +14,8 @@ import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/event.dart';
 import 'package:tuuzim_flutter/config/style.dart';
+import 'package:tuuzim_flutter/data/friend/friend_info.dart';
+import 'package:tuuzim_flutter/data/group/group_info.dart';
 import 'package:tuuzim_flutter/extend/websocket/websocket.dart';
 import 'package:tuuzim_flutter/extend/websocket/ws_router.dart';
 import 'package:websocket_manager/websocket_manager.dart';
@@ -21,7 +24,6 @@ void main() async {
   if (Platform.isAndroid) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   }
-
   runApp(MyApp());
 }
 
@@ -30,12 +32,15 @@ final JPush jpush = new JPush();
 final EventHub eventhub = EventHub();
 
 class Init {
-  Future<void> init() async {}
+  Future<void> init() async {
+    await FriendInfo.friend_list();
+    await GroupInfo.refresh_list();
+  }
 
   Future<void> initWebsocket() async {
     init_websocket();
     eventhub.on(EventType.Websocket_OnMessage, (message) {
-        WsRouter.Route(message);
+      WsRouter.Route(message);
     });
   }
 
@@ -144,11 +149,10 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
 
   @override
   void initState() {
-    ///初始化，这个函数在生命周期中只调用一次
-    super.initState();
     Init().init();
     Init().initWebsocket();
     Init().initPlatformState();
+    super.initState();
 
     pages..add(Index1("TuuzIM"))..add(Index2("联系人"))..add(Index3("发现"))..add(Index4("我的"));
   }
