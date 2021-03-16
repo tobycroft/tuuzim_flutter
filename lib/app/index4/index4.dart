@@ -15,6 +15,7 @@ import 'package:tuuzim_flutter/config/event.dart';
 import 'package:tuuzim_flutter/config/res.dart';
 import 'package:tuuzim_flutter/config/style.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
+import 'package:tuuzim_flutter/extend/websocket/ws_message.dart';
 import 'package:tuuzim_flutter/main.dart';
 import 'package:tuuzim_flutter/model/FriendModel.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
@@ -312,6 +313,27 @@ class _Index4 extends State<Index4> {
                   var data = await db.rawQuery("SELECT * FROM groups");
                   // var data = await FriendModel.Api_select();
                   print(data);
+                },
+              ),
+              ListTile(
+                tileColor: Style.Listtile_color(this.context),
+                leading: Icon(
+                  Icons.settings,
+                  color: Colors.red,
+                  size: 32,
+                ),
+                trailing: Icon(
+                  Icons.keyboard_arrow_right,
+                  color: Colors.red,
+                ),
+                title: Text(
+                  "ws连接",
+                  style: TextStyle(color: Colors.red),
+                ),
+                onTap: () async {
+                  var login = await AuthAction().LoginObject();
+                  var data = WsMessage.init(login["uid"], login["token"]);
+                  eventhub.fire(EventType.Websocket_Send, data);
                 },
               ),
             ],

@@ -13,7 +13,11 @@ class WsRouter {
     switch (json["type"].toString()) {
       case "connected":
         var login = await AuthAction().LoginObject();
-        WsMessage.init(login["uid"], login["token"]);
+        Map data = WsMessage.init(login["uid"], login["token"]);
+        eventhub.fire(EventType.Websocket_Send, data);
+        break;
+
+      case "init":
         break;
 
       default:

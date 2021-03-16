@@ -1,5 +1,5 @@
 class WsMessage {
-  static init(dynamic uid, token) {
+  static Map init(dynamic uid, token) {
     Map<String, dynamic> data = {
       "type": "init",
       "data": {

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
@@ -20,7 +21,8 @@ void init_websocket() async {
   });
 
   eventhub.on(EventType.Websocket_Send, (dynamic message) {
-    socket.send(message.toString());
+    print(EventType.Websocket_Send + ":" + message.toString());
+    socket.send(jsonEncode(message));
   });
 
   eventhub.on(EventType.Websocket_close, (_) {
