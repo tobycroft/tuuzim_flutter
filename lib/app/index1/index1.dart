@@ -166,9 +166,12 @@ class _Index1 extends State<Index1> {
       ),
       body: EasyRefresh(
         scrollController: null,
-        child: ListView.builder(
+        child: ListView.separated(
           itemBuilder: (BuildContext con, int index) => BotItem(this.context, _data[index]),
           itemCount: _data.length,
+          separatorBuilder: (context, index) {
+            return Divider();
+          },
         ),
         firstRefresh: false,
         onRefresh: get_data,
@@ -210,6 +213,7 @@ class BotItem extends StatelessWidget {
       }
     }
     return ListTile(
+      tileColor: Colors.white,
       leading: CircleAvatar(
         child: head_img,
       ),

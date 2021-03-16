@@ -70,6 +70,7 @@ class _Index3 extends State<Index3> {
             height: 10,
           ),
           ListTile(
+            tileColor: Colors.white10,
             leading: Icon(
               Icons.error_outline,
               color: Colors.purple,

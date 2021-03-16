@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:event_hub/event_hub.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tuuzim_flutter/app/index1/index1.dart';
@@ -57,34 +58,30 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      darkTheme: ThemeData(
-        backgroundColor: Colors.black,
-        appBarTheme: AppBarTheme(
-          color: Colors.black87,
-          centerTitle: true,
-        ),
-        primarySwatch: Colors.green,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      darkTheme: ThemeData.dark(),
       theme: ThemeData(
-        backgroundColor: Colors.black,
-        appBarTheme: AppBarTheme(
-          color: Colors.white70,
-          actionsIconTheme: IconThemeData(color: Colors.black),
-          textTheme: TextTheme(
-            title: TextStyle(
-              color: Colors.black,
-              fontSize: 22,
+          // primaryColor: Colors.grey,
+          brightness: Brightness.light,
+          scaffoldBackgroundColor: Color.fromRGBO(238, 238, 238, 1),
+          appBarTheme: AppBarTheme(
+            brightness: Brightness.light,
+            color: Colors.white54,
+            shadowColor: Colors.transparent,
+            actionsIconTheme: IconThemeData(color: Colors.black),
+            textTheme: TextTheme(
+              title: TextStyle(
+                color: Colors.black,
+                fontSize: 22,
+              ),
             ),
+            iconTheme: IconThemeData(color: Colors.black),
+            centerTitle: true,
           ),
           iconTheme: IconThemeData(color: Colors.black),
-          centerTitle: true,
-        ),
-        iconTheme: IconThemeData(color: Colors.black),
-        primarySwatch: Colors.green,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.white70),
-      ),
+          primarySwatch: Colors.green,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.white70),
+          dividerTheme: DividerThemeData(color: Colors.black, thickness: 1)),
       home: BotomeMenumPage(),
     );
   }

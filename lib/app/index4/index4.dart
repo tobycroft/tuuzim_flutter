@@ -95,8 +95,7 @@ class _Index4 extends State<Index4> {
             child: Stack(
               alignment: Alignment.centerLeft,
               children: [
-                Container(
-                ),
+                Container(),
                 Container(
                   margin: EdgeInsets.only(left: 20),
                   width: 80,
@@ -176,6 +175,7 @@ class _Index4 extends State<Index4> {
                 height: 10,
               ),
               ListTile(
+                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.check_circle_outline,
                   color: Colors.green,
@@ -195,6 +195,7 @@ class _Index4 extends State<Index4> {
                 height: 10,
               ),
               ListTile(
+                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.move_to_inbox,
                   color: Colors.red,
@@ -211,6 +212,7 @@ class _Index4 extends State<Index4> {
                 },
               ),
               ListTile(
+                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.image,
                   color: Colors.blue,
@@ -227,6 +229,7 @@ class _Index4 extends State<Index4> {
                 },
               ),
               ListTile(
+                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.face,
                   color: Colors.yellow,
@@ -246,6 +249,7 @@ class _Index4 extends State<Index4> {
                 height: 10,
               ),
               ListTile(
+                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.settings,
                   color: Colors.blue,
@@ -265,6 +269,7 @@ class _Index4 extends State<Index4> {
                 height: 10,
               ),
               ListTile(
+                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.settings,
                   color: Colors.red,
@@ -286,6 +291,7 @@ class _Index4 extends State<Index4> {
                 },
               ),
               ListTile(
+                tileColor: Colors.white10,
                 leading: Icon(
                   Icons.settings,
                   color: Colors.red,
