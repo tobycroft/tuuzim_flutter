@@ -9,6 +9,7 @@ import 'package:tuuzim_flutter/app/index1/bind_bot/bind_bot.dart';
 import 'package:tuuzim_flutter/app/index1/chat/chat_private.dart';
 import 'package:tuuzim_flutter/app/index1/help/help.dart';
 import 'package:tuuzim_flutter/app/index1/url_index1.dart';
+import 'package:tuuzim_flutter/app/index2/search/search_friend.dart';
 import 'package:tuuzim_flutter/app/login/login.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
@@ -116,16 +117,20 @@ class _Index1 extends State<Index1> {
         centerTitle: true,
         actions: <Widget>[
           FlatButton(
-              onPressed: () async {},
-              minWidth: 1,
-              child: Icon(
-                Icons.search_sharp,
-                // color: Colors.white,
-              )),
+            onPressed: () async {
+              Windows.Open(context, SearchFriend("搜索好友", null));
+            },
+            minWidth: 1,
+            child: Icon(
+              Icons.search_sharp,
+              // color: Colors.white,
+            ),
+          ),
           PopupMenuButton(
             icon: const Icon(Icons.add_circle_outline),
             offset: Offset(100, 100),
-            itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+            itemBuilder: (BuildContext context) =>
+            <PopupMenuItem<String>>[
               // Tuuz_Popup.MenuItem(Icons.login, "登录", "login"),
               Tuuz_Popup.MenuItem(Icons.add_box, "绑定机器人", "bind_bot"),
               Tuuz_Popup.MenuItem(Icons.help_center, "首页帮助", "index_help"),
@@ -239,7 +244,7 @@ class BotItem extends StatelessWidget {
         // print(ret);
         switch (ret["chat_type"]) {
           case "group":
-            // Windows.Open(this._context, ChatPrivate(ret["uname"], ret));
+          // Windows.Open(this._context, ChatPrivate(ret["uname"], ret));
             break;
 
           case "private":
