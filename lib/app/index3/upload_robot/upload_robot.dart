@@ -150,7 +150,7 @@ class _Upload_robot extends State<Upload_robot> {
             height: 80,
           ),
           UI_button.Button_submit(context, () async {
-            Map post = await AuthAction().LoginObject();
+            Map post = await AuthAction.LoginObject();
             post["bot"] = this.qq.toString();
             post["password"] = this.password.toString();
             post["secret"] = this.secret.toString();

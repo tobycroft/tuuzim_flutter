@@ -8,7 +8,7 @@ import 'package:tuuzim_flutter/tuuz/net/net.dart';
 
 class GroupMember {
   static Future<void> refresh_member() async {
-    Map post = await AuthAction().LoginObject();
+    Map post = await AuthAction.LoginObject();
     String ret = await Net.Post(Config.Url, UrlGroup.GroupMember, null, post, null);
     Map json = jsonDecode(ret);
     if (json["code"] == 0) {
@@ -34,7 +34,7 @@ class GroupMember {
     if (data != null) {
       return data;
     }
-    Map post = await AuthAction().LoginObject();
+    Map post = await AuthAction.LoginObject();
     String ret = await Net.Post(Config.Url, UrlGroup.Get, null, post, null);
     Map json = jsonDecode(ret);
     if (json["code"] == 0) {

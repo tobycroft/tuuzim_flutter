@@ -56,7 +56,7 @@ class _Index4 extends State<Index4> {
 
   @override
   Future<void> get_user_info() async {
-    Map<String, String> post = await AuthAction().LoginObject();
+    Map<String, String> post = await AuthAction.LoginObject();
     var ret = await Net.Post(Config.Url, Url_Index4.User_info, null, post, null);
     Map json = jsonDecode(ret);
     if (Auth.Return_login_check(context, json)) {
@@ -331,7 +331,7 @@ class _Index4 extends State<Index4> {
                   style: TextStyle(color: Colors.red),
                 ),
                 onTap: () async {
-                  var login = await AuthAction().LoginObject();
+                  var login = await AuthAction.LoginObject();
                   var data = WsMessage.init(login["uid"], login["token"]);
                   eventhub.fire(EventType.Websocket_Send, data);
                 },

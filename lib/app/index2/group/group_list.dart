@@ -41,7 +41,7 @@ class _GroupList extends State<GroupList> {
   }
 
   Future<void> _group_list(BuildContext context) async {
-    Map post = await AuthAction().LoginObject();
+    Map post = await AuthAction.LoginObject();
     String ret = await Net.Post(Config.Url, Url_Index2.GroupList, null, post, null);
     Map json = jsonDecode(ret);
     if (Auth.Return_login_check(context, json)) {

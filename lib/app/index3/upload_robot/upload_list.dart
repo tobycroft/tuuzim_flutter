@@ -30,7 +30,7 @@ class _Upload_list extends State<Upload_list> {
   }
 
   Future<void> get_bot_request() async {
-    Map post = await AuthAction().LoginObject();
+    Map post = await AuthAction.LoginObject();
     String ret = await Net.Post(Config.Url, Url_upload_robot.Upload_list, null, post, null);
     Map json = jsonDecode(ret);
     if (Auth.Return_login_check(context, json)) {

@@ -32,7 +32,7 @@ class _Balance_record extends State<Balance_record> {
 
   @override
   Future<void> get_balance_record() async {
-    Map<String, String> post = await AuthAction().LoginObject();
+    Map<String, String> post = await AuthAction.LoginObject();
     var ret = await Net.Post(Config.Url, Url_balance_record.User_balance_record, null, post, null);
     Map json = jsonDecode(ret);
     if (Auth.Return_login_check(context, json)) {

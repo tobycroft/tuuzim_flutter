@@ -9,7 +9,7 @@ import 'package:tuuzim_flutter/tuuz/net/net.dart';
 
 class GroupInfo {
   static Future<void> refresh_list() async {
-    Map post = await AuthAction().LoginObject();
+    Map post = await AuthAction.LoginObject();
     String ret = await Net.Post(Config.Url, Url_Index2.GroupList, null, post, null);
     Map json = jsonDecode(ret);
     if (json["code"] == 0) {
@@ -44,7 +44,7 @@ class GroupInfo {
     if (data != null) {
       return data;
     }
-    Map post = await AuthAction().LoginObject();
+    Map post = await AuthAction.LoginObject();
     post["gid"] = gid;
     String ret = await Net.Post(Config.Url, UrlGroup.Get, null, post, null);
     Map json = jsonDecode(ret);

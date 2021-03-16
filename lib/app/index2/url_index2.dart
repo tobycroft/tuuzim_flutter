@@ -5,4 +5,6 @@ class Url_Index2 extends Url {
   static String GroupList = "/v1/group/info/list";
   static String is_friend="/v1/friend/friend/is_friend";
   static String Friend_info="/v1/friend/info/userinfo";
+
+  static String Add_friend="/v1/request/request/friend";
 }

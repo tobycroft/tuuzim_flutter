@@ -55,7 +55,7 @@ class _SearchFriend extends State<SearchFriend> {
           IconButton(
             icon: Icon(Icons.send),
             onPressed: () async {
-              Map post = await AuthAction().LoginObject();
+              Map post = await AuthAction.LoginObject();
               post["value"] = this._value;
               String ret = await Net.Post(Config.Url, Url_Search.Search_friend, null, post, null);
               Map json = jsonDecode(ret);

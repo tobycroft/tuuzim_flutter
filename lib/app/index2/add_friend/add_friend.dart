@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:tuuzim_flutter/app/index2/add_friend/add_friend.dart';
 import 'package:tuuzim_flutter/app/index2/url_index2.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
@@ -10,26 +9,25 @@ import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
 import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
-import 'package:tuuzim_flutter/tuuz/win/close.dart';
 
-class UserInfo extends StatefulWidget {
+class AddFriend extends StatefulWidget {
   String _title;
   var _pageparam;
 
-  UserInfo(this._title, this._pageparam);
+  AddFriend(this._title, this._pageparam);
 
-  _UserInfo createState() => _UserInfo(this._title, this._pageparam);
+  _AddFriend createState() => _AddFriend(this._title, this._pageparam);
 }
 
 var _data = {};
 bool _is_friend;
 
-class _UserInfo extends State<UserInfo> {
+class _AddFriend extends State<AddFriend> {
   String _title;
   var _pageparam;
   var _fid;
 
-  _UserInfo(this._title, this._pageparam);
+  _AddFriend(this._title, this._pageparam);
 
   Future<void> get_data() async {
     Map post = await AuthAction.LoginObject();
@@ -82,8 +80,8 @@ class _UserInfo extends State<UserInfo> {
               alignment: Alignment.centerLeft,
               children: [
                 Container(
-                    // color: Colors.white10,
-                    ),
+                  // color: Colors.white10,
+                ),
                 Container(
                   margin: EdgeInsets.only(left: 20),
                   width: 80,
@@ -191,7 +189,8 @@ class _UserInfo extends State<UserInfo> {
               color: Style.Listtile_color(context),
               height: 60,
               onPressed: () async {
-                Windows.Open(context, AddFriend(null, _data));
+
+
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

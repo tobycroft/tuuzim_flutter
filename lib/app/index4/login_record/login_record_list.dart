@@ -37,7 +37,7 @@ class _LoginRecordList extends State<LoginRecordList> {
   }
 
   Future<void> get_data(BuildContext context) async {
-    Map post = await AuthAction().LoginObject();
+    Map post = await AuthAction.LoginObject();
 
     String ret = await Net.Post(Config.Url, Url_login_record.Login_record, null, post, null);
     Map json = jsonDecode(ret);
@@ -119,7 +119,7 @@ class _LoginRecordList extends State<LoginRecordList> {
 }
 
 Future<bool> delete_data(BuildContext context, String id) async {
-  Map post = await AuthAction().LoginObject();
+  Map post = await AuthAction.LoginObject();
   post["id"] = id;
 
   String ret = await Net.Post(Config.Url, Url_login_record.Login_delete, null, post, null);

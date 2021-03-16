@@ -47,7 +47,7 @@ class FriendInfo {
   }
 
   static Future<void> friend_list() async {
-    Map post = await AuthAction().LoginObject();
+    Map post = await AuthAction.LoginObject();
     String ret = await Net.Post(Config.Url, Url_Index2.Friend_list, null, post, null);
     Map json = jsonDecode(ret);
     if (json["data"] != null) {
