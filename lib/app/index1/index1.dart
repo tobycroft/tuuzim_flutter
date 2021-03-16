@@ -12,6 +12,7 @@ import 'package:tuuzim_flutter/app/index1/url_index1.dart';
 import 'package:tuuzim_flutter/app/login/login.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
+import 'package:tuuzim_flutter/config/style.dart';
 import 'package:tuuzim_flutter/data/friend/friend_info.dart';
 import 'package:tuuzim_flutter/data/group/group_info.dart';
 import 'package:tuuzim_flutter/main.dart';
@@ -171,7 +172,6 @@ class _Index1 extends State<Index1> {
           itemCount: _data.length,
           separatorBuilder: (context, index) {
             return Divider(
-              height: 0,
             );
           },
         ),
@@ -215,7 +215,7 @@ class BotItem extends StatelessWidget {
       }
     }
     return ListTile(
-      tileColor: Colors.white,
+      tileColor: Style.Listtile_color(this._context),
       leading: CircleAvatar(
         child: head_img,
       ),

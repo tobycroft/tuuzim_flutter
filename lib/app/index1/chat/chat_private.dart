@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:tuuzim_flutter/app/index1/chat/url_chat.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
+import 'package:tuuzim_flutter/config/style.dart';
 import 'package:tuuzim_flutter/data/friend/friend_info.dart';
 import 'package:tuuzim_flutter/main.dart';
 import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
@@ -128,7 +129,6 @@ class _ChatPrivate extends State<ChatPrivate> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(
           this._title,
@@ -192,6 +192,11 @@ class EntryItem extends StatelessWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
               new Container(
                 margin: const EdgeInsets.only(top: 5.0),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5), topRight: Radius.circular(0), topLeft: Radius.circular(5)),
+                  color: Style.Chat_on_right(context),
+                ),
                 child: new Text(
                   message["message"],
                   maxLines: 1,
@@ -217,17 +222,24 @@ class EntryItem extends StatelessWidget {
             child: CacheImage.network(this._friend_info["face"], 40, 40),
           ),
           Flexible(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-              new Container(
-                margin: const EdgeInsets.only(top: 5.0),
-                child: new Text(
-                  message["message"],
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Config.Text_Style_default,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  margin: const EdgeInsets.only(top: 5.0),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5), topRight: Radius.circular(0.0), topLeft: Radius.circular(5.0)),
+                    color: Style.Chat_on_left(context),
+                  ),
+                  child: new Text(
+                    message["message"],
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              )
-            ]),
+              ],
+            ),
           ),
         ],
       );

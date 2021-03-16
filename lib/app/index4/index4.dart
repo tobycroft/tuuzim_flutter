@@ -12,6 +12,7 @@ import 'package:tuuzim_flutter/app/index4/url_index4.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/res.dart';
+import 'package:tuuzim_flutter/config/style.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
 import 'package:tuuzim_flutter/main.dart';
 import 'package:tuuzim_flutter/model/FriendModel.dart';
@@ -175,7 +176,7 @@ class _Index4 extends State<Index4> {
                 height: 10,
               ),
               ListTile(
-                tileColor: Colors.white10,
+                tileColor: Style.Listtile_color(this.context),
                 leading: Icon(
                   Icons.check_circle_outline,
                   color: Colors.green,
@@ -195,7 +196,7 @@ class _Index4 extends State<Index4> {
                 height: 10,
               ),
               ListTile(
-                tileColor: Colors.white10,
+                tileColor: Style.Listtile_color(this.context),
                 leading: Icon(
                   Icons.move_to_inbox,
                   color: Colors.red,
@@ -212,7 +213,7 @@ class _Index4 extends State<Index4> {
                 },
               ),
               ListTile(
-                tileColor: Colors.white10,
+                tileColor: Style.Listtile_color(this.context),
                 leading: Icon(
                   Icons.image,
                   color: Colors.blue,
@@ -229,7 +230,7 @@ class _Index4 extends State<Index4> {
                 },
               ),
               ListTile(
-                tileColor: Colors.white10,
+                tileColor: Style.Listtile_color(this.context),
                 leading: Icon(
                   Icons.face,
                   color: Colors.yellow,
@@ -249,7 +250,7 @@ class _Index4 extends State<Index4> {
                 height: 10,
               ),
               ListTile(
-                tileColor: Colors.white10,
+                tileColor: Style.Listtile_color(this.context),
                 leading: Icon(
                   Icons.settings,
                   color: Colors.blue,
@@ -269,7 +270,7 @@ class _Index4 extends State<Index4> {
                 height: 10,
               ),
               ListTile(
-                tileColor: Colors.white10,
+                tileColor: Style.Listtile_color(this.context),
                 leading: Icon(
                   Icons.settings,
                   color: Colors.red,
@@ -291,7 +292,7 @@ class _Index4 extends State<Index4> {
                 },
               ),
               ListTile(
-                tileColor: Colors.white10,
+                tileColor: Style.Listtile_color(this.context),
                 leading: Icon(
                   Icons.settings,
                   color: Colors.red,

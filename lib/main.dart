@@ -59,7 +59,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData.dark().copyWith(
+        dividerTheme: DividerThemeData(
+          color: Colors.black12,
+          thickness: 0.5,
+          space: 0.5,
+        ),
+      ),
       theme: ThemeData(
         // primaryColor: Colors.grey,
         brightness: Brightness.light,
@@ -81,9 +87,13 @@ class MyApp extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.black),
         primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Colors.white70),
-        dividerTheme: DividerThemeData(color: Style.LightGrey, thickness: 1),
-        dividerColor: Colors.grey,
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: Style.LightGrey),
+        dividerTheme: DividerThemeData(
+          color: Style.LightGrey,
+          thickness: 0.3,
+          space: 0.5,
+        ),
+        backgroundColor: Colors.white,
       ),
       home: BotomeMenumPage(),
     );

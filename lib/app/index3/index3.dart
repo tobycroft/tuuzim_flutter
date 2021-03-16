@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tuuzim_flutter/app/index3/upload_robot/upload_robot.dart';
 import 'package:tuuzim_flutter/config/config.dart';
+import 'package:tuuzim_flutter/config/style.dart';
 import 'package:tuuzim_flutter/tuuz/win/close.dart';
 
 class Index3 extends StatefulWidget {
@@ -26,13 +27,13 @@ class _Index3 extends State<Index3> {
           style: Config.Text_style_title,
         ),
       ),
-      body:          Column(
+      body: Column(
         children: [
           SizedBox(
             height: 10,
           ),
           ListTile(
-            tileColor: Colors.white10,
+            tileColor: Style.Listtile_color(this.context),
             leading: Icon(
               Icons.camera,
               color: Colors.greenAccent,
@@ -44,14 +45,13 @@ class _Index3 extends State<Index3> {
             title: Text(
               "朋友圈",
             ),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           SizedBox(
             height: 10,
           ),
           ListTile(
-            tileColor: Colors.white10,
+            tileColor: Style.Listtile_color(this.context),
             leading: Icon(
               Icons.qr_code_scanner,
               color: Colors.red,
@@ -63,14 +63,13 @@ class _Index3 extends State<Index3> {
             title: Text(
               "扫码",
             ),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           SizedBox(
             height: 10,
           ),
           ListTile(
-            tileColor: Colors.white10,
+            tileColor: Style.Listtile_color(this.context),
             leading: Icon(
               Icons.error_outline,
               color: Colors.purple,
@@ -82,10 +81,8 @@ class _Index3 extends State<Index3> {
             title: Text(
               "周围的人",
             ),
-            onTap: () {
-            },
+            onTap: () {},
           ),
-
         ],
       ),
     );

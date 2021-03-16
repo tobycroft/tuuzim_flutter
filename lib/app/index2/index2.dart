@@ -7,6 +7,7 @@ import 'package:tuuzim_flutter/app/index2/info/user_info.dart';
 import 'package:tuuzim_flutter/app/index2/url_index2.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
+import 'package:tuuzim_flutter/config/style.dart';
 import 'package:tuuzim_flutter/extend/authaction/authaction.dart';
 import 'package:tuuzim_flutter/main.dart';
 import 'package:tuuzim_flutter/model/FriendModel.dart';
@@ -93,6 +94,7 @@ class _Index2 extends State<Index2> {
         child: ListView(
           children: <Widget>[
                 ListTile(
+                  tileColor: Style.Listtile_color(this.context),
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Container(
@@ -117,6 +119,7 @@ class _Index2 extends State<Index2> {
                   trailing: Icon(Icons.keyboard_arrow_right),
                 ),
                 ListTile(
+                  tileColor: Style.Listtile_color(this.context),
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Container(
@@ -166,6 +169,7 @@ class _group_list_widget extends StatelessWidget {
   Widget _buildTiles(Map ret) {
     if (ret == null) return ListTile();
     return ListTile(
+      tileColor: Style.Listtile_color(this._context),
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Image.network(
