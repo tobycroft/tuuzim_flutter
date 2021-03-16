@@ -9,7 +9,9 @@ import 'package:tuuzim_flutter/app/index2/index2.dart';
 import 'package:tuuzim_flutter/app/index3/index3.dart';
 import 'package:tuuzim_flutter/app/index4/index4.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
+import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/style.dart';
+import 'package:websocket_manager/websocket_manager.dart';
 
 void main() async {
   if (Platform.isAndroid) {
@@ -19,8 +21,35 @@ void main() async {
   runApp(MyApp());
 }
 
+final JPush jpush = new JPush();
+
+final EventHub eventhub = EventHub();
+
+final socket = WebsocketManager(Config.WS);
+int messageNum = 0;
+
 class Init {
   Future<void> init() async {}
+
+  Future<void> initWebsocket() async {
+    // socket.onClose((dynamic message) {
+    //   print('close');
+    // });
+// Listen to server messages
+    socket.onMessage((dynamic message) {
+      print('recv: $message');
+      if (messageNum == 10) {
+        socket.close();
+      } else {
+        messageNum += 1;
+        final String msg = '$messageNum: ${DateTime.now()}';
+        print('send: $msg');
+        socket.send(msg);
+      }
+    });
+// Connect to server
+    socket.connect();
+  }
 
   Future<void> initPlatformState() async {
     String platformVersion;
@@ -115,10 +144,6 @@ class BotomeMenumPage extends StatefulWidget {
   BotomeMenumPageState createState() => BotomeMenumPageState();
 }
 
-final JPush jpush = new JPush();
-
-final EventHub eventhub = EventHub();
-
 /**
  * 在 State 中,可以动态改变数据
  * 在 setState 之后，改变的数据会触发 Widget 重新构建刷新
@@ -133,7 +158,8 @@ class BotomeMenumPageState extends State<BotomeMenumPage> {
   void initState() {
     ///初始化，这个函数在生命周期中只调用一次
     super.initState();
-
+    Init().init();
+    Init().initWebsocket();
     Init().initPlatformState();
 
     pages..add(Index1("TuuzIM"))..add(Index2("联系人"))..add(Index3("发现"))..add(Index4("我的"));
