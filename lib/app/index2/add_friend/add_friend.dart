@@ -71,56 +71,20 @@ class _AddFriend extends State<AddFriend> {
       appBar: AppBar(
         shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
+        actions: [
+          FlatButton(
+            minWidth: 50,
+            color: Colors.green,
+            child: Text(
+              "Send",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: ListView(
         children: [
-          Container(
-            height: 150,
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Container(
-                  // color: Colors.white10,
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 20),
-                  width: 80,
-                  alignment: Alignment.centerLeft,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: CacheImage.network(this._pageparam["face"], 70, 70),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 110),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        this._pageparam["uname"].toString(),
-                        style: Config.Text_style_Name.copyWith(
-                          fontSize: 28,
-                        ),
-                      ),
-                      Text(
-                        "昵称：" + (this._pageparam["nickname"] != null ? this._pageparam["nickname"] : this._pageparam["uname"]).toString(),
-                        style: Config.Text_style_Name.copyWith(
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        "TuIM ID：" + (this._pageparam["fid"] != null ? this._pageparam["fid"].toString() : this._pageparam["uid"].toString()),
-                        style: Config.Text_style_Name.copyWith(
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
           Divider(),
           ListTile(
             tileColor: Style.Listtile_color(context),
@@ -188,10 +152,7 @@ class _AddFriend extends State<AddFriend> {
             child: FlatButton(
               color: Style.Listtile_color(context),
               height: 60,
-              onPressed: () async {
-
-
-              },
+              onPressed: () async {},
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
