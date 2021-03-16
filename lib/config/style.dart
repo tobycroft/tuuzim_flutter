@@ -28,7 +28,7 @@ class Style {
 
   static Color Chat_on_right(BuildContext context) {
     if (isDarkMode(context)) {
-      return Lightwhite;
+      return Colors.green;
     } else {
       return Colors.lightGreenAccent;
     }

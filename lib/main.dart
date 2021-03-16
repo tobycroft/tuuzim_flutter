@@ -65,6 +65,9 @@ class MyApp extends StatelessWidget {
           thickness: 0.5,
           space: 0.5,
         ),
+        appBarTheme: AppBarTheme(
+          centerTitle: true,
+        ),
       ),
       theme: ThemeData(
         // primaryColor: Colors.grey,
