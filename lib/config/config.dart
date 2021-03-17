@@ -5,6 +5,8 @@ class Config {
   static double Font_Size = 24;
   static double Font_size_text = 16;
 
+  static String default_image = "images/logo.png";
+
   static TextStyle Text_Style_default = TextStyle(
     fontSize: 16,
   );
