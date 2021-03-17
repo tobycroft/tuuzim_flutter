@@ -11,6 +11,6 @@ class EventType {
 
   static String FriendList_updated = "friendlist_updated";
 
-
   static String Private_chat = "private_chat";
+  static String Group_chat = "group_chat";
 }
