@@ -41,7 +41,7 @@ dependencies:
   flutter_easyloading: ^2.2.2
   event_hub: ^0.1.1
   websocket_manager: ^0.2.2
-  cache_image: ^1.0.5
+  ok_image: ^0.4.0
 
   #  extended_image: ^1.6.0
 

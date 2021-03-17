@@ -1,26 +1,26 @@
 import 'dart:ui';
 
-import 'package:cache_image/cache_image.dart' as iiage;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ok_image/ok_image.dart';
 
 class CacheImage {
-  static FadeInImage network(dynamic img, double w, double h) {
+  static OKImage network(dynamic img, double w, double h) {
     if (img == null) {
-      return FadeInImage(
-        fit: BoxFit.cover,
+      return OKImage(
+        url: "images/logo.png",
         width: w,
         height: h,
-        placeholder: AssetImage("images/logo.png"),
-        image: iiage.CacheImage("images/logo.png"),
+        timeout: Duration(seconds: 20),
+        fit: BoxFit.cover,
       );
     } else {
-      return FadeInImage(
-        fit: BoxFit.cover,
+      return OKImage(
+        url: img.toString(),
         width: w,
         height: h,
-        placeholder: AssetImage("images/logo.png"),
-        image: iiage.CacheImage(img.toString()),
+        timeout: Duration(seconds: 20),
+        fit: BoxFit.cover,
       );
     }
   }

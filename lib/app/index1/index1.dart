@@ -202,7 +202,7 @@ class BotItem extends StatelessWidget {
 
   Widget _buildTiles(Map ret) {
     if (ret == null) return ListTile();
-    FadeInImage head_img;
+    var head_img;
     if (ret["info"] != null) {
       if (ret["info"]["face"] == null) {
         head_img = CacheImage.network(ret["info"]["img"], 60, 60);
