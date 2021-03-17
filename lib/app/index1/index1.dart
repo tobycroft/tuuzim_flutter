@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -203,7 +202,7 @@ class BotItem extends StatelessWidget {
 
   Widget _buildTiles(Map ret) {
     if (ret == null) return ListTile();
-    ExtendedImage head_img;
+    FadeInImage head_img;
     if (ret["info"] != null) {
       if (ret["info"]["face"] == null) {
         head_img = CacheImage.network(ret["info"]["img"], 60, 60);
