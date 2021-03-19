@@ -10,6 +10,14 @@ class Style {
     return Theme.of(context).brightness == Brightness.dark;
   }
 
+  static Color Revert_color(BuildContext context) {
+    if (isDarkMode(context)) {
+      return Colors.white;
+    } else {
+      return Colors.black;
+    }
+  }
+
   static Color Listtile_color(BuildContext context) {
     if (isDarkMode(context)) {
       return Lightwhite;

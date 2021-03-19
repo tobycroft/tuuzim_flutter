@@ -47,6 +47,7 @@ class _ChatPrivate extends State<ChatPrivate> {
 
   var _send_button = false;
   var _voice_func = false;
+  var _orign_button = Icons.settings_voice;
 
   TextEditingController _text = new TextEditingController();
 
@@ -56,31 +57,30 @@ class _ChatPrivate extends State<ChatPrivate> {
         // margin: const EdgeInsets.symmetric(horizontal: 8.0),
         child: new Row(children: <Widget>[
           new IconButton(
-              onPressed: null,
-              icon: Icon(
-                Icons.settings_voice,
-                color: Colors.black,
-              )),
-          new Flexible(
-            child: new TextField(
-              controller: _text,
-              onSubmitted: (data) async {},
-              onChanged: (String data) async {
+              onPressed: () {
                 setState(() {
-                  if (data != "") {
-                    this._send_button = true;
-                  } else {
-                    this._send_button = false;
-                  }
+                  this._voice_func = !this._voice_func;
                 });
               },
-              decoration: new InputDecoration.collapsed(hintText: '发送消息'),
-            ),
-          ),
-          new Container(
-            margin: new EdgeInsets.symmetric(horizontal: 4.0),
-            child: Offstage(
-              offstage: !this._send_button,
+              icon: Icon(
+                this._orign_button,
+                color: Style.Revert_color(context),
+              )),
+          input_area(),
+          new IconButton(
+              onPressed: () {
+                setState(() {
+                  this._voice_func = !this._voice_func;
+                });
+              },
+              icon: Icon(
+                this._orign_button,
+                color: Style.Revert_color(context),
+              )),
+          Offstage(
+            offstage: !this._send_button || !this._voice_func,
+            child: new Container(
+              margin: new EdgeInsets.symmetric(horizontal: 4.0),
               child: new FlatButton(
                 minWidth: 0,
                 onPressed: () async {
@@ -91,7 +91,21 @@ class _ChatPrivate extends State<ChatPrivate> {
                 child: Text("发送"),
               ),
             ),
-          )
+          ),
+          Offstage(
+            offstage: this._send_button || !this._voice_func,
+            child: new IconButton(
+              onPressed: () {
+                setState(() {
+                  this._voice_func = !this._voice_func;
+                });
+              },
+              icon: Icon(
+                this._orign_button,
+                color: Style.Revert_color(context),
+              ),
+            ),
+          ),
         ]));
   }
 
@@ -119,6 +133,38 @@ class _ChatPrivate extends State<ChatPrivate> {
           });
         });
       }
+    }
+  }
+
+  Widget input_area() {
+    if (this._voice_func) {
+      setState(() {
+        this._orign_button = Icons.keyboard;
+      });
+      return new Flexible(
+        child: new TextField(
+          controller: _text,
+          onSubmitted: (data) async {},
+          onChanged: (String data) async {
+            setState(() {
+              if (data != "") {
+                this._send_button = true;
+              } else {
+                this._send_button = false;
+              }
+            });
+          },
+          decoration: new InputDecoration(fillColor: Colors.green),
+        ),
+      );
+    } else {
+      setState(() {
+        this._orign_button = Icons.settings_voice;
+      });
+      return new Flexible(
+        fit: FlexFit.tight,
+        child: new ElevatedButton(onPressed: () {}, child: Text("发送语音")),
+      );
     }
   }
 
