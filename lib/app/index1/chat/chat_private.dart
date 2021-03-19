@@ -45,12 +45,14 @@ class _ChatPrivate extends State<ChatPrivate> {
 
   _ChatPrivate(this._title, this._fid, this._friend_info, this._user_info);
 
+  var send_button = true;
+
   TextEditingController _text = new TextEditingController();
 
   Widget _buildTextComposer() {
     return new Container(
         color: Colors.white10,
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        // margin: const EdgeInsets.symmetric(horizontal: 8.0),
         child: new Row(children: <Widget>[
           new IconButton(
               onPressed: null,
@@ -67,15 +69,18 @@ class _ChatPrivate extends State<ChatPrivate> {
           ),
           new Container(
             margin: new EdgeInsets.symmetric(horizontal: 4.0),
-            child: new IconButton(
-                icon: new Icon(
-                  Icons.send_rounded,
-                  color: Colors.blue,
-                ),
+            child: Offstage(
+              offstage: this.send_button,
+              child: new FlatButton(
+                minWidth: 0,
                 onPressed: () async {
                   send_chat(UrlChat.Private_Send_text, _text.text, null, "");
                   _text.clear();
-                }),
+                },
+                color: Colors.green,
+                child: Text("发送"),
+              ),
+            ),
           )
         ]));
   }
