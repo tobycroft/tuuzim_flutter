@@ -45,7 +45,8 @@ class _ChatPrivate extends State<ChatPrivate> {
 
   _ChatPrivate(this._title, this._fid, this._friend_info, this._user_info);
 
-  var send_button = true;
+  var _send_button = false;
+  var _voice_func = false;
 
   TextEditingController _text = new TextEditingController();
 
@@ -64,13 +65,22 @@ class _ChatPrivate extends State<ChatPrivate> {
             child: new TextField(
               controller: _text,
               onSubmitted: (data) async {},
+              onChanged: (String data) async {
+                setState(() {
+                  if (data != "") {
+                    this._send_button = true;
+                  } else {
+                    this._send_button = false;
+                  }
+                });
+              },
               decoration: new InputDecoration.collapsed(hintText: '发送消息'),
             ),
           ),
           new Container(
             margin: new EdgeInsets.symmetric(horizontal: 4.0),
             child: Offstage(
-              offstage: this.send_button,
+              offstage: !this._send_button,
               child: new FlatButton(
                 minWidth: 0,
                 onPressed: () async {
