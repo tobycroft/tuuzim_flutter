@@ -282,7 +282,7 @@ class EntryItem extends StatelessWidget {
                 ),
                 child: new Text(
                   message["message"],
-                  maxLines: 1,
+                  maxLines: 999,
                   overflow: TextOverflow.ellipsis,
                   style: Config.Text_Style_default,
                 ),
@@ -291,6 +291,7 @@ class EntryItem extends StatelessWidget {
           ),
           new Container(
             margin: const EdgeInsets.only(left: 12.0, right: 12.0),
+            alignment: Alignment.topCenter,
             child: CacheImage.network(this._user_info["face"], 40, 40),
           ),
         ],
@@ -302,6 +303,7 @@ class EntryItem extends StatelessWidget {
         children: <Widget>[
           new Container(
             margin: const EdgeInsets.only(left: 12.0, right: 12.0),
+            alignment: Alignment.topCenter,
             child: CacheImage.network(this._friend_info["face"], 40, 40),
           ),
           Flexible(
@@ -317,7 +319,7 @@ class EntryItem extends StatelessWidget {
                   ),
                   child: new Text(
                     message["message"].toString(),
-                    maxLines: 1,
+                    maxLines: 999,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
