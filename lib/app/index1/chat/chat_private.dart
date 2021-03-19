@@ -74,7 +74,7 @@ class _ChatPrivate extends State<ChatPrivate> {
                 });
               },
               icon: Icon(
-                this._orign_button,
+                Icons.face,
                 color: Style.Revert_color(context),
               )),
           Offstage(
@@ -86,6 +86,7 @@ class _ChatPrivate extends State<ChatPrivate> {
                 onPressed: () async {
                   send_chat(UrlChat.Private_Send_text, _text.text, null, "");
                   _text.clear();
+                  this._send_button = false;
                 },
                 color: Colors.green,
                 child: Text("发送"),
@@ -93,7 +94,7 @@ class _ChatPrivate extends State<ChatPrivate> {
             ),
           ),
           Offstage(
-            offstage: this._send_button || !this._voice_func,
+            offstage: this._send_button,
             child: new IconButton(
               onPressed: () {
                 setState(() {
@@ -101,7 +102,7 @@ class _ChatPrivate extends State<ChatPrivate> {
                 });
               },
               icon: Icon(
-                this._orign_button,
+                Icons.add_box_rounded,
                 color: Style.Revert_color(context),
               ),
             ),
