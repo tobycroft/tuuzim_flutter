@@ -5,6 +5,7 @@ import 'package:event_hub/event_hub.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tuuzim_flutter/app/index1/chat/url_chat.dart';
+import 'package:tuuzim_flutter/app/index1/chat/widget_message.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/event.dart';
@@ -317,11 +318,7 @@ class EntryItem extends StatelessWidget {
                     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5), topRight: Radius.circular(0.0), topLeft: Radius.circular(5.0)),
                     color: Style.Chat_on_left(context),
                   ),
-                  child: new Text(
-                    message["message"].toString(),
-                    maxLines: 999,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  child:WidgetPrivateMessage(this.context, this.message, this.message["type"], this.message["message"], this.message["extra"], this.message["date"], this.message["ident"]),
                 ),
               ],
             ),
@@ -338,3 +335,4 @@ class EntryItem extends StatelessWidget {
     );
   }
 }
+
