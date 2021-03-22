@@ -48,7 +48,7 @@ class _ChatPrivate extends State<ChatPrivate> {
 
   var _send_button = false;
   var _voice_func = false;
-  var _orign_button = Icons.settings_voice;
+  var _orign_button;
 
   TextEditingController _text = new TextEditingController();
 
@@ -139,9 +139,9 @@ class _ChatPrivate extends State<ChatPrivate> {
   }
 
   Widget input_area() {
-    if (this._voice_func) {
+    if (!this._voice_func) {
       setState(() {
-        this._orign_button = Icons.keyboard;
+        this._orign_button = Icons.settings_voice;
       });
       return new Flexible(
         child: new TextField(
@@ -161,7 +161,7 @@ class _ChatPrivate extends State<ChatPrivate> {
       );
     } else {
       setState(() {
-        this._orign_button = Icons.settings_voice;
+        this._orign_button = Icons.keyboard;
       });
       return new Flexible(
         fit: FlexFit.tight,
@@ -318,7 +318,7 @@ class EntryItem extends StatelessWidget {
                     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5), topRight: Radius.circular(0.0), topLeft: Radius.circular(5.0)),
                     color: Style.Chat_on_left(context),
                   ),
-                  child:WidgetPrivateMessage(this.context, this.message, this.message["type"], this.message["message"], this.message["extra"], this.message["date"], this.message["ident"]),
+                  child: WidgetPrivateMessage(this.context, this.message, this.message["type"], this.message["message"], this.message["extra"], this.message["date"], this.message["ident"]),
                 ),
               ],
             ),
@@ -335,4 +335,3 @@ class EntryItem extends StatelessWidget {
     );
   }
 }
-

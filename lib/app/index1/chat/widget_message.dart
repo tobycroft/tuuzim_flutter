@@ -30,7 +30,11 @@ class WidgetPrivateMessage extends StatelessWidget {
         break;
 
       case "2":
-        return CacheImage.network(extra["img"], null, null);
+        return Container(
+          width: 200,
+          height: 200,
+          child: CacheImage.fullscreen(extra["img"], double.infinity, double.infinity),
+        );
         break;
 
       default:
