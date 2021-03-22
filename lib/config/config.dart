@@ -60,7 +60,7 @@ class Config {
 
   static String ProxyURL = "http://10.0.0.100:9000";
 
-  static bool Proxy_debug = false;
+  static bool Proxy_debug = true;
 
   // static String Url = "127.0.0.1";
   //
