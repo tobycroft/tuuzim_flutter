@@ -50,10 +50,12 @@ class _ChatPrivate extends State<ChatPrivate> {
   var _send_button = false;
   var _voice_func = false;
   var _orign_button;
+  double _buttom_plus = 0.0;
 
   TextEditingController _text = new TextEditingController();
 
-  Widget _buildTextComposer() {
+  //底部输入框
+  Widget _bottom_input() {
     return new Container(
         color: Colors.white10,
         // margin: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -102,7 +104,11 @@ class _ChatPrivate extends State<ChatPrivate> {
             child: new IconButton(
               onPressed: () {
                 setState(() {
-                  this._voice_func = !this._voice_func;
+                  if (this._buttom_plus == 0) {
+                    this._buttom_plus = 210;
+                  } else {
+                    this._buttom_plus = 0;
+                  }
                 });
               },
               icon: Icon(
@@ -112,6 +118,34 @@ class _ChatPrivate extends State<ChatPrivate> {
             ),
           ),
         ]));
+  }
+
+  Widget _bottom_plus() {
+    return AnimatedContainer(
+      curve: Curves.fastLinearToSlowEaseIn,
+      duration: Duration(seconds: 1),
+      height: this._buttom_plus,
+      alignment: Alignment.center,
+      decoration: new BoxDecoration(
+        color: Theme.of(context).cardColor,
+      ),
+      child: GridView.count(
+        crossAxisCount: 4,
+        children: [
+          GestureDetector(
+            child: Column(
+              children: [
+                Icon(
+                  Icons.image,
+                  size: 64,
+                ),
+                Text("选择图片")
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> get_data() async {
@@ -253,8 +287,9 @@ class _ChatPrivate extends State<ChatPrivate> {
               decoration: new BoxDecoration(
                 color: Theme.of(context).cardColor,
               ),
-              child: _buildTextComposer(),
-            )
+              child: _bottom_input(),
+            ),
+            _bottom_plus(),
           ],
         ),
         onWillPop: () async {
