@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:event_hub/event_hub.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tuuzim_flutter/app/index1/chat/url_chat.dart';
 import 'package:tuuzim_flutter/app/index1/chat/widget_message.dart';
 import 'package:tuuzim_flutter/app/index2/info/user_info.dart';
@@ -142,6 +143,24 @@ class _ChatPrivate extends State<ChatPrivate> {
                 Text("选择图片")
               ],
             ),
+            onTap: () async {
+            PickedFile pickfile=await ImagePicker().getImage(source: ImageSource.gallery);
+            print(pickfile.path);
+            },
+          ),
+          GestureDetector(
+            child: Column(
+              children: [
+                Icon(
+                  Icons.camera_alt,
+                  size: 64,
+                ),
+                Text("选择相机")
+              ],
+            ),
+            onTap: () async {
+              ImagePicker().getImage(source: ImageSource.camera);
+            },
           ),
         ],
       ),

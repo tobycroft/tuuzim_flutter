@@ -46,7 +46,7 @@ dependencies:
   yin_drag_sacle: ^0.0.2
   flutter_sound: ^7.7.0+1
   image_picker: ^0.6.7+22
-
+  flutter_uploader: ^1.2.1
 
 
   # The following adds the Cupertino Icons font to your application.

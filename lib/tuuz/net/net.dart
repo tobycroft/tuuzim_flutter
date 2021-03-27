@@ -57,6 +57,12 @@ class Net {
     return ret;
   }
 
+
+  static Future<String> PostFile(String url, path, Map<String, String> get, dynamic post, Map<String, String> header) async {
+
+
+  }
+
   static Future<String> PostJson(String url, path, Map<String, String> get, Map<String, dynamic> post, Map<String, String> header) async {
     var http = new HttpClient();
     if (Config.Proxy_debug) {
