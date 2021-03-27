@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:tuuzim_flutter/app/index1/bind_bot/bind_bot.dart';
 import 'package:tuuzim_flutter/app/index1/chat/chat_private.dart';
 import 'package:tuuzim_flutter/app/index1/help/help.dart';
@@ -21,6 +22,7 @@ import 'package:tuuzim_flutter/model/UserModel.dart';
 import 'package:tuuzim_flutter/tuuz/alert/ios.dart';
 import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
 import 'package:tuuzim_flutter/tuuz/calc/sort.dart';
+import 'package:tuuzim_flutter/tuuz/database/Db.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
 import 'package:tuuzim_flutter/tuuz/popup/popupmenu.dart';
@@ -54,6 +56,8 @@ class _Index1 extends State<Index1> {
     });
     eventhub.on(EventType.Logout, (data) async {
       _data = [];
+      Database db = await TuuzDb().getDb();
+      deleteDatabase("tuuzim.db");
     });
     super.initState();
   }
