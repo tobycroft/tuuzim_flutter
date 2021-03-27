@@ -26,7 +26,7 @@ class UserInfo extends StatefulWidget {
 
 var _data = {};
 bool _is_friend = false;
-bool _show_button = true;
+bool _show;
 
 class _UserInfo extends State<UserInfo> {
   String _title;
@@ -37,11 +37,6 @@ class _UserInfo extends State<UserInfo> {
 
   Future<void> get_data() async {
     Map post = await AuthAction.LoginObject();
-    if (this._fid == post["uid"]) {
-      setState(() {
-        _show_button = false;
-      });
-    }
     post["fid"] = this._fid;
     String ret = await Net.Post(Config.Url, Url_Index2.Friend_info, null, post, null);
     Map json = jsonDecode(ret);
@@ -56,6 +51,7 @@ class _UserInfo extends State<UserInfo> {
 
   Future<void> get_data2() async {
     Map post = await AuthAction.LoginObject();
+
     post["fid"] = this._fid;
     String ret = await Net.Post(Config.Url, Url_Index2.is_friend, null, post, null);
     Map json = jsonDecode(ret);
@@ -68,11 +64,23 @@ class _UserInfo extends State<UserInfo> {
     }
   }
 
+  void inita() async {
+    String uid = await AuthAction.Uid();
+    setState(() {
+      if (uid == this._fid.toString()) {
+        _show = false;
+      } else {
+        _show = true;
+      }
+    });
+  }
+
   @override
   void initState() {
     this._fid = (this._pageparam["fid"] != null ? this._pageparam["fid"].toString() : this._pageparam["uid"].toString());
     get_data();
     get_data2();
+    inita();
     super.initState();
   }
 
@@ -149,7 +157,7 @@ class _UserInfo extends State<UserInfo> {
             height: 10,
           ),
           Offstage(
-            offstage: !_is_friend && !_show_button,
+            offstage: !_is_friend,
             child: FlatButton(
               color: Style.Listtile_color(context),
               height: 60,
@@ -176,7 +184,7 @@ class _UserInfo extends State<UserInfo> {
             ),
           ),
           Offstage(
-            offstage: !_is_friend && !_show_button,
+            offstage: !_is_friend,
             child: FlatButton(
               color: Style.Listtile_color(context),
               height: 60,
@@ -199,7 +207,7 @@ class _UserInfo extends State<UserInfo> {
             ),
           ),
           Offstage(
-            offstage: _is_friend && !_show_button,
+            offstage: (_show == true) ? _is_friend : true,
             child: FlatButton(
               color: Style.Listtile_color(context),
               height: 60,
