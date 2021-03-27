@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:tuuzim_flutter/app/index1/index1.dart';
 import 'package:tuuzim_flutter/app/index2/index2.dart';
 import 'package:tuuzim_flutter/app/index3/index3.dart';
@@ -30,6 +31,16 @@ void main() async {
 final JPush jpush = new JPush();
 
 final EventHub eventhub = EventHub();
+
+final upload_progress = FlutterUploader().progress.listen((progress) {
+ print(progress);
+});
+
+final upload_result = FlutterUploader().result.listen((result) {
+  print(result);
+}, onError: (ex, stacktrace) {
+  // ... code to handle error
+});
 
 class Init {
   Future<void> init() async {

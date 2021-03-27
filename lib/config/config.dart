@@ -69,4 +69,7 @@ class Config {
   static String Url = "chat.tuuz.cc:20000";
 
   static String WS = "ws://chat.tuuz.cc:20001";
+
+  static String Upload = "http://upload.tuuz.cc:81/upfull?token=" + Upload_token;
+  static String Upload_token = "gochat";
 }

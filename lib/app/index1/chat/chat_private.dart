@@ -12,6 +12,7 @@ import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/event.dart';
 import 'package:tuuzim_flutter/config/style.dart';
+import 'package:tuuzim_flutter/config/url.dart';
 import 'package:tuuzim_flutter/data/chat/private_chat_data.dart';
 import 'package:tuuzim_flutter/data/friend/friend_info.dart';
 import 'package:tuuzim_flutter/extend/chat_gen/chat_gen.dart';
@@ -144,8 +145,8 @@ class _ChatPrivate extends State<ChatPrivate> {
               ],
             ),
             onTap: () async {
-            PickedFile pickfile=await ImagePicker().getImage(source: ImageSource.gallery);
-            print(pickfile.path);
+              PickedFile pickfile = await ImagePicker().getImage(source: ImageSource.gallery);
+              Net.PostFile(pickfile.path, null, null, null);
             },
           ),
           GestureDetector(
