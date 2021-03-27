@@ -79,7 +79,7 @@ class _ChatPrivate extends State<ChatPrivate> {
                 color: Style.Revert_color(context),
               )),
           Offstage(
-            offstage: !this._send_button || !this._voice_func,
+            offstage: !this._send_button,
             child: new Container(
               margin: new EdgeInsets.symmetric(horizontal: 4.0),
               child: new FlatButton(
