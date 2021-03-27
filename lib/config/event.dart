@@ -1,5 +1,6 @@
 class EventType {
   static String Login = "login";
+  static String Register = "register";
   static String Logout = "logout";
 
   static String Websocket_Send = "websocket_send";

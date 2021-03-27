@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tuuzim_flutter/app/login/help/help.dart';
-import 'package:tuuzim_flutter/app/login/register/register.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/event.dart';
 import 'package:tuuzim_flutter/config/res.dart';
@@ -16,58 +14,31 @@ import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/storage/storage.dart';
 import 'package:tuuzim_flutter/tuuz/win/close.dart';
 
-class Login extends StatefulWidget {
+class Register extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _login();
+  State<StatefulWidget> createState() => _Register();
 }
 
-class _login extends State<Login> {
+class _Register extends State<Register> {
   String username;
+  String phone;
   String password;
 
   @override
   Widget build(BuildContext context) {
-    var uid_controller = new TextEditingController(text: "");
-    var password_controller = new TextEditingController(text: "");
-    uid_controller.addListener(() {
-      this.username = uid_controller.text;
-    });
-
-    //这里双向绑定简直是太蛋疼了
-    password_controller.addListener(() {
-      this.password = password_controller.text;
-    });
-    void initold() async {
-      Map user = await UserModel.Api_find();
-      if (user != null) {
-        uid_controller.text = user["username"].toString();
-        password_controller.text = user["password"].toString();
-      }
-    }
-
-    initold();
-    // void initState() {
-    //   setState(() {
-    //     var _con = new TextEditingController(text: "");
-    //   });
-    // }
-
-    close_win() async {}
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leadingWidth: 120,
         backgroundColor: Colors.black,
         centerTitle: true,
         title: Text(
-          "登录",
+          "注册账号",
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
-        // leading: Tuuz_Button.BackWithWord(context),
+        leading: BackButton(),
         actions: [
           // IconButton(
           //     icon: Icon(
@@ -100,7 +71,6 @@ class _login extends State<Login> {
                     height: 100,
                   ),
                   TextFormField(
-                    controller: uid_controller,
                     cursorColor: Colors.white,
                     textCapitalization: TextCapitalization.words,
                     style: TextStyle(
@@ -117,7 +87,7 @@ class _login extends State<Login> {
                         color: Colors.white,
                       ),
                       hintText: "账号",
-                      labelText: "请输入你的账号",
+                      labelText: "用于登录的账号（可中文）",
                       hintStyle: TextStyle(
                         color: Colors.white,
                       ),
@@ -133,7 +103,38 @@ class _login extends State<Login> {
                     height: 50,
                   ),
                   TextFormField(
-                    controller: password_controller,
+                    cursorColor: Colors.white,
+                    textCapitalization: TextCapitalization.words,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                    decoration: const InputDecoration(
+                      hoverColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2.0, color: Colors.white),
+                      ),
+                      filled: true,
+                      icon: Icon(
+                        Icons.person,
+                        color: Colors.white,
+                      ),
+                      hintText: "手机号",
+                      labelText: "仅作为恢复密码用（不可搜索）",
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                      ),
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    onChanged: (String value) {
+                      this.phone = value;
+                    },
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  TextFormField(
                     cursorColor: Colors.white,
                     textCapitalization: TextCapitalization.words,
                     style: TextStyle(
@@ -191,13 +192,14 @@ class _login extends State<Login> {
                     minWidth: 300,
                     height: 50,
                     shape: RoundedRectangleBorder(side: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(50))),
-                    child: Text('登录'),
+                    child: Text('注册'),
                     onPressed: () async {
                       Map<String, String> post = {
                         "username": this.username,
+                        "phone": this.phone,
                         "password": this.password,
                       };
-                      String ret = await Net.Post(Config.Url, Url.login, null, post, null);
+                      String ret = await Net.Post(Config.Url, Url.Register_simple, null, post, null);
                       var json = jsonDecode(ret);
                       if (json["code"] == 0) {
                         Storage.Set("__uid__", json["data"]["uid"].toString());
@@ -208,31 +210,20 @@ class _login extends State<Login> {
                           UserModel.Api_insert(json["data"]["uid"].toString(), json["data"]["token"].toString(), this.username, this.password);
                         }
                         eventhub.fire(EventType.Login);
-                        Alert.Confirm(context, "登录成功", json["data"]["uid"].toString() + "欢迎回来！", Windows.Close(context));
+                        Alert.Confirm(context, "注册成功", json["data"]["uid"].toString() + "欢迎回来！", () {
+                          Windows.Close(context);
+                          Windows.Close(context);
+                        });
                       } else {
-                        Alert.Confirm(context, "登录失败", json["echo"], null);
+                        Alert.Confirm(context, "注册失败", json["echo"], null);
                       }
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  FlatButton(
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    minWidth: 300,
-                    height: 50,
-                    shape: RoundedRectangleBorder(side: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(50))),
-                    child: Text('注册'),
-                    onPressed: () async {
-                      Windows.Open(context, Register());
                     },
                   ),
                 ],
               ),
             ),
           ),
-          onWillPop: close_win),
+          onWillPop: null),
     );
   }
 }

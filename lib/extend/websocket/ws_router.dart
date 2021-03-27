@@ -17,6 +17,9 @@ class WsRouter {
         break;
 
       case "init":
+        if (json["code"] == 400) {
+          eventhub.fire(EventType.Websocket_close);
+        }
         break;
 
       case "private_chat":
