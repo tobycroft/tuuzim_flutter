@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tuuzim_flutter/app/index1/chat/url_chat.dart';
 import 'package:tuuzim_flutter/app/index1/chat/widget_message.dart';
+import 'package:tuuzim_flutter/app/index2/info/user_info.dart';
 import 'package:tuuzim_flutter/config/auth.dart';
 import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/event.dart';
@@ -225,6 +226,13 @@ class _ChatPrivate extends State<ChatPrivate> {
             Windows.Close(context);
           },
         ),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.more_horiz),
+              onPressed: () {
+                Windows.Open(context, UserInfo("", this._friend_info));
+              })
+        ],
       ),
       body: WillPopScope(
         child: new Column(
@@ -292,10 +300,15 @@ class EntryItem extends StatelessWidget {
               )
             ]),
           ),
-          new Container(
-            margin: const EdgeInsets.only(left: 12.0, right: 12.0),
-            alignment: Alignment.topCenter,
-            child: CacheImage.network(this._user_info["face"], 40, 40),
+          new GestureDetector(
+            child: Container(
+              margin: const EdgeInsets.only(left: 12.0, right: 12.0),
+              alignment: Alignment.topCenter,
+              child: CacheImage.network(this._user_info["face"], 40, 40),
+            ),
+            onTap: () {
+              Windows.Open(context, UserInfo("", this._user_info));
+            },
           ),
         ],
       );
@@ -304,10 +317,15 @@ class EntryItem extends StatelessWidget {
       return new Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          new Container(
-            margin: const EdgeInsets.only(left: 12.0, right: 12.0),
-            alignment: Alignment.topCenter,
-            child: CacheImage.network(this._friend_info["face"], 40, 40),
+          new GestureDetector(
+            child: Container(
+              margin: const EdgeInsets.only(left: 12.0, right: 12.0),
+              alignment: Alignment.topCenter,
+              child: CacheImage.network(this._friend_info["face"], 40, 40),
+            ),
+            onTap: () {
+              Windows.Open(context, UserInfo("", this._friend_info));
+            },
           ),
           Flexible(
             child: Column(
