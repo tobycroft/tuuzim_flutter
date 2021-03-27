@@ -86,8 +86,10 @@ class _ChatPrivate extends State<ChatPrivate> {
                 minWidth: 0,
                 onPressed: () async {
                   send_chat(UrlChat.Private_Send_text, _text.text, null, "");
-                  _text.clear();
-                  this._send_button = false;
+                  setState(() {
+                    _text.clear();
+                    this._send_button = false;
+                  });
                 },
                 color: Colors.green,
                 child: Text("发送"),
