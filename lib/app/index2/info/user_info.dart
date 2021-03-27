@@ -38,7 +38,9 @@ class _UserInfo extends State<UserInfo> {
   Future<void> get_data() async {
     Map post = await AuthAction.LoginObject();
     if (this._fid == post["uid"]) {
-      _show_button = false;
+      setState(() {
+        _show_button = false;
+      });
     }
     post["fid"] = this._fid;
     String ret = await Net.Post(Config.Url, Url_Index2.Friend_info, null, post, null);
