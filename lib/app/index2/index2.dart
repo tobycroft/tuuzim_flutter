@@ -38,6 +38,7 @@ class _Index2 extends State<Index2> {
       _load_database(context);
     });
     eventhub.on(EventType.Logout, (data) async {
+      _widgets=[];
       _data = [];
     });
     // _friend_list(context);
