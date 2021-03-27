@@ -9,7 +9,7 @@ import 'package:yin_drag_sacle/core/drag_scale_widget.dart';
 
 class CacheImage {
   static network(dynamic img, double w, double h) {
-    if (img == null) {
+    if (img == null||img.toString().length<10) {
       return DefaultImage(w, h);
     } else {
       return new OKImage(
