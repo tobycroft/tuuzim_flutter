@@ -26,6 +26,7 @@ class UserInfo extends StatefulWidget {
 
 var _data = {};
 bool _is_friend = false;
+bool _show_button = true;
 
 class _UserInfo extends State<UserInfo> {
   String _title;
@@ -36,6 +37,9 @@ class _UserInfo extends State<UserInfo> {
 
   Future<void> get_data() async {
     Map post = await AuthAction.LoginObject();
+    if (this._fid == post["uid"]) {
+      _show_button = false;
+    }
     post["fid"] = this._fid;
     String ret = await Net.Post(Config.Url, Url_Index2.Friend_info, null, post, null);
     Map json = jsonDecode(ret);
@@ -143,7 +147,7 @@ class _UserInfo extends State<UserInfo> {
             height: 10,
           ),
           Offstage(
-            offstage: !_is_friend,
+            offstage: !_is_friend && !_show_button,
             child: FlatButton(
               color: Style.Listtile_color(context),
               height: 60,
@@ -170,7 +174,7 @@ class _UserInfo extends State<UserInfo> {
             ),
           ),
           Offstage(
-            offstage: !_is_friend,
+            offstage: !_is_friend && !_show_button,
             child: FlatButton(
               color: Style.Listtile_color(context),
               height: 60,
@@ -193,7 +197,7 @@ class _UserInfo extends State<UserInfo> {
             ),
           ),
           Offstage(
-            offstage: _is_friend,
+            offstage: _is_friend && !_show_button,
             child: FlatButton(
               color: Style.Listtile_color(context),
               height: 60,
