@@ -25,7 +25,7 @@ class UserInfo extends StatefulWidget {
 }
 
 var _data = {};
-bool _is_friend;
+bool _is_friend = false;
 
 class _UserInfo extends State<UserInfo> {
   String _title;
