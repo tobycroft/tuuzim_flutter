@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:r_upgrade/r_upgrade.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tuuzim_flutter/app/index4/balance_record/balance_record.dart';
 import 'package:tuuzim_flutter/app/index4/my_info/my_info.dart';
@@ -331,6 +332,30 @@ class _Index4 extends State<Index4> {
                   var login = await AuthAction.LoginObject();
                   var data = WsMessage.init(login["uid"], login["token"]);
                   eventhub.fire(EventType.Websocket_Send, data);
+                },
+              ),
+              ListTile(
+                tileColor: Style.Listtile_color(this.context),
+                leading: Icon(
+                  Icons.settings,
+                  color: Colors.red,
+                  size: 32,
+                ),
+                trailing: Icon(
+                  Icons.keyboard_arrow_right,
+                  color: Colors.red,
+                ),
+                title: Text(
+                  "升级测试",
+                  style: TextStyle(color: Colors.red),
+                ),
+                onTap: () async {
+                  int id = await RUpgrade.upgrade(
+                    'http://pandorabox.tuuz.cc:8000/app/tuuzim/app-release.apk',
+                    fileName: 'app-release.apk',
+                    isAutoRequestInstall: true,
+                    notificationStyle: NotificationStyle.speechAndPlanTime,
+                  );
                 },
               ),
             ],
