@@ -56,7 +56,6 @@ class _Index1 extends State<Index1> {
     });
     eventhub.on(EventType.Logout, (data) async {
       _data = [];
-      Database db = await TuuzDb().getDb();
       deleteDatabase("tuuzim.db");
     });
     super.initState();
