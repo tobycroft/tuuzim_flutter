@@ -153,7 +153,7 @@ class _Index2 extends State<Index2> {
           // _load_database(context);
           _friend_list(context);
         },
-        firstRefresh: false,
+        firstRefresh: true,
       ),
     );
   }

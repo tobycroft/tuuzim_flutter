@@ -67,7 +67,7 @@ class _login extends State<Login> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        // leading: Tuuz_Button.BackWithWord(context),
+        leading: null,
         actions: [
           // IconButton(
           //     icon: Icon(

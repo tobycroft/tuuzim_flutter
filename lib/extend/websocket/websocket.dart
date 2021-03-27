@@ -30,7 +30,11 @@ void init_websocket() async {
     socket.close();
   });
 
-  eventhub.on(EventType.Websocket_close, (_) {
+  eventhub.on(EventType.Websocket_connect, (_) {
+    socket.connect();
+  });
+
+  eventhub.on(EventType.Login, (_) {
     socket.connect();
   });
 
