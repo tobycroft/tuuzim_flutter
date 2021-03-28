@@ -27,6 +27,7 @@ import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
 import 'package:tuuzim_flutter/tuuz/popup/popupmenu.dart';
 import 'package:tuuzim_flutter/tuuz/storage/storage.dart';
+import 'package:tuuzim_flutter/tuuz/time/time.dart';
 import 'package:tuuzim_flutter/tuuz/win/close.dart';
 
 class Index1 extends StatefulWidget {
@@ -74,6 +75,8 @@ class _Index1 extends State<Index1> {
         List _d1 = [];
         List _d2 = [];
         for (var i = 0; i < _dat.length; i++) {
+          // var timing = _dat[i]["date"];
+          // _dat[i]["datetime"] = Time.Int2Date(timing);
           switch (_dat[i]["chat_type"].toString()) {
             case "private":
               _dat[i]["info"] = await FriendInfo.friend_info(_dat[i]["fid"]);
@@ -237,7 +240,7 @@ class BotItem extends StatelessWidget {
         style: Config.Text_Style_default,
       ),
       trailing: Text(
-        ret["date"].toString(),
+        Time.Int2Date_auto_str(int.parse(ret["date"].toString())),
         style: Config.Text_Style_default,
       ),
       onTap: () async {
