@@ -1,37 +1,32 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/adapter.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:path/path.dart';
 import 'package:tuuzim_flutter/config/config.dart';
-import 'package:http/http.dart';
 
 class Net {
-  static Future<String> Post(String url, path, Map<String, String> get, Map<String, String> post, Map<String, String> header) async {
-    var http = new HttpClient();
-    if (Config.Proxy_debug) {
-      http.findProxy = (url) {
-        return HttpClient.findProxyFromEnvironment(url, environment: {"http_proxy": Config.ProxyURL});
+  static Future<String> Post(String url, path, Map<String, dynamic> get, Map<String, dynamic> post, Map<String, String> header) async {
+    Response response;
+    BaseOptions options = new BaseOptions(
+      baseUrl: url,
+      connectTimeout: 5000,
+      receiveTimeout: 3000,
+    );
+    Dio dio = new Dio(options);
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+      client.badCertificateCallback = (X509Certificate cert, String host, int port) {
+        return Platform.isAndroid;
       };
-    }
-    var uri;
-    if (get == null || get.isEmpty) {
-      uri = new Uri.http(url, path);
-    } else {
-      uri = new Uri.http(url, path, get);
-    }
-    var query = new Uri(queryParameters: post);
-    var req = await http.postUrl(uri);
-    if (header != null && !header.isEmpty) {
-      header.forEach((key, value) {
-        req.headers.add(key, value);
-      });
-    }
-    req.headers.contentType = ContentType.parse("application/x-www-form-urlencoded");
-    req.write(query.query);
-    var resp = await req.close();
-    var ret = await resp.transform(utf8.decoder).join();
-    return ret;
+      client.findProxy = (uri) {
+        return "PROXY " + Config.ProxyURL;
+      };
+    };
+    FormData formData = new FormData.fromMap(post);
+    response = await dio.post(path, queryParameters: get, data: formData, options: Options(headers: header));
+    return response.data.toString();
   }
 
   static Future<String> PostRaw(String url, path, Map<String, String> get, dynamic post, Map<String, String> header) async {
@@ -105,7 +100,18 @@ class Net {
     return ret;
   }
 
-  static Future<String> Get(String url, path, Map<String, String> get, Map<String, String> header) async {
+  static Future<String> Get(String url, path, Map<String, dynamic> get, Map<String, dynamic> header) async {
+    Response response;
+    BaseOptions options = new BaseOptions(
+      baseUrl: url,
+      connectTimeout: 5000,
+      receiveTimeout: 3000,
+    );
+    Dio dio = new Dio(options);
+
+    response = await dio.get(path, queryParameters: get, options: Options(headers: header));
+    return response.data.toString();
+
     var http = new HttpClient();
     if (Config.Proxy_debug) {
       http.findProxy = (url) {

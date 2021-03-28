@@ -1,9 +1,7 @@
 import 'dart:io';
-import 'dart:isolate';
 
 import 'package:event_hub/event_hub.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_uploader/flutter_uploader.dart';
@@ -12,14 +10,12 @@ import 'package:tuuzim_flutter/app/index2/index2.dart';
 import 'package:tuuzim_flutter/app/index3/index3.dart';
 import 'package:tuuzim_flutter/app/index4/index4.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
-import 'package:tuuzim_flutter/config/config.dart';
 import 'package:tuuzim_flutter/config/event.dart';
 import 'package:tuuzim_flutter/config/style.dart';
 import 'package:tuuzim_flutter/data/friend/friend_info.dart';
 import 'package:tuuzim_flutter/data/group/group_info.dart';
 import 'package:tuuzim_flutter/extend/websocket/websocket.dart';
 import 'package:tuuzim_flutter/extend/websocket/ws_router.dart';
-import 'package:websocket_manager/websocket_manager.dart';
 
 void main() async {
   if (Platform.isAndroid) {
