@@ -41,7 +41,7 @@ class CacheImage {
   static fullscreen(dynamic img, double w, double h) {
     return FullScreenWidget(
       child: Hero(
-        tag: "customTag",
+        tag: img,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: pinch(img, w, h),

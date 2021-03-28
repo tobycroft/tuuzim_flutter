@@ -16,7 +16,7 @@ class WidgetPrivateMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var extra = null;
+    Map extra = {};
     try {
       extra = jsonDecode(this._extra);
     } catch (e) {}
@@ -27,14 +27,20 @@ class WidgetPrivateMessage extends StatelessWidget {
           maxLines: 999,
           overflow: TextOverflow.ellipsis,
         );
-        break;
 
       case "2":
-        return Container(
-          width: 200,
-          height: 200,
-          child: CacheImage.fullscreen(extra["img"], double.infinity, double.infinity),
-        );
+        if (extra["img"] != null) {
+          return Container(
+            width: 200,
+            height: 200,
+            child: CacheImage.fullscreen(extra["img"], double.infinity, double.infinity),
+          );
+        } else {
+          return Container(
+            width: 200,
+            height: 200,
+          );
+        }
         break;
 
       default:

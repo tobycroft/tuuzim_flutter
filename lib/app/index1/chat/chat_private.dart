@@ -148,7 +148,7 @@ class _ChatPrivate extends State<ChatPrivate> {
             onTap: () async {
               PickedFile pickfile = await ImagePicker().getImage(source: ImageSource.gallery);
               String ret = await Net.PostFile(pickfile.path, null, null);
-              Map json=jsonDecode(ret);
+              Map json = jsonDecode(ret);
               if (Auth.Return_login_check_and_Goto(context, json)) {
                 if (Ret.Check_isok(context, json)) {
                   Map<String, dynamic> extra = {
@@ -245,7 +245,7 @@ class _ChatPrivate extends State<ChatPrivate> {
     post["token"] = await Storage.Get("__token__");
     post["fid"] = this._fid;
     post["msg"] = msg.toString();
-    post["extra"] = extra.toString();
+    post["extra"] = jsonEncode(extra);
     post["ident"] = ident.toString();
     _friend_info = await FriendInfo.friend_info(_fid);
     var ret = await Net.Post(Config.Url, UrlChat, null, post, null);
@@ -358,12 +358,7 @@ class EntryItem extends StatelessWidget {
                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5), topRight: Radius.circular(0), topLeft: Radius.circular(5)),
                   color: Style.Chat_on_right(context),
                 ),
-                child: new Text(
-                  message["message"],
-                  maxLines: 999,
-                  overflow: TextOverflow.ellipsis,
-                  style: Config.Text_Style_default,
-                ),
+                child: WidgetPrivateMessage(this.context, this.message, this.message["type"], this.message["message"], this.message["extra"], this.message["date"], this.message["ident"]),
               )
             ]),
           ),
