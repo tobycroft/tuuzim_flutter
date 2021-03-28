@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  dio: ^3.0.10
   flutter_slidable: ^0.5.7
   shared_preferences: ^0.5.12+4
   flutter_easyrefresh: ^2.1.8

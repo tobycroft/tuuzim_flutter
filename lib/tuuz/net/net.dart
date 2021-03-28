@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_uploader/flutter_uploader.dart';
 import 'package:path/path.dart';
 import 'package:tuuzim_flutter/config/config.dart';
+import 'package:http/http.dart';
 
 class Net {
   static Future<String> Post(String url, path, Map<String, String> get, Map<String, String> post, Map<String, String> header) async {
@@ -68,7 +68,8 @@ class Net {
       files: [FileItem(filename: basename(filepath), savedDir: dirname(filepath), fieldname: "file")],
       // required: list of files that you want to upload
       method: UploadMethod.POST,
-      // HTTP method  (POST or PUT or PATCH)
+      // HTTP method  (POST or PUT or PATCH)cmd
+
       headers: header,
       data: post,
       // any data you want to send in upload request

@@ -33,7 +33,7 @@ final JPush jpush = new JPush();
 final EventHub eventhub = EventHub();
 
 final upload_progress = FlutterUploader().progress.listen((progress) {
- print(progress);
+ // print(progress);
 });
 
 final upload_result = FlutterUploader().result.listen((result) {
