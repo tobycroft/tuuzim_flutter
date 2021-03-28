@@ -6,6 +6,7 @@ import 'package:event_hub/event_hub.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_pickers/image_pickers.dart';
 import 'package:path/path.dart' as p;
 import 'package:thumbnailer/thumbnailer.dart';
 import 'package:tuuzim_flutter/app/index1/chat/url_chat.dart';
@@ -208,21 +209,20 @@ class _ChatPrivate extends State<ChatPrivate> {
               ],
             ),
             onTap: () async {
-              File pickfile = await ImagePicker.pickVideo(source: ImageSource.gallery, maxDuration: Duration(seconds: 120));
+              // File pickfile = await ImagePicker.pickVideo(source: ImageSource.gallery, maxDuration: Duration(seconds: 120));
+              List<Media> pickfile = await ImagePickers.pickerPaths(
+                galleryMode: GalleryMode.video,
+                selectCount: 1,
+                showCamera: true,
+              );
               if (pickfile == null) {
                 return;
               }
-              String thumb = await VideoThumbnail.thumbnailFile(
-                video: pickfile.path,
-                imageFormat: ImageFormat.WEBP,
-                maxHeight: 300,
-                quality: 75,
-              );
-              print(pickfile.statSync());
-              print(thumb);
-              return;
-              String video = await Net.PostFile(pickfile.path, null, null);
-              String img = await Net.PostFile(thumb, null, null);
+              print(pickfile[0].path);
+              print(pickfile[0].thumbPath);
+
+              String video = await Net.PostFile(pickfile[0].path, null, null);
+              String img = await Net.PostFile(pickfile[0].thumbPath, null, null);
               Map video1 = jsonDecode(video);
               Map img1 = jsonDecode(img);
               if (Auth.Return_login_check_and_Goto(context, video1) && Auth.Return_login_check_and_Goto(context, img1)) {
@@ -231,7 +231,7 @@ class _ChatPrivate extends State<ChatPrivate> {
                     "thumbPath": img1["data"],
                     "videoPath": video1["data"],
                   };
-                  send_chat(UrlChat.Private_Send_img, "好友向你发送一段视频", extra, Time.now());
+                  send_chat(UrlChat.Private_Send_video, "好友向你发送一段视频", extra, Time.now());
                 }
               }
             },
@@ -260,7 +260,7 @@ class _ChatPrivate extends State<ChatPrivate> {
                     "name": p.basename(pickfile.path),
                     "ident": Time.now(),
                   };
-                  send_chat(UrlChat.Private_Send_img, "好友向你发送了一张照片", extra, Time.now());
+                  send_chat(UrlChat.Private_Send_file, "好友向你发送了一个文件", extra, Time.now());
                 }
               }
             },
