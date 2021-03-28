@@ -65,7 +65,7 @@ class Config {
   // static String Url = "127.0.0.1";
   //
   static bool Proxy_debug = false;
-
+  //
   static String Url = "http://chat.tuuz.cc:20000";
 
   static String WS = "ws://chat.tuuz.cc:20001";
