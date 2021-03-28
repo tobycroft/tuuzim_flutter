@@ -276,8 +276,8 @@ class _ChatPrivate extends State<ChatPrivate> {
     if (history != null) {
       Sort.sort(history, "msg_id");
       _data = history;
+      setState(() {});
     }
-    setState(() {});
   }
 
   Future<void> get_data() async {
@@ -291,10 +291,10 @@ class _ChatPrivate extends State<ChatPrivate> {
     if (Auth.Return_login_check_and_Goto(context, json)) {
       if (Ret.Check_isok(context, json)) {
         _data = json["data"];
-        _data.forEach((element) async {
+        setState(() {});
+        _data.forEach((element) {
           PrivateChatData.sync(element);
         });
-        setState(() {});
       }
     }
   }
