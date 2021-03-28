@@ -43,6 +43,21 @@ class WidgetPrivateMessage extends StatelessWidget {
         }
         break;
 
+      case "5": //视频
+        if (extra["thumbPath"] != null) {
+          return Container(
+            width: 320,
+            height: 380,
+            child: CacheImage.Video(this._context, extra["thumbPath"], extra["videoPath"]),
+          );
+        } else {
+          return Container(
+            width: 320,
+            height: 360,
+          );
+        }
+        break;
+
       default:
         return new Text(
           this._message.toString(),

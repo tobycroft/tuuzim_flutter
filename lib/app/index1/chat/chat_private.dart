@@ -5,6 +5,8 @@ import 'package:event_hub/event_hub.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as p;
+import 'package:thumbnails/thumbnails.dart';
 import 'package:tuuzim_flutter/app/index1/chat/url_chat.dart';
 import 'package:tuuzim_flutter/app/index1/chat/widget_message.dart';
 import 'package:tuuzim_flutter/app/index2/info/user_info.dart';
@@ -142,11 +144,14 @@ class _ChatPrivate extends State<ChatPrivate> {
                   Icons.image,
                   size: 64,
                 ),
-                Text("选择图片")
+                Text("发送图片")
               ],
             ),
             onTap: () async {
               PickedFile pickfile = await ImagePicker().getImage(source: ImageSource.gallery);
+              if (pickfile == null) {
+                return;
+              }
               String ret = await Net.PostFile(pickfile.path, null, null);
               Map json = jsonDecode(ret);
               if (Auth.Return_login_check_and_Goto(context, json)) {
@@ -160,7 +165,7 @@ class _ChatPrivate extends State<ChatPrivate> {
                 }
               }
             },
-          ),
+          ), //选择图片
           GestureDetector(
             child: Column(
               children: [
@@ -168,13 +173,88 @@ class _ChatPrivate extends State<ChatPrivate> {
                   Icons.camera_alt,
                   size: 64,
                 ),
-                Text("选择相机")
+                Text("拍照发送")
               ],
             ),
             onTap: () async {
-              ImagePicker().getImage(source: ImageSource.camera);
+              PickedFile pickfile = await ImagePicker().getImage(source: ImageSource.camera);
+              if (pickfile == null) {
+                return;
+              }
+              String ret = await Net.PostFile(pickfile.path, null, null);
+              Map json = jsonDecode(ret);
+              if (Auth.Return_login_check_and_Goto(context, json)) {
+                if (Ret.Check_isok(context, json)) {
+                  Map<String, dynamic> extra = {
+                    "img": json["data"],
+                    "type": "album",
+                    "ident": Time.now(),
+                  };
+                  send_chat(UrlChat.Private_Send_img, "好友向你发送了一张照片", extra, Time.now());
+                }
+              }
             },
-          ),
+          ), //选择相机
+          GestureDetector(
+            child: Column(
+              children: [
+                Icon(
+                  Icons.video_library,
+                  size: 64,
+                ),
+                Text("选择视频")
+              ],
+            ),
+            onTap: () async {
+              PickedFile pickfile = await ImagePicker().getVideo(source: ImageSource.gallery);
+              if (pickfile == null) {
+                return;
+              }
+              String thumb = await Thumbnails.getThumbnail(videoFile: pickfile.path, imageType: ThumbFormat.PNG, quality: 30);
+              String video = await Net.PostFile(pickfile.path, null, null);
+              String img = await Net.PostFile(thumb, null, null);
+              Map video1 = jsonDecode(video);
+              Map img1 = jsonDecode(img);
+              if (Auth.Return_login_check_and_Goto(context, video1) && Auth.Return_login_check_and_Goto(context, img1)) {
+                if (Ret.Check_isok(context, video1) && Ret.Check_isok(context, img1)) {
+                  Map<String, dynamic> extra = {
+                    "thumbPath": img1["data"],
+                    "videoPath": video1["data"],
+                  };
+                  send_chat(UrlChat.Private_Send_img, "好友向你发送一段视频", extra, Time.now());
+                }
+              }
+            },
+          ), //选择视频
+          GestureDetector(
+            child: Column(
+              children: [
+                Icon(
+                  Icons.attach_file,
+                  size: 64,
+                ),
+                Text("发送文件")
+              ],
+            ),
+            onTap: () async {
+              PickedFile pickfile = await ImagePicker().getVideo(source: ImageSource.gallery);
+              if (pickfile == null) {
+                return;
+              }
+              String ret = await Net.PostFile(pickfile.path, null, null);
+              Map json = jsonDecode(ret);
+              if (Auth.Return_login_check_and_Goto(context, json)) {
+                if (Ret.Check_isok(context, json)) {
+                  Map<String, dynamic> extra = {
+                    "url": json["data"],
+                    "name": p.basename(pickfile.path),
+                    "ident": Time.now(),
+                  };
+                  send_chat(UrlChat.Private_Send_img, "好友向你发送了一张照片", extra, Time.now());
+                }
+              }
+            },
+          ), //选择文件
         ],
       ),
     );

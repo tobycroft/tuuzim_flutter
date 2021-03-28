@@ -4,12 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:full_screen_image/full_screen_image.dart';
 import 'package:ok_image/ok_image.dart';
+import 'package:tuuzim_flutter/app/index1/chat/widget_video.dart';
 import 'package:tuuzim_flutter/config/config.dart';
+import 'package:tuuzim_flutter/tuuz/win/close.dart';
 import 'package:yin_drag_sacle/core/drag_scale_widget.dart';
+import '';
 
 class CacheImage {
   static network(dynamic img, double w, double h) {
-    if (img == null||img.toString().length<10) {
+    if (img == null || img.toString().length < 10) {
       return DefaultImage(w, h);
     } else {
       return new OKImage(
@@ -64,6 +67,15 @@ class CacheImage {
       width: w,
       height: h,
       fit: BoxFit.cover,
+    );
+  }
+
+  static Widget Video(BuildContext context, String img, video) {
+    return GestureDetector(
+      child: network_fit(img, double.infinity, double.infinity, BoxFit.fitWidth),
+      onTap: () {
+        Windows.Open(context, WidgetVideo(img, video));
+      },
     );
   }
 }
