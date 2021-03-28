@@ -23,6 +23,7 @@ import 'package:tuuzim_flutter/tuuz/calc/sort.dart';
 import 'package:tuuzim_flutter/tuuz/net/net.dart';
 import 'package:tuuzim_flutter/tuuz/net/ret.dart';
 import 'package:tuuzim_flutter/tuuz/storage/storage.dart';
+import 'package:tuuzim_flutter/tuuz/time/time.dart';
 import 'package:tuuzim_flutter/tuuz/win/close.dart';
 
 class ChatPrivate extends StatefulWidget {
@@ -146,7 +147,18 @@ class _ChatPrivate extends State<ChatPrivate> {
             ),
             onTap: () async {
               PickedFile pickfile = await ImagePicker().getImage(source: ImageSource.gallery);
-              Net.PostFile(pickfile.path, null, null, null);
+              String ret = await Net.PostFile(pickfile.path, null, null);
+              Map json=jsonDecode(ret);
+              if (Auth.Return_login_check_and_Goto(context, json)) {
+                if (Ret.Check_isok(context, json)) {
+                  Map<String, dynamic> extra = {
+                    "img": json["data"],
+                    "type": "album",
+                    "ident": Time.now(),
+                  };
+                  send_chat(UrlChat.Private_Send_img, "好友向你发送了一张图片", extra, Time.now());
+                }
+              }
             },
           ),
           GestureDetector(
