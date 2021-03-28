@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_sound/flutter_sound.dart';
+import 'package:flutter/material.dart';
 import 'package:tuuzim_flutter/tuuz/cache/cache.dart';
+import 'widget_audio.dart';
 
 class WidgetPrivateMessage extends StatelessWidget {
   var _context;
@@ -45,17 +46,19 @@ class WidgetPrivateMessage extends StatelessWidget {
         break;
 
       case "3":
-
         if (extra["path"] != null) {
           return Container(
-            width: 300,
-            height: 100,
-            child: WidgetAudio(),
+            width: 400,
+            height: 50,
+            alignment: Alignment.center,
+            child: WidgetAudio(extra["path"]),
+            color: Colors.transparent,
           );
         } else {
           return Container(
-            width: 300,
-            height: 100,
+            width: 400,
+            height: 50,
+            alignment: Alignment.center,
           );
         }
         break;
