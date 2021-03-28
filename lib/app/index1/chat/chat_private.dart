@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:event_hub/event_hub.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as p;
-import 'package:thumbnails/thumbnails.dart';
+import 'package:thumbnailer/thumbnailer.dart';
 import 'package:tuuzim_flutter/app/index1/chat/url_chat.dart';
 import 'package:tuuzim_flutter/app/index1/chat/widget_message.dart';
 import 'package:tuuzim_flutter/app/index2/info/user_info.dart';
@@ -27,6 +28,7 @@ import 'package:tuuzim_flutter/tuuz/net/ret.dart';
 import 'package:tuuzim_flutter/tuuz/storage/storage.dart';
 import 'package:tuuzim_flutter/tuuz/time/time.dart';
 import 'package:tuuzim_flutter/tuuz/win/close.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 class ChatPrivate extends StatefulWidget {
   String _title;
@@ -206,11 +208,19 @@ class _ChatPrivate extends State<ChatPrivate> {
               ],
             ),
             onTap: () async {
-              PickedFile pickfile = await ImagePicker().getVideo(source: ImageSource.gallery);
+              File pickfile = await ImagePicker.pickVideo(source: ImageSource.gallery, maxDuration: Duration(seconds: 120));
               if (pickfile == null) {
                 return;
               }
-              String thumb = await Thumbnails.getThumbnail(videoFile: pickfile.path, imageType: ThumbFormat.PNG, quality: 30);
+              String thumb = await VideoThumbnail.thumbnailFile(
+                video: pickfile.path,
+                imageFormat: ImageFormat.WEBP,
+                maxHeight: 300,
+                quality: 75,
+              );
+              print(pickfile.statSync());
+              print(thumb);
+              return;
               String video = await Net.PostFile(pickfile.path, null, null);
               String img = await Net.PostFile(thumb, null, null);
               Map video1 = jsonDecode(video);
