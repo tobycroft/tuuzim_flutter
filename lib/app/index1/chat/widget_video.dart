@@ -1,3 +1,4 @@
+import 'package:cached_video_player/cached_video_player.dart';
 import 'package:tuuzim_flutter/tuuz/win/close.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class WidgetVideo extends StatefulWidget {
 }
 
 class _VideoAppState extends State<WidgetVideo> {
-  VideoPlayerController _controller;
+  CachedVideoPlayerController _controller;
 
   String img;
   String video;
@@ -23,7 +24,7 @@ class _VideoAppState extends State<WidgetVideo> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(this.video)
+    _controller = CachedVideoPlayerController.network(this.video)
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {
@@ -37,10 +38,10 @@ class _VideoAppState extends State<WidgetVideo> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _controller.value.isInitialized
+        child: _controller.value.initialized
             ? Container(
                 child: GestureDetector(
-                  child: VideoPlayer(_controller),
+                  child: CachedVideoPlayer(_controller),
                   onTap: () {
                     Windows.Close(context);
                   },
