@@ -270,16 +270,19 @@ class _ChatPrivate extends State<ChatPrivate> {
     );
   }
 
+  Future<void> get_data_history() async {
+    _uid = await Storage.Get("__uid__");
+    var history = await PrivateChatModel.Api_select_byChatId(ChatGen.ChatId(int.parse(_uid), int.parse(this._fid)));
+    if (history != null) {
+      Sort.sort(history, "msg_id");
+      _data = history;
+    }
+    setState(() {});
+  }
+
   Future<void> get_data() async {
     Map<String, String> post = {};
     _uid = await Storage.Get("__uid__");
-    var history = await PrivateChatModel.Api_select_byChatId(ChatGen.ChatId(int.parse(_uid), int.parse(this._fid)));
-    setState(() {
-      if (history != null) {
-        Sort.sort(history, "msg_id");
-        _data = history;
-      }
-    });
     post["uid"] = _uid;
     post["token"] = await Storage.Get("__token__");
     post["fid"] = _fid;
@@ -287,12 +290,11 @@ class _ChatPrivate extends State<ChatPrivate> {
     var json = jsonDecode(ret);
     if (Auth.Return_login_check_and_Goto(context, json)) {
       if (Ret.Check_isok(context, json)) {
-        setState(() {
-          _data = json["data"];
-          _data.forEach((element) async {
-            PrivateChatData.sync(element);
-          });
+        _data = json["data"];
+        _data.forEach((element) async {
+          PrivateChatData.sync(element);
         });
+        setState(() {});
       }
     }
   }
@@ -349,6 +351,7 @@ class _ChatPrivate extends State<ChatPrivate> {
 
   @override
   void initState() {
+    get_data_history();
     get_data();
     this._eventhub = eventhub.on(EventType.Private_chat, (dynamic message) {
       _data.add(message["data"]);
@@ -452,7 +455,7 @@ class EntryItem extends StatelessWidget {
               )
             ]),
           ),
-          new GestureDetector(
+          GestureDetector(
             child: Container(
               margin: const EdgeInsets.only(left: 12.0, right: 12.0),
               alignment: Alignment.topCenter,
@@ -469,7 +472,7 @@ class EntryItem extends StatelessWidget {
       return new Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          new GestureDetector(
+          GestureDetector(
             child: Container(
               margin: const EdgeInsets.only(left: 12.0, right: 12.0),
               alignment: Alignment.topCenter,
