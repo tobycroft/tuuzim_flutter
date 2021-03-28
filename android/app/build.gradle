@@ -53,7 +53,7 @@ android {
 
         multiDexEnabled true
         applicationId "im.tuuz.cc"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

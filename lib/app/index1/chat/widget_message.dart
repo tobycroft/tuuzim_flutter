@@ -58,6 +58,34 @@ class WidgetPrivateMessage extends StatelessWidget {
         }
         break;
 
+      case "4": //文件
+        if (extra["size"] != null) {
+          return Container(
+            width: 200,
+            height: 100,
+          );
+        } else {
+          return Container(
+            width: 200,
+            height: 100,
+          );
+        }
+        break;
+
+      case "7": //名片
+        if (extra["id"] != null) {
+          return Container(
+            width: 200,
+            height: 100,
+          );
+        } else {
+          return Container(
+            width: 200,
+            height: 100,
+          );
+        }
+        break;
+
       default:
         return new Text(
           this._message.toString(),
