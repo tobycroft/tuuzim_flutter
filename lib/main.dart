@@ -107,12 +107,12 @@ class MyApp extends StatelessWidget {
           color: Colors.white54,
           shadowColor: Colors.transparent,
           actionsIconTheme: IconThemeData(color: Colors.black),
-          textTheme: TextTheme(
-            title: TextStyle(
-              color: Colors.black,
-              fontSize: 22,
-            ),
-          ),
+          // textTheme: TextTheme(
+          //   title: TextStyle(
+          //     color: Colors.black,
+          //     fontSize: 22,
+          //   ),
+          // ),
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
         ),
